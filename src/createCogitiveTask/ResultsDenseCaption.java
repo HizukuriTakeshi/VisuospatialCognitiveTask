@@ -1,21 +1,24 @@
 package createCogitiveTask;
 
+import java.util.List;
 import java.util.Map;
 
 public class ResultsDenseCaption {
 	private Map<String, Object> opt;
-	private Map<String, Object> results;
-	
+	private List<Map<String, List>> results;
 	public Map<String, Object> getOpt() {
 		return opt;
 	}
 	public void setOpt(Map<String, Object> opt) {
 		this.opt = opt;
 	}
-	public Map<String, Object> getResults() {
+	public List<Map<String, List>> getResults() {
 		return results;
 	}
-	public void setResults(Map<String, Object> results) {
+	public void setResults(List<Map<String, List>> results) {
 		this.results = results;
 	}
+	
+	
+	
 }
