@@ -1,6 +1,8 @@
 package createCogitiveTask;
 
+
 import java.util.Arrays;
+
 
 public class DenseCaption implements DisplayObject {
 
@@ -16,10 +18,18 @@ public class DenseCaption implements DisplayObject {
 		this.boxes = boxes;
 	}
 	
-	
+
+
 	public String getImg_name() {
 		return img_name;
 	}
+
+
+
+	public void setImg_name(String img_name) {
+		this.img_name = img_name;
+	}
+
 
 
 	public double getScore() {
@@ -27,14 +37,35 @@ public class DenseCaption implements DisplayObject {
 	}
 
 
+
+	public void setScore(double score) {
+		this.score = score;
+	}
+
+
+
 	public String getCaption() {
 		return caption;
 	}
 
 
+
+	public void setCaption(String caption) {
+		this.caption = caption;
+	}
+
+
+
 	public double[] getBoxes() {
 		return boxes;
 	}
+
+
+
+	public void setBoxes(double[] boxes) {
+		this.boxes = boxes;
+	}
+
 
 
 	@Override
