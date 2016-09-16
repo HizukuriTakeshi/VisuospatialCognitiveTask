@@ -12,7 +12,7 @@ public class JsonDataReader {
 		try {
 			ResultsDenseCaption resultsDensecap = JSON.decode(new FileReader("src/results.json"), ResultsDenseCaption.class);
 			System.out.println(resultsDensecap.getOpt());
-			System.out.println(resultsDensecap.getResults());
+			//System.out.println(resultsDensecap.getResults());
 		} catch (JSONException | IOException e) {
 			// TODO 自動生成された catch ブロック
 			e.printStackTrace();
