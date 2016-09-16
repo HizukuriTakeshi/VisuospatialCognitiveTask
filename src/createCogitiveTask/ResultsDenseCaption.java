@@ -3,7 +3,6 @@ package createCogitiveTask;
 import java.util.Map;
 
 public class ResultsDenseCaption {
-
 	private Map<String, Object> opt;
 	private Map<String, Object> results;
 	
