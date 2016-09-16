@@ -81,7 +81,7 @@ public class DenseCaption implements DisplayObject {
 				+ score + ","
 				+ caption + ","
 				+ Arrays.asList(boxes) 
-				+ "]";
+				+ "]a";
 	}
 
 }
