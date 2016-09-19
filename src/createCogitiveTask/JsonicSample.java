@@ -14,9 +14,9 @@ public class JsonicSample {
      
      // 配列を含むJSON形式のデータを用意
      
-     //final HogeList hogeList = JSON.decode(hoges, HogeList.class);
 
      try {
+    	
 		HogeList hogeList = JSON.decode(new FileReader("src/results.json"), HogeList.class);
 		 
 	     for (final Hoge tmp : hogeList.getHoges()) {
