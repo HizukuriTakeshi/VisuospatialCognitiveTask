@@ -18,11 +18,11 @@ public class JsonicSample {
      try {
 
 
-	DenseCapList hogeList1 = JSON.decode(new FileReader("src/results.json"), DenseCapList.class);
+	DenseCapList denseList = JSON.decode(new FileReader("src/results.json"), DenseCapList.class);
 
-	     for (DenseCap tmp1 : hogeList1.getDenseCaps()) {
-	         System.out.println("tmp.name:" + tmp1.getName());
-	         System.out.println("tmp.age:" + tmp1.getAge());
+	     for (DenseCap tmp : denseList.getResults()) {
+	         System.out.println("tmp.img_name:" + tmp.getImg_name());
+	         System.out.println("tmp.scores:" + tmp.getScores());
 	}
 
      } catch (JSONException e) {

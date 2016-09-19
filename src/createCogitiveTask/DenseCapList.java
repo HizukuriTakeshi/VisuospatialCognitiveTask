@@ -6,15 +6,14 @@ public class DenseCapList {
 
 
 
-    private List<DenseCap> hoges;
+    private List<DenseCap> results;
 
+	public List<DenseCap> getResults() {
+		return results;
+	}
 
-    public void setHoges(final List<DenseCap> hoges) {
-        this.hoges = hoges;
-    }
-
-    public List<DenseCap> getDenseCaps() {
-        return hoges;
-    }
+	public void setResults(List<DenseCap> results) {
+		this.results = results;
+	}
 
 }

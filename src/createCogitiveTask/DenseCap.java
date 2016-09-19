@@ -1,23 +1,24 @@
 package createCogitiveTask;
 
 public class DenseCap {
-	  private String name;
+	  private String img_name;
 
-	     private int age;
+	     private int scores;
 
-	     public void setName(final String name) {
-	         this.name = name;
-	     }
+		public String getImg_name() {
+			return img_name;
+		}
 
-	     public String getName() {
-	         return name;
-	     }
+		public void setImg_name(String img_name) {
+			this.img_name = img_name;
+		}
 
-	     public void setAge(final int age) {
-	         this.age = age;
-	     }
+		public int getScores() {
+			return scores;
+		}
 
-	     public int getAge() {
-	         return age;
-	     }
+		public void setScores(int scores) {
+			this.scores = scores;
+		}
+	
 }
