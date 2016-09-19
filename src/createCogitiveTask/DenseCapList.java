@@ -2,15 +2,19 @@ package createCogitiveTask;
 
 import java.util.List;
 
-public class DenseCapList {
+public class HogeList {
 
-	private List<DenseCap> densecaps;
+    
 
-	public void setDensecaps(List<DenseCap> densecaps) {
-		this.densecaps = densecaps;
-	}
+    private List<Hoge> hoges;
 
-	public List<DenseCap> getDensecaps() {
-		return densecaps;
-	}
+
+    public void setHoges(final List<Hoge> hoges) {
+        this.hoges = hoges;
+    }
+
+    public List<Hoge> getHoges() {
+        return hoges;
+    }
+
 }
