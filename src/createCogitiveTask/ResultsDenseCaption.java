@@ -5,19 +5,24 @@ import java.util.Map;
 
 public class ResultsDenseCaption {
 	private Map<String, Object> opt;
-	private List<Map<String, List>> results;
+	private List<DenseCaption> results;
+	
 	public Map<String, Object> getOpt() {
 		return opt;
 	}
 	public void setOpt(Map<String, Object> opt) {
 		this.opt = opt;
 	}
-	public List<Map<String, List>> getResults() {
+	public List<DenseCaption> getResults() {
 		return results;
 	}
-	public void setResults(List<Map<String, List>> results) {
+	public void setResults(List<DenseCaption> results) {
 		this.results = results;
 	}
+	
+	
+	
+	
 	
 	
 	
