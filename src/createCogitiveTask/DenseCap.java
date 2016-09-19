@@ -1,6 +1,6 @@
 package createCogitiveTask;
 
-public class Hoge {
+public class DenseCap {
 	  private String name;
 
 	     private int age;

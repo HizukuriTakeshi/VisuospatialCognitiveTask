@@ -11,19 +11,20 @@ import net.arnx.jsonic.JSONException;
 public class JsonicSample {
  public static void main(String[] args) {
 
-     
+
      // 配列を含むJSON形式のデータを用意
-     
+
 
      try {
-    	
-		HogeList hogeList = JSON.decode(new FileReader("src/results.json"), HogeList.class);
-		 
-	     for (final Hoge tmp : hogeList.getHoges()) {
-	         System.out.println("tmp.name:" + tmp.getName());
-	         System.out.println("tmp.age:" + tmp.getAge());
+
+
+	DenseCapList hogeList1 = JSON.decode(new FileReader("src/results.json"), DenseCapList.class);
+
+	     for (DenseCap tmp1 : hogeList1.getDenseCaps()) {
+	         System.out.println("tmp.name:" + tmp1.getName());
+	         System.out.println("tmp.age:" + tmp1.getAge());
 	}
-	     
+
      } catch (JSONException e) {
 		// TODO 自動生成された catch ブロック
 		e.printStackTrace();
@@ -34,6 +35,6 @@ public class JsonicSample {
 		// TODO 自動生成された catch ブロック
 		e.printStackTrace();
 	}
-    
- } 
+
+ }
 }
