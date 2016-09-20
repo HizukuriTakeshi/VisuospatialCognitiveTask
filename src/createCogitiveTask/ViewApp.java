@@ -10,13 +10,8 @@ import javax.swing.JFileChooser;
 import javax.swing.AbstractAction;
 import java.awt.event.ActionEvent;
 import java.io.File;
-import java.util.logging.FileHandler;
-
 import javax.swing.Action;
-import javax.swing.JTextField;
-import javax.swing.JScrollBar;
 import javax.swing.JScrollPane;
-import javax.swing.JTextPane;
 import javax.swing.JTextArea;
 
 public class ViewApp {
@@ -74,7 +69,7 @@ public class ViewApp {
 		frame.getContentPane().add(btnNewButton);
 
 		scrollPane = new JScrollPane();
-		scrollPane.setBounds(52, 80, 174, 261);
+		scrollPane.setBounds(52, 80, 219, 130);
 		frame.getContentPane().add(scrollPane);
 
 		textArea = new JTextArea();
@@ -83,7 +78,7 @@ public class ViewApp {
 		scrollPane.setViewportView(textArea);
 
 		scrollPane_1 = new JScrollPane();
-		scrollPane_1.setBounds(324, 80, 174, 261);
+		scrollPane_1.setBounds(309, 80, 227, 130);
 		frame.getContentPane().add(scrollPane_1);
 
 		textArea_1 = new JTextArea();
@@ -109,10 +104,11 @@ public class ViewApp {
 				densecapList = jsonReader.jsonDataRead(file.getPath());//ファイルから読み込む
 				DataList dataList = new DataList();
 				List<Data> datas = dataList.toDataList(densecapList);
-				
-					//textArea.setText(d.getCaption());
-					//textArea.append("\n");
-				
+
+				System.out.println(datas.size());
+				for(Data d: datas){
+					textArea.append(d.getCaption()+"\n");
+				}
 			}
 		}
 	}

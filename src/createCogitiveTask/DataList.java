@@ -13,9 +13,10 @@ public class DataList {
 		for (DenseCap tmp : densecapList.getResults()) {
 			for(int i = 0;tmp.getScores()[i]>0;i++){
 				Data tmp2 = new Data(tmp.getImg_name(), tmp.getScores()[i], tmp.getCaptions().get(i),tmp.getBoxes()[i]);
-				//System.out.println(tmp2.getCaption());
+				System.out.println(tmp2.getCaption());
 				datas.add(tmp2);		
 			}
+			break;
 		}
 
 		return datas;
