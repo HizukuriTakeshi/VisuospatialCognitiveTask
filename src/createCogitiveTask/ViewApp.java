@@ -1,6 +1,7 @@
 package createCogitiveTask;
 
 import java.awt.EventQueue;
+import java.util.List;
 
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -96,7 +97,12 @@ public class ViewApp {
 				JsonDataReader jsonReader = new JsonDataReader();
 				DenseCapList tmp = new DenseCapList();
 				tmp = jsonReader.jsonDataRead(file.getPath());
-				textArea.setText(tmp.getResults().get(0).returnData());
+				DataList tmp2 = new DataList();
+				List<Data> tmp3 = tmp2.toDataList(tmp);
+				textArea.setText(tmp3.get(0).getCaption());
+				textArea.append("\n");
+				textArea.append(tmp3.get(1).getCaption());
+				
 			}
 		}
 	}
