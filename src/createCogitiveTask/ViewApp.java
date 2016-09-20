@@ -28,9 +28,10 @@ public class ViewApp {
 	private JScrollPane scrollPane;
 	private JTextArea textArea;
 
-	
-	private DenseCapList densecapList=null;
-	
+
+	private JTextArea textArea_1;
+	private JScrollPane scrollPane_1;
+
 	/**
 	 * Launch the application.
 	 */
@@ -59,7 +60,7 @@ public class ViewApp {
 	 */
 	private void initialize() {
 		frame = new JFrame();
-		frame.setBounds(100, 100, 450, 300);
+		frame.setBounds(100, 100, 563, 402);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
 
@@ -69,17 +70,26 @@ public class ViewApp {
 
 		btnNewButton = new JButton("New button");
 		btnNewButton.setAction(action);
-		btnNewButton.setBounds(260, 36, 108, 23);
+		btnNewButton.setBounds(376, 36, 108, 23);
 		frame.getContentPane().add(btnNewButton);
-		
+
 		scrollPane = new JScrollPane();
-		scrollPane.setBounds(62, 68, 312, 168);
+		scrollPane.setBounds(52, 80, 174, 261);
 		frame.getContentPane().add(scrollPane);
-		
+
 		textArea = new JTextArea();
 		textArea.setWrapStyleWord(true);
 		textArea.setLineWrap(true);
 		scrollPane.setViewportView(textArea);
+
+		scrollPane_1 = new JScrollPane();
+		scrollPane_1.setBounds(324, 80, 174, 261);
+		frame.getContentPane().add(scrollPane_1);
+
+		textArea_1 = new JTextArea();
+		textArea_1.setWrapStyleWord(true);
+		textArea_1.setLineWrap(true);
+		scrollPane_1.setViewportView(textArea_1);
 	}
 
 	private class SwingAction extends AbstractAction {
@@ -94,14 +104,14 @@ public class ViewApp {
 			if (selected == JFileChooser.APPROVE_OPTION){ //ファイルが選択されたら
 				File file = filechooser.getSelectedFile(); 
 				lblNewLabel.setText(file.getName()); //ラベルの文字をファイル名に
-				JsonDataReader jsonReader = new JsonDataReader();
-				DenseCapList tmp = new DenseCapList();
-				tmp = jsonReader.jsonDataRead(file.getPath());
-				DataList tmp2 = new DataList();
-				List<Data> tmp3 = tmp2.toDataList(tmp);
-				textArea.setText(tmp3.get(0).getCaption());
-				textArea.append("\n");
-				textArea.append(tmp3.get(1).getCaption());
+				JsonDataReader jsonReader = new JsonDataReader();//JSON形式ファイル読み込みクラス
+				DenseCapList densecapList = new DenseCapList();
+				densecapList = jsonReader.jsonDataRead(file.getPath());//ファイルから読み込む
+				DataList dataList = new DataList();
+				List<Data> datas = dataList.toDataList(densecapList);
+				
+					//textArea.setText(d.getCaption());
+					//textArea.append("\n");
 				
 			}
 		}

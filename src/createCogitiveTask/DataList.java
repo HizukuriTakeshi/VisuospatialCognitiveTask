@@ -4,30 +4,30 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class DataList {
-	private List<Data> dataList;
+	private List<Data> datas;
 
 	public List<Data> toDataList(DenseCapList densecapList){
 
-		dataList = new ArrayList<Data>();
+		datas = new ArrayList<Data>();
 
 		for (DenseCap tmp : densecapList.getResults()) {
 			for(int i = 0;tmp.getScores()[i]>0;i++){
 				Data tmp2 = new Data(tmp.getImg_name(), tmp.getScores()[i], tmp.getCaptions().get(i),tmp.getBoxes()[i]);
-				System.out.println(tmp2.getCaption());
-				dataList.add(tmp2);		
+				//System.out.println(tmp2.getCaption());
+				datas.add(tmp2);		
 			}
 		}
 
-		return dataList;
+		return datas;
 
 	}
 
-	public List<Data> getDataList() {
-		return dataList;
+	public List<Data> getDatas() {
+		return datas;
 	}
 
-	public void setDataList(List<Data> dataList) {
-		this.dataList = dataList;
+	public void setDataList(List<Data> datas) {
+		this.datas = datas;
 	}
 
 }
