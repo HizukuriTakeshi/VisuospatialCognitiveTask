@@ -1,5 +1,6 @@
 package createCogitiveTask;
 
+import java.util.Arrays;
 import java.util.List;
 
 public class DenseCap {
@@ -32,5 +33,8 @@ public class DenseCap {
 		this.boxes = boxes;
 	}
 
-
+	public String returnData(){
+		String data = Arrays.toString(scores);
+		return data;
+	}
 }
