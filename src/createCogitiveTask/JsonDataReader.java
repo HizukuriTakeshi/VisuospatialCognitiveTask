@@ -9,7 +9,7 @@ import net.arnx.jsonic.JSONException;
 
 public class JsonDataReader {
 
-	public void jsonDataRead(String path){
+	public DenseCapList jsonDataRead(String path){
 		try {
 			DenseCapList denseList = JSON.decode(new FileReader(path), DenseCapList.class);
 
@@ -24,6 +24,7 @@ public class JsonDataReader {
 				System.out.println("");
 			}
 			*/
+			return denseList;
 
 		} catch (JSONException e) {
 			// TODO 自動生成された catch ブロック
@@ -35,6 +36,7 @@ public class JsonDataReader {
 			// TODO 自動生成された catch ブロック
 			e.printStackTrace();
 		}
+		return null;
 	}
 	
 }
