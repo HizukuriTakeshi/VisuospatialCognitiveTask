@@ -2,7 +2,7 @@ package createCogitiveTask;
 
 import java.util.Arrays;
 import java.util.List;
-
+//
 public class DenseCap {
 	private String img_name;
 	private double[] scores;

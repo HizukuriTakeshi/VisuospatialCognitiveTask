@@ -8,22 +8,11 @@ import net.arnx.jsonic.JSON;
 import net.arnx.jsonic.JSONException;
 
 public class JsonDataReader {
-
+//
 	public DenseCapList jsonDataRead(String path){
 		try {
 			DenseCapList denseList = JSON.decode(new FileReader(path), DenseCapList.class);
 
-			/*
-			for (DenseCap tmp : denseList.getResults()) {
-				System.out.println("tmp.img_name:" + tmp.getImg_name());
-				for(int i = 0;tmp.getScores()[i]>0;i++){
-					System.out.println("tmp.score:" + tmp.getScores()[i]);
-					System.out.println("tmp.caption:" + tmp.getCaptions().get(i));
-					System.out.println("tmp.boxes:" + tmp.getBoxes()[i][0]);
-				}
-				System.out.println("");
-			}
-			*/
 			return denseList;
 
 		} catch (JSONException e) {
@@ -38,5 +27,5 @@ public class JsonDataReader {
 		}
 		return null;
 	}
-	
+
 }

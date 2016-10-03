@@ -5,14 +5,14 @@ public class Data {
 	private double score;
 	private String caption;
 	private double[] box;
-	
+	//
 	Data(String img_name, double score, String caption, double[] box){
 		this.img_name = img_name;
 		this.score = score;
 		this.caption = caption;
 		this.box = box;
 	}
-	
+
 	public String getImg_name() {
 		return img_name;
 	}

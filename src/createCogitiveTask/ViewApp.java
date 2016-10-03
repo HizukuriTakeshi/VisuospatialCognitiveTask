@@ -1,16 +1,15 @@
 package createCogitiveTask;
 
 import java.awt.EventQueue;
-import java.util.List;
-
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JButton;
-import javax.swing.JFileChooser;
-import javax.swing.AbstractAction;
 import java.awt.event.ActionEvent;
 import java.io.File;
+
+import javax.swing.AbstractAction;
 import javax.swing.Action;
+import javax.swing.JButton;
+import javax.swing.JFileChooser;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 
@@ -96,18 +95,26 @@ public class ViewApp {
 			JFileChooser filechooser = new JFileChooser(); // ファイル選択用クラス
 
 			int selected = filechooser.showOpenDialog(frame); //「開く」ダイアログ表示
+
 			if (selected == JFileChooser.APPROVE_OPTION){ //ファイルが選択されたら
-				File file = filechooser.getSelectedFile(); 
+				File file = filechooser.getSelectedFile();
 				lblNewLabel.setText(file.getName()); //ラベルの文字をファイル名に
+
+
 				JsonDataReader jsonReader = new JsonDataReader();//JSON形式ファイル読み込みクラス
 				DenseCapList densecapList = new DenseCapList();
 				densecapList = jsonReader.jsonDataRead(file.getPath());//ファイルから読み込む
-				DataList dataList = new DataList();
-				List<Data> datas = dataList.toDataList(densecapList);
+				DataListList datalistList = new DataListList();
+				datalistList = densecapList.toDataListList();
 
-				System.out.println(datas.size());
-				for(Data d: datas){
+
+				for(Data d: datalistList.getDatalistList().get(0).getDatas()){
 					textArea.append(d.getCaption()+"\n");
+				}
+
+
+				for(Data d: datalistList.getDatalistList().get(1).getDatas()){
+				 	textArea_1.append(d.getCaption()+"\n");
 				}
 			}
 		}
