@@ -55,7 +55,7 @@ public class ViewApp {
 	 */
 	private void initialize() {
 		frame = new JFrame();
-		frame.setBounds(100, 100, 563, 402);
+		frame.setBounds(100, 100, 831, 542);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
 
@@ -69,7 +69,7 @@ public class ViewApp {
 		frame.getContentPane().add(btnNewButton);
 
 		scrollPane = new JScrollPane();
-		scrollPane.setBounds(52, 80, 219, 130);
+		scrollPane.setBounds(316, 87, 227, 130);
 		frame.getContentPane().add(scrollPane);
 
 		textArea = new JTextArea();
@@ -78,7 +78,7 @@ public class ViewApp {
 		scrollPane.setViewportView(textArea);
 
 		scrollPane_1 = new JScrollPane();
-		scrollPane_1.setBounds(309, 80, 227, 130);
+		scrollPane_1.setBounds(316, 312, 227, 130);
 		frame.getContentPane().add(scrollPane_1);
 
 		textArea_1 = new JTextArea();
@@ -116,6 +116,13 @@ public class ViewApp {
 
 				for(Data d: datalistList.getDatalistList().get(1).getDatas()){
 				 	textArea_1.append(d.getCaption()+"\n");
+				}
+
+				CompareCap compareCap = new CompareCap();
+				compareCap.compareCaption(datalistList);
+
+				for(Data d:compareCap.getDatalist().getDatas()){
+				//textArea.setText(d.getCaption()+"\n");
 				}
 			}
 		}
