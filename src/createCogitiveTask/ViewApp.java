@@ -56,7 +56,7 @@ public class ViewApp {
 	 */
 	private void initialize() {
 		frame = new JFrame();
-		frame.setBounds(100, 100, 831, 542);
+		frame.setBounds(100, 100, 777, 660);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
 
@@ -70,7 +70,7 @@ public class ViewApp {
 		frame.getContentPane().add(btnNewButton);
 
 		scrollPane = new JScrollPane();
-		scrollPane.setBounds(316, 87, 227, 130);
+		scrollPane.setBounds(509, 88, 227, 130);
 		frame.getContentPane().add(scrollPane);
 
 		textArea = new JTextArea();
@@ -79,7 +79,7 @@ public class ViewApp {
 		scrollPane.setViewportView(textArea);
 
 		scrollPane_1 = new JScrollPane();
-		scrollPane_1.setBounds(316, 312, 227, 130);
+		scrollPane_1.setBounds(509, 254, 227, 130);
 		frame.getContentPane().add(scrollPane_1);
 
 		textArea_1 = new JTextArea();
@@ -88,11 +88,8 @@ public class ViewApp {
 		scrollPane_1.setViewportView(textArea_1);
 
 		scrollPane_2 = new JScrollPane();
-		scrollPane_2.setBounds(604, 187, 199, 130);
+		scrollPane_2.setBounds(509, 430, 227, 130);
 		frame.getContentPane().add(scrollPane_2);
-
-		textArea_2 = new JTextArea();
-		scrollPane_2.setViewportView(textArea_2);
 
 		textArea_2 = new JTextArea();
 		scrollPane_2.setViewportView(textArea_2);
