@@ -61,12 +61,12 @@ public class ViewApp {
 		frame.getContentPane().setLayout(null);
 
 		lblNewLabel = new JLabel("New label");
-		lblNewLabel.setBounds(52, 38, 136, 18);
+		lblNewLabel.setBounds(52, 38, 444, 18);
 		frame.getContentPane().add(lblNewLabel);
 
 		btnNewButton = new JButton("New button");
 		btnNewButton.setAction(action);
-		btnNewButton.setBounds(376, 36, 108, 23);
+		btnNewButton.setBounds(584, 36, 108, 23);
 		frame.getContentPane().add(btnNewButton);
 
 		scrollPane = new JScrollPane();
@@ -93,6 +93,10 @@ public class ViewApp {
 
 		textArea_2 = new JTextArea();
 		scrollPane_2.setViewportView(textArea_2);
+
+		ImageDisplayPanel imgdisplaypanel = new ImageDisplayPanel();
+		imgdisplaypanel.setBounds(52, 88, 366, 243);
+		frame.getContentPane().add(imgdisplaypanel);
 	}
 
 	private class SwingAction extends AbstractAction {
@@ -108,7 +112,6 @@ public class ViewApp {
 			if (selected == JFileChooser.APPROVE_OPTION){ //ファイルが選択されたら
 				File file = filechooser.getSelectedFile();
 				lblNewLabel.setText(file.getName()); //ラベルの文字をファイル名に
-
 
 				JsonDataReader jsonReader = new JsonDataReader();//JSON形式ファイル読み込みクラス
 				DenseCapList densecapList = new DenseCapList();
