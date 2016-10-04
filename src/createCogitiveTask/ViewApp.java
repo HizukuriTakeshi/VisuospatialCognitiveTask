@@ -36,7 +36,6 @@ public class ViewApp {
 					ViewApp window = new ViewApp();
 					window.frame.setVisible(true);
 				} catch (Exception e) {
-
 					e.printStackTrace();
 				}
 			}
