@@ -20,12 +20,12 @@ public class CompareCap {
 
 		for(Data d1: datalistlist.getDatalistList().get(1).getDatas()){
 			for(Data d0: datalistlist.getDatalistList().get(0).getDatas()){
-				System.out.println(d1.getCaption()+" "+d0.getCaption());
-				if(d1.getCaption()==d0.getCaption()){
-					System.out.println("ok");
+				//System.out.println(d1.getCaption()+" "+d0.getCaption());
+				if(d1.getCaption().equals(d0.getCaption())){
 					break;
 				}
 			}
+			System.out.println(d1.getCaption());
 			datalist.addData(d1);
 
 			}
