@@ -25,11 +25,9 @@ public class ViewApp {
 
 
 	private JTextArea textArea_1;
-	private JTextArea textArea_2;
 	private JScrollPane scrollPane_1;
 	private JScrollPane scrollPane_2;
-	private JTextArea textArea_3;
-
+	private JTextArea textArea_2;
 	/**
 	 * Launch the application.
 	 */
@@ -93,8 +91,11 @@ public class ViewApp {
 		scrollPane_2.setBounds(604, 187, 199, 130);
 		frame.getContentPane().add(scrollPane_2);
 
-		textArea_3 = new JTextArea();
-		scrollPane_2.setViewportView(textArea_3);
+		textArea_2 = new JTextArea();
+		scrollPane_2.setViewportView(textArea_2);
+
+		textArea_2 = new JTextArea();
+		scrollPane_2.setViewportView(textArea_2);
 	}
 
 	private class SwingAction extends AbstractAction {
@@ -131,9 +132,9 @@ public class ViewApp {
 				CompareCap compareCap = new CompareCap();
 				compareCap.compareCaption(datalistList);
 
-				//for(Data d:compareCap.getDatalist().getDatas()){
-				//	textArea_2.append(d.getCaption()+"\n");
-				//}
+				for(Data d:compareCap.getDatalist().getDatas()){
+					textArea_2.append(d.getCaption()+"\n");
+				}
 			}
 		}
 	}
