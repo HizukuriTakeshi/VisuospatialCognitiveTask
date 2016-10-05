@@ -28,6 +28,7 @@ public class ViewApp {
 	private JScrollPane scrollPane_1;
 	private JScrollPane scrollPane_2;
 	private JTextArea textArea_2;
+	private ImageDisplayPanel imgdisplaypanel;
 	/**
 	 * Launch the application.
 	 */
@@ -60,7 +61,7 @@ public class ViewApp {
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
 
-		lblNewLabel = new JLabel("New label");
+		lblNewLabel = new JLabel("");
 		lblNewLabel.setBounds(52, 38, 444, 18);
 		frame.getContentPane().add(lblNewLabel);
 
@@ -94,7 +95,7 @@ public class ViewApp {
 		textArea_2 = new JTextArea();
 		scrollPane_2.setViewportView(textArea_2);
 
-		ImageDisplayPanel imgdisplaypanel = new ImageDisplayPanel();
+		imgdisplaypanel = new ImageDisplayPanel();
 		imgdisplaypanel.setBounds(52, 88, 366, 243);
 		frame.getContentPane().add(imgdisplaypanel);
 	}
@@ -135,6 +136,8 @@ public class ViewApp {
 				for(Data d:compareCap.getDatalist().getDatas()){
 					textArea_2.append(d.getCaption()+"\n");
 				}
+				
+				imgdisplaypanel.ImageDisplay(datalistList);
 			}
 		}
 	}
