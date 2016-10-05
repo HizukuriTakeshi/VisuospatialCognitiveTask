@@ -12,14 +12,14 @@ public class ImageDisplayPanel extends JPanel {
 	public ImageDisplayPanel() {
 		setLayout(null);
 
-		ImageIcon icon = new ImageIcon();
+		ImageIcon icon = new ImageIcon(".\\src\\nc107711.jpg");
 
 
 		JLabel lblNewLabel = new JLabel(icon);
-		lblNewLabel.setBounds(20, 20, lblNewLabel.getIcon().getIconWidth(), lblNewLabel.getIcon().getIconHeight());
+		lblNewLabel.setBounds(28, 46, 124, 116);
 		add(lblNewLabel);
 
-		
+
 		JLabel lblTest = new JLabel("test");
 		lblTest.setBounds(0, 10, 407, 13);
 		add(lblTest);
