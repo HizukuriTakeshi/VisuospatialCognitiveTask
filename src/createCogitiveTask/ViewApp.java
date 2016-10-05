@@ -57,7 +57,7 @@ public class ViewApp {
 	 */
 	private void initialize() {
 		frame = new JFrame();
-		frame.setBounds(100, 100, 777, 660);
+		frame.setBounds(100, 100, 786, 740);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
 
@@ -67,7 +67,7 @@ public class ViewApp {
 
 		btnNewButton = new JButton("New button");
 		btnNewButton.setAction(action);
-		btnNewButton.setBounds(584, 36, 108, 23);
+		btnNewButton.setBounds(553, 38, 152, 20);
 		frame.getContentPane().add(btnNewButton);
 
 		scrollPane = new JScrollPane();
@@ -96,7 +96,7 @@ public class ViewApp {
 		scrollPane_2.setViewportView(textArea_2);
 
 		imgdisplaypanel = new ImageDisplayPanel();
-		imgdisplaypanel.setBounds(52, 88, 366, 243);
+		imgdisplaypanel.setBounds(52, 88, 419, 730);
 		frame.getContentPane().add(imgdisplaypanel);
 	}
 

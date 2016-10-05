@@ -8,17 +8,23 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 public class ImageDisplayPanel extends JPanel {
-	private JLabel lblNewLabel_1;
-
+	
+	private JLabel label;
+	private JLabel label_1;
+	
 	/**
 	 * Create the panel.
 	 */
 	public ImageDisplayPanel() {
 		setLayout(null);
 		
-		lblNewLabel_1 = new JLabel("");	
-		lblNewLabel_1.setBounds(0, 0, 360, 270);
-		add(lblNewLabel_1);
+		label = new JLabel("");
+		label.setBounds(0, 0, 360, 270);
+		add(label);
+		
+		label_1 = new JLabel("");
+		label_1.setBounds(0, 300, 360, 270);
+		add(label_1);
 
 	}
 	
@@ -27,14 +33,22 @@ public class ImageDisplayPanel extends JPanel {
 		
 		
 		MediaTracker tracker = new MediaTracker(this);
-		Image smallImg = icon.getImage().getScaledInstance((int) (icon.getIconWidth() * 0.25), -1,Image.SCALE_SMOOTH);
+		Image smallImg = icon.getImage().getScaledInstance((int) (360), (int) (270),Image.SCALE_SMOOTH);
 		tracker.addImage(smallImg, 1);
-		
 		ImageIcon smallIcon = new ImageIcon(smallImg);
 		
-		lblNewLabel_1.setIcon(smallIcon);
-		lblNewLabel_1.setBounds(53, 51, 269, 199);
-		add(lblNewLabel_1);
+		label.setIcon(smallIcon);
+		label.setBounds(0, 0, 360, 270);
+		add(label);
 		
+		ImageIcon icon_1 = new ImageIcon("./src/"+datalistList.getDatalistList().get(1).getDatas().get(0).getImg_name());
+		
+		Image smallImg_1 = icon_1.getImage().getScaledInstance((int) (360), (int) (270),Image.SCALE_SMOOTH);
+		tracker.addImage(smallImg_1, 1);
+		ImageIcon smallIcon_1 = new ImageIcon(smallImg_1);
+		
+		label_1.setIcon(smallIcon_1);
+		label_1.setBounds(0, 300, 360, 270);
+		add(label_1);
 	}
 }
