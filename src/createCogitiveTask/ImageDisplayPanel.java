@@ -33,7 +33,7 @@ public class ImageDisplayPanel extends JPanel {
 		
 		
 		MediaTracker tracker = new MediaTracker(this);
-		Image smallImg = icon.getImage().getScaledInstance((int) (360), (int) (270),Image.SCALE_SMOOTH);
+		Image smallImg = icon.getImage().getScaledInstance((int) (360), (int) (360*icon.getIconHeight()/icon.getIconWidth()),Image.SCALE_SMOOTH);
 		tracker.addImage(smallImg, 1);
 		ImageIcon smallIcon = new ImageIcon(smallImg);
 		
@@ -43,7 +43,7 @@ public class ImageDisplayPanel extends JPanel {
 		
 		ImageIcon icon_1 = new ImageIcon("./src/"+datalistList.getDatalistList().get(1).getDatas().get(0).getImg_name());
 		
-		Image smallImg_1 = icon_1.getImage().getScaledInstance((int) (360), (int) (270),Image.SCALE_SMOOTH);
+		Image smallImg_1 = icon_1.getImage().getScaledInstance((int) (360), (int) (360*icon_1.getIconHeight()/icon_1.getIconWidth()),Image.SCALE_SMOOTH);
 		tracker.addImage(smallImg_1, 1);
 		ImageIcon smallIcon_1 = new ImageIcon(smallImg_1);
 		
