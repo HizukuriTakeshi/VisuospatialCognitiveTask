@@ -131,9 +131,9 @@ public class ViewApp {
 				}
 
 				CompareCap compareCap = new CompareCap();
-				compareCap.compareCaption(datalistList);
+				compareCap.compareCaption0(datalistList);
 
-				for(Data d:compareCap.getDatalist().getDatas()){
+				for(Data d:compareCap.getDatalist0().getDatas()){
 					textArea_2.append(d.getCaption()+"\n");
 				}
 				
