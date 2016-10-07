@@ -29,6 +29,8 @@ public class ViewApp {
 	private JScrollPane scrollPane_2;
 	private JTextArea textArea_2;
 	private ImageDisplayPanel imgdisplaypanel;
+	private JScrollPane scrollPane_3;
+	private JTextArea textArea_3;
 	/**
 	 * Launch the application.
 	 */
@@ -80,7 +82,7 @@ public class ViewApp {
 		scrollPane.setViewportView(textArea);
 
 		scrollPane_1 = new JScrollPane();
-		scrollPane_1.setBounds(509, 254, 227, 130);
+		scrollPane_1.setBounds(509, 238, 227, 130);
 		frame.getContentPane().add(scrollPane_1);
 
 		textArea_1 = new JTextArea();
@@ -89,11 +91,18 @@ public class ViewApp {
 		scrollPane_1.setViewportView(textArea_1);
 
 		scrollPane_2 = new JScrollPane();
-		scrollPane_2.setBounds(509, 430, 227, 130);
+		scrollPane_2.setBounds(509, 394, 227, 130);
 		frame.getContentPane().add(scrollPane_2);
 
 		textArea_2 = new JTextArea();
 		scrollPane_2.setViewportView(textArea_2);
+
+		scrollPane_3 = new JScrollPane();
+		scrollPane_3.setBounds(509, 548, 227, 130);
+		frame.getContentPane().add(scrollPane_3);
+
+		textArea_3 = new JTextArea();
+		scrollPane_3.setViewportView(textArea_3);
 
 		imgdisplaypanel = new ImageDisplayPanel();
 		imgdisplaypanel.setBounds(52, 88, 419, 730);
@@ -121,6 +130,7 @@ public class ViewApp {
 				datalistList = densecapList.toDataListList();
 
 
+				/*テキストエリアにキャプション表示*/
 				for(Data d: datalistList.getDatalistList().get(0).getDatas()){
 					textArea.append(d.getCaption()+"\n");
 				}
@@ -130,13 +140,21 @@ public class ViewApp {
 				 	textArea_1.append(d.getCaption()+"\n");
 				}
 
-				CompareCap compareCap = new CompareCap();
-				compareCap.compareCaption0(datalistList);
 
-				for(Data d:compareCap.getDatalist0().getDatas()){
+				/*テキストエリアに比較キャプション表示*/
+				CompareCap compareCap = new CompareCap();
+				compareCap.compareCaption(datalistList);
+
+
+
+				for(Data d:compareCap.getDatalist1().getDatas()){
 					textArea_2.append(d.getCaption()+"\n");
 				}
-				
+
+				for(Data d:compareCap.getDatalist0().getDatas()){
+					textArea_3.append(d.getCaption()+"\n");
+				}
+
 				imgdisplaypanel.ImageDisplay(datalistList);
 			}
 		}

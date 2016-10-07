@@ -7,7 +7,7 @@ public class CompareCap {
 	public DataList datalist1 = new DataList();
 	private int count=0;
 
-	
+
 
 	public DataList getDatalist0() {
 		return datalist0;
@@ -42,7 +42,7 @@ public class CompareCap {
 
 			count = 0;
 			for(Data d0: datalistlist.getDatalistList().get(0).getDatas()){
-				//System.out.println(d1.getCaption()+" "+d0.getCaption());
+
 				if(d1.getCaption().equals(d0.getCaption())){
 					break;
 				}else{
@@ -50,9 +50,7 @@ public class CompareCap {
 				}
 
 			}
-			System.out.println(d1.getCaption());
 
-			//kokogaokasiiyo
 			if(count == datalistlist.getDatalistList().get(0).getDatas().size()){
 			datalist.addData(d1);
 			}
@@ -60,17 +58,17 @@ public class CompareCap {
 
 		setDatalist0(datalist);
 	}
-	
+
 	public void compareCaption1(DataListList datalistlist){
 
 		DataList datalist = new DataList();
 
 
-		for(Data d0: datalistlist.getDatalistList().get(1).getDatas()){
+		for(Data d0: datalistlist.getDatalistList().get(0).getDatas()){
 
 			count = 0;
-			for(Data d1: datalistlist.getDatalistList().get(0).getDatas()){
-				//System.out.println(d1.getCaption()+" "+d0.getCaption());
+			for(Data d1: datalistlist.getDatalistList().get(1).getDatas()){
+
 				if(d0.getCaption().equals(d1.getCaption())){
 					break;
 				}else{
@@ -78,7 +76,6 @@ public class CompareCap {
 				}
 
 			}
-			System.out.println(d0.getCaption());
 
 			//kokogaokasiiyo
 			if(count == datalistlist.getDatalistList().get(1).getDatas().size()){
@@ -86,7 +83,15 @@ public class CompareCap {
 			}
 		}
 
-		setDatalist0(datalist);
+		setDatalist1(datalist);
 	}
-	
+
+
+	public void compareCaption(DataListList datalistlist){
+
+		compareCaption0(datalistlist);
+		compareCaption1(datalistlist);
+
+	}
+
 }
