@@ -14,6 +14,8 @@ import javax.swing.JLabel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 
+import translation.Transration;
+
 public class ViewApp {
 
 	private JFrame frame;
@@ -31,6 +33,10 @@ public class ViewApp {
 	private ImageDisplayPanel imgdisplaypanel;
 	private JScrollPane scrollPane_3;
 	private JTextArea textArea_3;
+
+	private Transration trans;
+
+
 	/**
 	 * Launch the application.
 	 */
@@ -107,6 +113,10 @@ public class ViewApp {
 		imgdisplaypanel = new ImageDisplayPanel();
 		imgdisplaypanel.setBounds(52, 88, 419, 730);
 		frame.getContentPane().add(imgdisplaypanel);
+
+		//翻訳用のクラス
+		trans = new Transration();
+
 	}
 
 	private class SwingAction extends AbstractAction {
@@ -132,12 +142,22 @@ public class ViewApp {
 
 				/*テキストエリアにキャプション表示*/
 				for(Data d: datalistList.getDatalistList().get(0).getDatas()){
-					textArea.append(d.getCaption()+"\n");
+					try {
+						textArea.append(trans.transrateCaption(d.getCaption())+"\n");
+					} catch (Exception e1) {
+						// TODO 自動生成された catch ブロック
+						e1.printStackTrace();
+					}
 				}
 
 
 				for(Data d: datalistList.getDatalistList().get(1).getDatas()){
-				 	textArea_1.append(d.getCaption()+"\n");
+				 	try {
+						textArea_1.append(trans.transrateCaption(d.getCaption())+"\n");
+					} catch (Exception e1) {
+						// TODO 自動生成された catch ブロック
+						e1.printStackTrace();
+					}
 				}
 
 
@@ -146,13 +166,22 @@ public class ViewApp {
 				compareCap.compareCaption(datalistList);
 
 
-
 				for(Data d:compareCap.getDatalist1().getDatas()){
-					textArea_2.append(d.getCaption()+"\n");
+					try {
+						textArea_2.append(trans.transrateCaption(d.getCaption())+"\n");
+					} catch (Exception e1) {
+						// TODO 自動生成された catch ブロック
+						e1.printStackTrace();
+					}
 				}
 
 				for(Data d:compareCap.getDatalist0().getDatas()){
-					textArea_3.append(d.getCaption()+"\n");
+					try {
+						textArea_3.append(trans.transrateCaption(d.getCaption())+"\n");
+					} catch (Exception e1) {
+						// TODO 自動生成された catch ブロック
+						e1.printStackTrace();
+					}
 				}
 
 				imgdisplaypanel.ImageDisplay(datalistList);
