@@ -1,6 +1,5 @@
 package translation;
 
-import com.memetix.mst.language.Language;
 import com.memetix.mst.translate.Translate;
 
 
@@ -15,7 +14,7 @@ public class Transration {
 
 	public String transrateCaption(String caption) throws Exception {
     // English AUTO_DETECT -> japanese
-    String translatedText = Translate.execute(caption,Language.JAPANESE);
+    String translatedText = caption;//Translate.execute(caption,Language.JAPANESE);
     //System.out.println("English AUTO_DETECT -> Japanese: " + translatedText);
 	return translatedText;
 	}

@@ -16,8 +16,7 @@ public class MorphologicalAnalysis {
 		// Point TT4J to the TreeTagger installation directory. The executable is expected
         // in the "bin" subdirectory - in this example at "/opt/treetagger/bin/tree-tagger"
         //System.setProperty("treetagger.home", "/opt/treetagger");
-        System.setProperty("treetagger.home", "/treetagger");// ここに本体が必要　\treetagger\bin\tree-tagger.exe　これのことのようです。
-
+        System.setProperty("treetagger.home", "/treetagger");// ここに本体が必要　\treetagger\bin\tree-tagger.exe　
         v = false;
 
 
@@ -33,11 +32,11 @@ public class MorphologicalAnalysis {
 
                 		public String[] str = {"VB","VBD","VBZ","VBP","VD","VDD","VDZ","VDP","VH","VHD","VHZ","VHP","VV","VVD"};
                 		List<String> list = Arrays.asList(str);
-                		
+
                         public void token(String token, String pos, String lemma) {
 
                                 if(list.contains(pos)){
-                                    System.out.println(token + "\t" + pos + "\t" + lemma);
+                                    //System.out.println(token + "\t" + pos + "\t" + lemma);
                                 v = true;
                                 }
 
@@ -49,6 +48,30 @@ public class MorphologicalAnalysis {
                 tt.process(sampleStr);
 
                 return v;
+	}
+
+
+	public static List<String> breakUp(String str)throws Exception{
+		 System.setProperty("treetagger.home", "/treetagger");// ここに本体が必要　\treetagger\bin\tree-tagger.exe　
+		 //TreeTaggerWrapper<String> tt = new TreeTaggerWrapper<String>();
+		 List<String> sampleStr  = tokenize(str);
+		 //tt.setModel("/opt/treetagger/models/english.par:iso8859-1");
+
+
+
+		 //分かち書きだけする
+//		 tt.setModel("/treetagger/lib/english-utf8.par:iso8859-1");// ここにpar パラメータファイルなるものが必要
+//		 tt.setHandler(new TokenHandler<String>() {
+//			 public void token(String token, String pos, String lemma) {
+//
+//                 }
+//
+//            });
+//            //tt.process(asList(new String[] { "This", "is", "a", "test", ".", "I","bought","the","car",".","I've","bought","a","car","."}));
+//            tt.process(sampleStr);
+
+            return sampleStr;
+
 	}
 
 	  public static

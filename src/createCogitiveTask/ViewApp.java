@@ -14,6 +14,7 @@ import javax.swing.JLabel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 
+import nlp.KeitaisoKaiseki;
 import translation.Transration;
 
 public class ViewApp {
@@ -140,6 +141,9 @@ public class ViewApp {
 				datalistList = densecapList.toDataListList();
 
 
+
+
+
 				/*テキストエリアにキャプション表示*/
 				for(Data d: datalistList.getDatalistList().get(0).getDatas()){
 					try {
@@ -149,6 +153,18 @@ public class ViewApp {
 						e1.printStackTrace();
 					}
 				}
+
+
+				for(Data d: datalistList.getDatalistList().get(0).getDatas()){
+					KeitaisoKaiseki k = new KeitaisoKaiseki();
+					try {
+						k.Keitaiso(trans.transrateCaption(d.getCaption()));
+					} catch (Exception e1) {
+						// TODO 自動生成された catch ブロック
+						e1.printStackTrace();
+					}
+				}
+
 
 
 				for(Data d: datalistList.getDatalistList().get(1).getDatas()){

@@ -1,5 +1,6 @@
 package createCogitiveTask;
 
+import nlp.CosinSimilarity;
 
 public class CompareCap {
 
@@ -7,6 +8,8 @@ public class CompareCap {
 	public DataList datalist1 = new DataList();
 	private int count=0;
 
+	//cosin類似度チェック
+	CosinSimilarity cs = new CosinSimilarity();
 
 
 	public DataList getDatalist0() {
@@ -32,8 +35,12 @@ public class CompareCap {
 	}
 
 
-
-	public void compareCaption0(DataListList datalistlist){
+	/**データリストリスト中のデータリスト同士のキャプションを比較して
+	 * 増えたキャプションのみを返す
+	 * @param datalistlist　データリストリスト
+	 * @throws Exception
+	 */
+	public void compareCaption0(DataListList datalistlist) throws Exception{
 
 		DataList datalist = new DataList();
 
@@ -43,7 +50,7 @@ public class CompareCap {
 			count = 0;
 			for(Data d0: datalistlist.getDatalistList().get(0).getDatas()){
 
-				if(d1.getCaption().equals(d0.getCaption())){
+				if(cs.caluculate(d1.getCaption(),d0.getCaption())>0.6){
 					break;
 				}else{
 					count++;
@@ -59,6 +66,11 @@ public class CompareCap {
 		setDatalist0(datalist);
 	}
 
+
+	/**データリストリスト中のデータリスト同士のキャプションを比較して
+	 * 消えたキャプションのみを返す
+	 * @param datalistlist
+	 */
 	public void compareCaption1(DataListList datalistlist){
 
 		DataList datalist = new DataList();
@@ -69,10 +81,15 @@ public class CompareCap {
 			count = 0;
 			for(Data d1: datalistlist.getDatalistList().get(1).getDatas()){
 
-				if(d0.getCaption().equals(d1.getCaption())){
-					break;
-				}else{
-					count++;
+				try {
+					if(cs.caluculate(d0.getCaption(),d1.getCaption())>0.6){
+						break;
+					}else{
+						count++;
+					}
+				} catch (Exception e) {
+					// TODO 自動生成された catch ブロック
+					e.printStackTrace();
 				}
 
 			}
@@ -89,7 +106,12 @@ public class CompareCap {
 
 	public void compareCaption(DataListList datalistlist){
 
-		compareCaption0(datalistlist);
+		try {
+			compareCaption0(datalistlist);
+		} catch (Exception e) {
+			// TODO 自動生成された catch ブロック
+			e.printStackTrace();
+		}
 		compareCaption1(datalistlist);
 
 	}
