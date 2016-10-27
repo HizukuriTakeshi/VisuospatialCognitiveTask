@@ -15,12 +15,12 @@ public class KeitaisoKaiseki {
 
 	List<Token> tokens = tokenizer.tokenize(str);
 
-	for (Token token : tokens) {
-		System.out.println("==================================================");
-		//System.out.println("allFeatures : " + token.getAllFeatures());
-		//System.out.println("surfaceFrom : " + token.getSurfaceForm());
-		//System.out.println("allFeaturesArray : " + Arrays.asList(token.getAllFeaturesArray()));
-	}
+//	for (Token token : tokens) {
+//		System.out.println("==================================================");
+//		System.out.println("allFeatures : " + token.getAllFeatures());
+//		System.out.println("surfaceFrom : " + token.getSurfaceForm());
+//		System.out.println("allFeaturesArray : " + Arrays.asList(token.getAllFeaturesArray()));
+//	}
 
 
 	List<Word> words = new ArrayList<>();

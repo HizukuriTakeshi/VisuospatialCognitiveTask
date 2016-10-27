@@ -36,10 +36,16 @@ public class ViewApp {
 	private JTextArea textArea_3;
 
 	private Transration trans;
+
 	private JButton btnNewButton_1;
 	private JButton btnNewButton_2;
 	private JButton btnNewButton_3;
 	private JButton btnNewButton_4;
+	private JButton btnNewButton_0;
+	private final Action action_1 = new SwingAction_1();
+
+	private ChoicesCreate cc;
+	private DataListList datalistList;
 
 
 	/**
@@ -79,8 +85,8 @@ public class ViewApp {
 		frame.getContentPane().add(lblNewLabel);
 
 		btnNewButton = new JButton("New button");
-		btnNewButton.setAction(action);
 		btnNewButton.setBounds(553, 38, 152, 20);
+		btnNewButton.setAction(action);
 		frame.getContentPane().add(btnNewButton);
 
 		scrollPane = new JScrollPane();
@@ -135,8 +141,18 @@ public class ViewApp {
 		btnNewButton_4.setBounds(411, 762, 244, 21);
 		frame.getContentPane().add(btnNewButton_4);
 
+		btnNewButton_0 = new JButton("New button");
+		btnNewButton_0.setAction(action_1);
+		btnNewButton_0.setBounds(25, 725, 56, 52);
+		frame.getContentPane().add(btnNewButton_0);
+
 		//翻訳用のクラス
 		trans = new Transration();
+
+		//選択肢作成クラス
+		cc = new ChoicesCreate();
+
+		datalistList = new DataListList();
 
 	}
 
@@ -157,7 +173,7 @@ public class ViewApp {
 				JsonDataReader jsonReader = new JsonDataReader();//JSON形式ファイル読み込みクラス
 				DenseCapList densecapList = new DenseCapList();
 				densecapList = jsonReader.jsonDataRead(file.getPath());//ファイルから読み込む
-				DataListList datalistList = new DataListList();
+
 				datalistList = densecapList.toDataListList();
 
 
@@ -189,18 +205,27 @@ public class ViewApp {
 
 				for(Data d:datalistList.getDatalistList().get(0).getDatas()){
 					if(d.getType() == 1 && d.getLink() == -1){
-					textArea_2.append(trans.transrateCaption(d.getCaption())+"\n");
+						textArea_2.append(trans.transrateCaption(d.getCaption())+"\n");
 					}
 				}
 
 				for(Data d:datalistList.getDatalistList().get(1).getDatas()){
 					if(d.getType() == 0 && d.getLink() == -1){
-					textArea_3.append(trans.transrateCaption(d.getCaption())+"\n");
+						textArea_3.append(trans.transrateCaption(d.getCaption())+"\n");
 					}
 				}
 
 				imgdisplaypanel.ImageDisplay(datalistList);
 			}
+		}
+	}
+	private class SwingAction_1 extends AbstractAction {
+		public SwingAction_1() {
+			putValue(NAME, "SwingAction_1");
+			putValue(SHORT_DESCRIPTION, "Some short description");
+		}
+		public void actionPerformed(ActionEvent e) {
+			cc.createCoices(datalistList, btnNewButton_1, btnNewButton_2, btnNewButton_3, btnNewButton_4, 1);
 		}
 	}
 }
