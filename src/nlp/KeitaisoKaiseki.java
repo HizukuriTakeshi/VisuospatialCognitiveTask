@@ -19,7 +19,7 @@ public class KeitaisoKaiseki {
 		System.out.println("==================================================");
 		//System.out.println("allFeatures : " + token.getAllFeatures());
 		//System.out.println("surfaceFrom : " + token.getSurfaceForm());
-		System.out.println("allFeaturesArray : " + Arrays.asList(token.getAllFeaturesArray()));
+		//System.out.println("allFeaturesArray : " + Arrays.asList(token.getAllFeaturesArray()));
 	}
 
 

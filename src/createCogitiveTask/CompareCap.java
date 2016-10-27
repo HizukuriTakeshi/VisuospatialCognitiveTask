@@ -40,7 +40,7 @@ public class CompareCap {
 	 * @param datalistlist　データリストリスト
 	 * @throws Exception
 	 */
-	public void compareCaption0(DataListList datalistlist) throws Exception{
+	public void compareCaption0(DataListList datalistlist){
 
 		DataList datalist = new DataList();
 
@@ -59,7 +59,8 @@ public class CompareCap {
 			}
 
 			if(count == datalistlist.getDatalistList().get(0).getDatas().size()){
-			datalist.addData(d1);
+				datalist.addData(d1);
+				d1.setType(0);
 			}
 		}
 
@@ -96,7 +97,8 @@ public class CompareCap {
 
 			//kokogaokasiiyo
 			if(count == datalistlist.getDatalistList().get(1).getDatas().size()){
-			datalist.addData(d0);
+				datalist.addData(d0);
+				d0.setType(1);
 			}
 		}
 
@@ -106,14 +108,29 @@ public class CompareCap {
 
 	public void compareCaption(DataListList datalistlist){
 
-		try {
-			compareCaption0(datalistlist);
-		} catch (Exception e) {
-			// TODO 自動生成された catch ブロック
-			e.printStackTrace();
-		}
+		compareCaption0(datalistlist);
 		compareCaption1(datalistlist);
-
+		uniquCaption(datalistlist.getDatalistList().get(0));
+		uniquCaption(datalistlist.getDatalistList().get(1));
 	}
+
+	/**datalistの消失・出現フラグのあるキャプションを比較する
+	 *
+	 * @param datalist　
+	 */
+	public void uniquCaption(DataList datalist){
+		for(int i = 0 ;i<datalist.getDatas().size()-1;i++){
+			for(int j = i+1;j<datalist.getDatas().size()-1;j++){
+				//出現もしくは消失したキャプションで、かつ、出現は出現、消失は消失と比較
+				if(datalist.getDatas().get(i).getType() != -1 && datalist.getDatas().get(i).getType() == datalist.getDatas().get(j).getType()){
+					if(cs.caluculate(datalist.getDatas().get(i).getCaption(),datalist.getDatas().get(j).getCaption())>0.6){
+						datalist.getDatas().get(j).setLink(i);
+					}
+				}
+			}
+		}
+	}
+
+
 
 }

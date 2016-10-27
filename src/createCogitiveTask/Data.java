@@ -5,6 +5,10 @@ public class Data {
 	private double score;
 	private String caption;
 	private double[] box;
+	private int link = -1;
+	private int type = -1;
+
+
 	//
 	Data(String img_name, double score, String caption, double[] box){
 		this.img_name = img_name;
@@ -36,5 +40,21 @@ public class Data {
 	}
 	public void setBox(double[] box) {
 		this.box = box;
+	}
+
+	public int getLink() {
+		return link;
+	}
+
+	public void setLink(int link) {
+		this.link = link;
+	}
+
+	public int getType() {
+		return type;
+	}
+
+	public void setType(int type) {
+		this.type = type;
 	}
 }

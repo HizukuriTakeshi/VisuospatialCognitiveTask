@@ -36,6 +36,10 @@ public class ViewApp {
 	private JTextArea textArea_3;
 
 	private Transration trans;
+	private JButton btnNewButton_1;
+	private JButton btnNewButton_2;
+	private JButton btnNewButton_3;
+	private JButton btnNewButton_4;
 
 
 	/**
@@ -66,7 +70,7 @@ public class ViewApp {
 	 */
 	private void initialize() {
 		frame = new JFrame();
-		frame.setBounds(100, 100, 786, 740);
+		frame.setBounds(100, 100, 784, 852);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
 
@@ -112,8 +116,24 @@ public class ViewApp {
 		scrollPane_3.setViewportView(textArea_3);
 
 		imgdisplaypanel = new ImageDisplayPanel();
-		imgdisplaypanel.setBounds(52, 88, 419, 730);
+		imgdisplaypanel.setBounds(52, 88, 419, 614);
 		frame.getContentPane().add(imgdisplaypanel);
+
+		btnNewButton_1 = new JButton("New button");
+		btnNewButton_1.setBounds(108, 712, 227, 21);
+		frame.getContentPane().add(btnNewButton_1);
+
+		btnNewButton_2 = new JButton("New button");
+		btnNewButton_2.setBounds(411, 712, 244, 21);
+		frame.getContentPane().add(btnNewButton_2);
+
+		btnNewButton_3 = new JButton("New button");
+		btnNewButton_3.setBounds(107, 762, 227, 21);
+		frame.getContentPane().add(btnNewButton_3);
+
+		btnNewButton_4 = new JButton("New button");
+		btnNewButton_4.setBounds(411, 762, 244, 21);
+		frame.getContentPane().add(btnNewButton_4);
 
 		//翻訳用のクラス
 		trans = new Transration();
@@ -142,38 +162,24 @@ public class ViewApp {
 
 
 
-
-
 				/*テキストエリアにキャプション表示*/
 				for(Data d: datalistList.getDatalistList().get(0).getDatas()){
-					try {
-						textArea.append(trans.transrateCaption(d.getCaption())+"\n");
-					} catch (Exception e1) {
-						// TODO 自動生成された catch ブロック
-						e1.printStackTrace();
-					}
+
+					textArea.append(trans.transrateCaption(d.getCaption())+"\n");
 				}
 
 
 				for(Data d: datalistList.getDatalistList().get(0).getDatas()){
 					KeitaisoKaiseki k = new KeitaisoKaiseki();
-					try {
-						k.Keitaiso(trans.transrateCaption(d.getCaption()));
-					} catch (Exception e1) {
-						// TODO 自動生成された catch ブロック
-						e1.printStackTrace();
-					}
+
+					k.Keitaiso(trans.transrateCaption(d.getCaption()));
 				}
 
 
-
 				for(Data d: datalistList.getDatalistList().get(1).getDatas()){
-				 	try {
-						textArea_1.append(trans.transrateCaption(d.getCaption())+"\n");
-					} catch (Exception e1) {
-						// TODO 自動生成された catch ブロック
-						e1.printStackTrace();
-					}
+
+					textArea_1.append(trans.transrateCaption(d.getCaption())+"\n");
+
 				}
 
 
@@ -181,22 +187,15 @@ public class ViewApp {
 				CompareCap compareCap = new CompareCap();
 				compareCap.compareCaption(datalistList);
 
-
-				for(Data d:compareCap.getDatalist1().getDatas()){
-					try {
-						textArea_2.append(trans.transrateCaption(d.getCaption())+"\n");
-					} catch (Exception e1) {
-						// TODO 自動生成された catch ブロック
-						e1.printStackTrace();
+				for(Data d:datalistList.getDatalistList().get(0).getDatas()){
+					if(d.getType() == 1 && d.getLink() == -1){
+					textArea_2.append(trans.transrateCaption(d.getCaption())+"\n");
 					}
 				}
 
-				for(Data d:compareCap.getDatalist0().getDatas()){
-					try {
-						textArea_3.append(trans.transrateCaption(d.getCaption())+"\n");
-					} catch (Exception e1) {
-						// TODO 自動生成された catch ブロック
-						e1.printStackTrace();
+				for(Data d:datalistList.getDatalistList().get(1).getDatas()){
+					if(d.getType() == 0 && d.getLink() == -1){
+					textArea_3.append(trans.transrateCaption(d.getCaption())+"\n");
 					}
 				}
 

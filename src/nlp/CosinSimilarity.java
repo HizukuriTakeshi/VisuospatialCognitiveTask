@@ -7,7 +7,7 @@ import java.util.Set;
 
 public class CosinSimilarity {
 
-	public double caluculate(String str1, String str2) throws Exception{
+	public double caluculate(String str1, String str2){
 		List<String> a1 = MorphologicalAnalysis.breakUp(str1);
 		List<String> a2 = MorphologicalAnalysis.breakUp(str2);
 
