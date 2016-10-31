@@ -225,7 +225,8 @@ public class ViewApp {
 			putValue(SHORT_DESCRIPTION, "Some short description");
 		}
 		public void actionPerformed(ActionEvent e) {
-			cc.createCoices(datalistList, btnNewButton_1, btnNewButton_2, btnNewButton_3, btnNewButton_4, QuestionType.APPEARANCE);
+			cc.createCoices(datalistList, QuestionType.APPEARANCE);
+			cc.displayCoices(btnNewButton_1, btnNewButton_2, btnNewButton_3, btnNewButton_4);
 		}
 	}
 }

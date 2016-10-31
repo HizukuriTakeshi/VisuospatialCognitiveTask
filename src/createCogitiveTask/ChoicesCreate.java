@@ -1,14 +1,12 @@
 package createCogitiveTask;
 
-import java.util.ArrayList;
 import java.util.Collections;
-import java.util.List;
 
 import javax.swing.JButton;
 
 public class ChoicesCreate {
 
-	public List<String> coices = null;
+	public DataListList coiceslist = new DataListList();;
 
 	/**
 	 * @param datalistlist　過去の説明文のリストと現在の説明文のリスト
@@ -18,84 +16,92 @@ public class ChoicesCreate {
 	 * @param d　選択肢ボタン
 	 * @param type 問題のタイプ
 	 */
-	public void createCoices(DataListList datalistlist, JButton a,JButton b,JButton c,JButton d, QuestionType type){
-
-		coices = new ArrayList<>();
-
-
-		String seikai = searchAnswer(datalistlist, type).getDatas().get(0).getCaption();
-		coices = setCoices(datalistlist, seikai, type);
-
-
-
-		Collections.shuffle(coices);
-		//ここで3つまでリストを減らす
-
-		for(int i = coices.size()-1; i>=3;i--){
-			coices.remove(i);
-		}
-		//さらに正解のキャプションをcoices
-
-		coices.add(seikai);
-
-		//もう一度シャッフル
-		Collections.shuffle(coices);
-
+	public void displayCoices(JButton a,JButton b,JButton c,JButton d){
 		//翻訳して出力
-		a.setText(coices.get(0));
-		b.setText(coices.get(1));
-		c.setText(coices.get(2));
-		d.setText(coices.get(3));
+		a.setText(coiceslist.getDatalistList().get(1).getDatas().get(0).getCaption());
+		b.setText(coiceslist.getDatalistList().get(1).getDatas().get(1).getCaption());
+		c.setText(coiceslist.getDatalistList().get(1).getDatas().get(2).getCaption());
+		d.setText(coiceslist.getDatalistList().get(1).getDatas().get(3).getCaption());
 	}
 
 	/**
-	 * @param datalistlist 過去の説明文のリストと現在の説明文のリスト
-	 * @param type	問題のタイプ
-	 * @return　問題の答えとなる説明文のリスト
+	 * @param datalistlist
+	 * @param type
+	 * @return
 	 */
-	public DataList searchAnswer(DataListList datalistlist, QuestionType type){
-		int opt = 0;
-		DataList datalist = new DataList();
+	public DataListList createCoices(DataListList datalistlist, QuestionType type){
 
-		if(type == QuestionType.DISAPPEARANCE){
-			opt = 0;
-		}else if(type == QuestionType.APPEARANCE){
-			opt = 1;
-		}
-
-		for(Data d: datalistlist.getDatalistList().get(opt).getDatas()){
-			if(d.getType() == type){
-				datalist.addData(d);
-			}
-		}
-
-		return datalist;
-
-	}
-
-	/**
-	 * @param datalistlist　過去の説明文のリストと現在の説明文のリスト
-	 * @param seikai　正解の説明文
-	 * @param type　問題のタイプ
-	 * @return　選択肢のリスト
-	 */
-	public List<String> setCoices(DataListList datalistlist , String seikai, QuestionType type){
-		List<String> Coices = new ArrayList<>();
-
-
-		//仕方なくopt使用　のちに変更
 		int opt = 0;
 		if(type == QuestionType.APPEARANCE){
 			opt = 1;
 		}
 
-		for(Data d: datalistlist.getDatalistList().get(opt).getDatas()){
-			if(!d.getCaption().equals(seikai) && d.getType() != QuestionType.APPEARANCE && d.getLink() == -1){
-				Coices.add(d.getCaption());
+		for(Data answer: searchAnswer(datalistlist.getDatalistList().get(opt), type).getDatas()){
+
+			DataList coices = new DataList();
+
+
+			coices = setCoices(datalistlist.getDatalistList().get(opt), answer, type);
+
+
+
+			Collections.shuffle(coices.getDatas());
+
+
+			//ここで3つまでリストを減らす
+			for(int i = coices.getDatas().size()-1; i>=3;i--){
+				coices.getDatas().remove(i);
+			}
+
+			//さらに正解のキャプションをcoices
+			coices.addData(answer);
+
+			//もう一度シャッフル
+			Collections.shuffle(coices.getDatas());
+
+			coiceslist.addDataList(coices);
+
+		}
+
+		return coiceslist;
+
+	}
+
+	/**
+	 * @param datalist 説明文のリスト
+	 * @param type	問題のタイプ
+	 * @return　問題の答えとなる説明文のリスト
+	 */
+	public DataList searchAnswer(DataList datalist, QuestionType type){
+		DataList dlist = new DataList();
+
+		for(Data d: datalist.getDatas()){
+			if(d.getType() == type && d.getLink() == -1){
+				dlist.addData(d);
+			}
+		}
+
+		return dlist;
+
+	}
+
+	/**
+	 * @param datalistlist　説明文のリスト
+	 * @param answer　正解の説明文
+	 * @param type　問題のタイプ
+	 * @return　正解を除いた選択肢のリスト
+	 */
+	public DataList setCoices(DataList datalist , Data answer, QuestionType type){
+		DataList Coices = new DataList();
+
+
+		for(Data d: datalist.getDatas()){
+			//正解文ではない、出現or消失していない、正解文とのリンクはない
+			if(!d.getCaption().equals(answer.getCaption()) && d.getType() != type && d.getLink() == -1){
+				Coices.addData(d);
 			}
 		}
 
 		return Coices;
-
 	}
 }
