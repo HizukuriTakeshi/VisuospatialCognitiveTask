@@ -6,7 +6,7 @@ public class Data {
 	private String caption;
 	private double[] box;
 	private int link = -1;
-	private int type = -1;
+	private QuestionType type;
 
 
 	//
@@ -50,11 +50,11 @@ public class Data {
 		this.link = link;
 	}
 
-	public int getType() {
+	public QuestionType getType() {
 		return type;
 	}
 
-	public void setType(int type) {
+	public void setType(QuestionType type) {
 		this.type = type;
 	}
 }

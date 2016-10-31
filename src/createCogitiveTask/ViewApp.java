@@ -204,13 +204,13 @@ public class ViewApp {
 				compareCap.compareCaption(datalistList);
 
 				for(Data d:datalistList.getDatalistList().get(0).getDatas()){
-					if(d.getType() == 1 && d.getLink() == -1){
+					if(d.getType() == QuestionType.DISAPPEARANCE && d.getLink() == -1){
 						textArea_2.append(trans.transrateCaption(d.getCaption())+"\n");
 					}
 				}
 
 				for(Data d:datalistList.getDatalistList().get(1).getDatas()){
-					if(d.getType() == 0 && d.getLink() == -1){
+					if(d.getType() == QuestionType.APPEARANCE && d.getLink() == -1){
 						textArea_3.append(trans.transrateCaption(d.getCaption())+"\n");
 					}
 				}
@@ -225,7 +225,7 @@ public class ViewApp {
 			putValue(SHORT_DESCRIPTION, "Some short description");
 		}
 		public void actionPerformed(ActionEvent e) {
-			cc.createCoices(datalistList, btnNewButton_1, btnNewButton_2, btnNewButton_3, btnNewButton_4, 1);
+			cc.createCoices(datalistList, btnNewButton_1, btnNewButton_2, btnNewButton_3, btnNewButton_4, QuestionType.APPEARANCE);
 		}
 	}
 }

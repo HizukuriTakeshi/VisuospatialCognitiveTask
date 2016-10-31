@@ -60,7 +60,7 @@ public class CompareCap {
 
 			if(count == datalistlist.getDatalistList().get(0).getDatas().size()){
 				datalist.addData(d1);
-				d1.setType(0);
+				d1.setType(QuestionType.APPEARANCE);
 			}
 		}
 
@@ -98,7 +98,7 @@ public class CompareCap {
 			//kokogaokasiiyo
 			if(count == datalistlist.getDatalistList().get(1).getDatas().size()){
 				datalist.addData(d0);
-				d0.setType(1);
+				d0.setType(QuestionType.DISAPPEARANCE);
 			}
 		}
 
@@ -122,7 +122,7 @@ public class CompareCap {
 		for(int i = 0 ;i<datalist.getDatas().size()-1;i++){
 			for(int j = i+1;j<datalist.getDatas().size()-1;j++){
 				//出現もしくは消失したキャプションで、かつ、出現は出現、消失は消失と比較
-				if(datalist.getDatas().get(i).getType() != -1 && datalist.getDatas().get(i).getType() == datalist.getDatas().get(j).getType()){
+				if(datalist.getDatas().get(i).getType() != QuestionType.NULL && datalist.getDatas().get(i).getType() == datalist.getDatas().get(j).getType()){
 					if(cs.caluculate(datalist.getDatas().get(i).getCaption(),datalist.getDatas().get(j).getCaption())>0.6){
 						datalist.getDatas().get(j).setLink(i);
 					}
