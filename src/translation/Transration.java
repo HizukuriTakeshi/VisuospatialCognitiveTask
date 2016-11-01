@@ -17,7 +17,7 @@ public class Transration {
     // English AUTO_DETECT -> japanese
     String translatedText = null;
 	try {
-		translatedText = caption;Translate.execute(caption,Language.JAPANESE);
+		translatedText = caption;//Translate.execute(caption,Language.JAPANESE);
 	} catch (Exception e) {
 		// TODO 自動生成された catch ブロック
 		e.printStackTrace();

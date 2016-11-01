@@ -20,9 +20,9 @@ import translation.Transration;
 public class ViewApp {
 
 	private JFrame frame;
-	private JLabel lblNewLabel;
-	private JButton btnNewButton;
-	private final Action action = new SwingAction();
+	private JLabel readFileLabel;
+	private JButton readFileButton;
+	private final Action action = new ReadFileAction();
 	private JScrollPane scrollPane;
 	private JTextArea textArea;
 
@@ -37,15 +37,21 @@ public class ViewApp {
 
 	private Transration trans;
 
-	private JButton btnNewButton_1;
-	private JButton btnNewButton_2;
-	private JButton btnNewButton_3;
-	private JButton btnNewButton_4;
-	private JButton btnNewButton_0;
-	private final Action action_1 = new SwingAction_1();
+	private JButton coiceButton_1;
+	private JButton coiceButton_2;
+	private JButton coiceButton_3;
+	private JButton coiceButton_4;
+	private JButton createButton;
+	private final Action action_1 = new CreateCoicesAction();
 
 	private ChoicesCreate cc;
 	private DataListList datalistList;
+	private JButton readImgButton_1;
+	private JButton readImgButton_2;
+	private final Action action_2 = new ReadImgAction_1();
+	private final Action action_3 = new ReadImgAction();
+	private JLabel readImgLabel_1;
+	private JLabel readImgLabel_2;
 
 
 	/**
@@ -80,17 +86,17 @@ public class ViewApp {
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
 
-		lblNewLabel = new JLabel("");
-		lblNewLabel.setBounds(52, 38, 444, 18);
-		frame.getContentPane().add(lblNewLabel);
+		readFileLabel = new JLabel("");
+		readFileLabel.setBounds(53, 58, 418, 18);
+		frame.getContentPane().add(readFileLabel);
 
-		btnNewButton = new JButton("New button");
-		btnNewButton.setBounds(553, 38, 152, 20);
-		btnNewButton.setAction(action);
-		frame.getContentPane().add(btnNewButton);
+		readFileButton = new JButton("New button");
+		readFileButton.setBounds(544, 58, 152, 20);
+		readFileButton.setAction(action);
+		frame.getContentPane().add(readFileButton);
 
 		scrollPane = new JScrollPane();
-		scrollPane.setBounds(509, 88, 227, 130);
+		scrollPane.setBounds(510, 141, 227, 130);
 		frame.getContentPane().add(scrollPane);
 
 		textArea = new JTextArea();
@@ -99,7 +105,7 @@ public class ViewApp {
 		scrollPane.setViewportView(textArea);
 
 		scrollPane_1 = new JScrollPane();
-		scrollPane_1.setBounds(509, 238, 227, 130);
+		scrollPane_1.setBounds(510, 290, 227, 130);
 		frame.getContentPane().add(scrollPane_1);
 
 		textArea_1 = new JTextArea();
@@ -108,14 +114,14 @@ public class ViewApp {
 		scrollPane_1.setViewportView(textArea_1);
 
 		scrollPane_2 = new JScrollPane();
-		scrollPane_2.setBounds(509, 394, 227, 130);
+		scrollPane_2.setBounds(510, 446, 227, 130);
 		frame.getContentPane().add(scrollPane_2);
 
 		textArea_2 = new JTextArea();
 		scrollPane_2.setViewportView(textArea_2);
 
 		scrollPane_3 = new JScrollPane();
-		scrollPane_3.setBounds(509, 548, 227, 130);
+		scrollPane_3.setBounds(510, 600, 227, 130);
 		frame.getContentPane().add(scrollPane_3);
 
 		textArea_3 = new JTextArea();
@@ -125,26 +131,44 @@ public class ViewApp {
 		imgdisplaypanel.setBounds(52, 88, 419, 614);
 		frame.getContentPane().add(imgdisplaypanel);
 
-		btnNewButton_1 = new JButton("New button");
-		btnNewButton_1.setBounds(108, 712, 227, 21);
-		frame.getContentPane().add(btnNewButton_1);
+		coiceButton_1 = new JButton("New button");
+		coiceButton_1.setBounds(128, 746, 227, 21);
+		frame.getContentPane().add(coiceButton_1);
 
-		btnNewButton_2 = new JButton("New button");
-		btnNewButton_2.setBounds(411, 712, 244, 21);
-		frame.getContentPane().add(btnNewButton_2);
+		coiceButton_2 = new JButton("New button");
+		coiceButton_2.setBounds(412, 746, 244, 21);
+		frame.getContentPane().add(coiceButton_2);
 
-		btnNewButton_3 = new JButton("New button");
-		btnNewButton_3.setBounds(107, 762, 227, 21);
-		frame.getContentPane().add(btnNewButton_3);
+		coiceButton_3 = new JButton("New button");
+		coiceButton_3.setBounds(128, 775, 227, 21);
+		frame.getContentPane().add(coiceButton_3);
 
-		btnNewButton_4 = new JButton("New button");
-		btnNewButton_4.setBounds(411, 762, 244, 21);
-		frame.getContentPane().add(btnNewButton_4);
+		coiceButton_4 = new JButton("New button");
+		coiceButton_4.setBounds(412, 775, 244, 21);
+		frame.getContentPane().add(coiceButton_4);
 
-		btnNewButton_0 = new JButton("New button");
-		btnNewButton_0.setAction(action_1);
-		btnNewButton_0.setBounds(25, 725, 56, 52);
-		frame.getContentPane().add(btnNewButton_0);
+		createButton = new JButton("New button");
+		createButton.setAction(action_1);
+		createButton.setBounds(39, 746, 56, 52);
+		frame.getContentPane().add(createButton);
+		
+		readImgButton_1 = new JButton("New button");
+		readImgButton_1.setAction(action_2);
+		readImgButton_1.setBounds(209, 12, 108, 23);
+		frame.getContentPane().add(readImgButton_1);
+		
+		readImgButton_2 = new JButton("New button");
+		readImgButton_2.setAction(action_3);
+		readImgButton_2.setBounds(520, 12, 108, 23);
+		frame.getContentPane().add(readImgButton_2);
+		
+		readImgLabel_1 = new JLabel("New label");
+		readImgLabel_1.setBounds(69, 17, 64, 13);
+		frame.getContentPane().add(readImgLabel_1);
+		
+		readImgLabel_2 = new JLabel("New label");
+		readImgLabel_2.setBounds(394, 17, 64, 13);
+		frame.getContentPane().add(readImgLabel_2);
 
 		//翻訳用のクラス
 		trans = new Transration();
@@ -156,12 +180,12 @@ public class ViewApp {
 
 	}
 
-	private class SwingAction extends AbstractAction {
+	private class ReadFileAction extends AbstractAction {
 		/**
 		 * 
 		 */
 		private static final long serialVersionUID = 1L;
-		public SwingAction() {
+		public ReadFileAction() {
 			putValue(NAME, "読み込み");
 			putValue(SHORT_DESCRIPTION, "Some short description");
 		}
@@ -172,7 +196,7 @@ public class ViewApp {
 
 			if (selected == JFileChooser.APPROVE_OPTION){ //ファイルが選択されたら
 				File file = filechooser.getSelectedFile();
-				lblNewLabel.setText(file.getName()); //ラベルの文字をファイル名に
+				readFileLabel.setText(file.getName()); //ラベルの文字をファイル名に
 
 				JsonDataReader jsonReader = new JsonDataReader();//JSON形式ファイル読み込みクラス
 				DenseCapList densecapList = new DenseCapList();
@@ -223,18 +247,58 @@ public class ViewApp {
 			}
 		}
 	}
-	private class SwingAction_1 extends AbstractAction {
+	private class CreateCoicesAction extends AbstractAction {
 		/**
 		 * 
 		 */
 		private static final long serialVersionUID = 1L;
-		public SwingAction_1() {
+		public CreateCoicesAction() {
 			putValue(NAME, "SwingAction_1");
 			putValue(SHORT_DESCRIPTION, "Some short description");
 		}
 		public void actionPerformed(ActionEvent e) {
 			cc.createCoices(datalistList, QuestionType.APPEARANCE);
-			cc.displayCoices(btnNewButton_1, btnNewButton_2, btnNewButton_3, btnNewButton_4);
+			cc.displayCoices(coiceButton_1, coiceButton_2, coiceButton_3, coiceButton_4);
+		}
+	}
+	private class ReadImgAction_1 extends AbstractAction {
+		/**
+		 * 
+		 */
+		private static final long serialVersionUID = 1L;
+		public ReadImgAction_1() {
+			putValue(NAME, "SwingAction_2");
+			putValue(SHORT_DESCRIPTION, "Some short description");
+		}
+		public void actionPerformed(ActionEvent e) {
+			JFileChooser filechooser = new JFileChooser(); // ファイル選択用クラス
+
+			int selected = filechooser.showOpenDialog(frame); //「開く」ダイアログ表示
+			
+			if (selected == JFileChooser.APPROVE_OPTION){ //ファイルが選択されたら
+				File file = filechooser.getSelectedFile();
+				readImgLabel_1.setText(file.getName()); //ラベルの文字をファイル名に
+			}
+		}
+	}
+	private class ReadImgAction extends AbstractAction {
+		/**
+		 * 
+		 */
+		private static final long serialVersionUID = 1L;
+		public ReadImgAction() {
+			putValue(NAME, "SwingAction");
+			putValue(SHORT_DESCRIPTION, "Some short description");
+		}
+		public void actionPerformed(ActionEvent e) {
+			JFileChooser filechooser = new JFileChooser(); // ファイル選択用クラス
+
+			int selected = filechooser.showOpenDialog(frame); //「開く」ダイアログ表示
+			
+			if (selected == JFileChooser.APPROVE_OPTION){ //ファイルが選択されたら
+				File file = filechooser.getSelectedFile();
+				readImgLabel_2.setText(file.getName()); //ラベルの文字をファイル名に
+			}
 		}
 	}
 }
