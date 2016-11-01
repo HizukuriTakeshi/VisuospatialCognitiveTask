@@ -157,6 +157,10 @@ public class ViewApp {
 	}
 
 	private class SwingAction extends AbstractAction {
+		/**
+		 * 
+		 */
+		private static final long serialVersionUID = 1L;
 		public SwingAction() {
 			putValue(NAME, "読み込み");
 			putValue(SHORT_DESCRIPTION, "Some short description");
@@ -220,6 +224,10 @@ public class ViewApp {
 		}
 	}
 	private class SwingAction_1 extends AbstractAction {
+		/**
+		 * 
+		 */
+		private static final long serialVersionUID = 1L;
 		public SwingAction_1() {
 			putValue(NAME, "SwingAction_1");
 			putValue(SHORT_DESCRIPTION, "Some short description");

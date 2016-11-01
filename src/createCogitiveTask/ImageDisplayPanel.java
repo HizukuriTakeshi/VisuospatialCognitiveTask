@@ -9,6 +9,10 @@ import javax.swing.JPanel;
 
 public class ImageDisplayPanel extends JPanel {
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private JLabel label;
 	private JLabel label_1;
 	
