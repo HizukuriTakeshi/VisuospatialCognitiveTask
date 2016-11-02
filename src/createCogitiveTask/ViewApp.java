@@ -212,10 +212,15 @@ public class ViewApp {
 				readFileLabel.setText(file.getName()); //ラベルの文字をファイル名に
 
 				JsonDataReader jsonReader = new JsonDataReader();//JSON形式ファイル読み込みクラス
-				DenseCapList densecapList = new DenseCapList();
-				densecapList = jsonReader.jsonDataRead(file.getPath());//ファイルから読み込む
+				
+				
+				DenseCapList densecapList1 = new DenseCapList();
+				densecapList1 = jsonReader.jsonDataRead(file.getPath());//ファイルから読み込む
 
-				datalistList = densecapList.toDataListList();
+				//二つ目のjsonファイルを読み込み、datalistlist1に datalistlist2のdatalistを追加することで一つのデータリストリストに過去現在の説明文を入れる。
+				
+				
+				datalistList = densecapList1.toDataListList();
 
 
 
