@@ -33,7 +33,7 @@ public class ImageDisplayPanel extends JPanel {
 	}
 	
 	public void ImageDisplay(DataListList datalistList){
-		ImageIcon icon = new ImageIcon("./src/"+datalistList.getDatalistList().get(0).getDatas().get(0).getImg_name());	
+		ImageIcon icon = new ImageIcon("./imgs/"+datalistList.getDatalistList().get(0).getDatas().get(0).getImg_name());	
 		
 		
 		MediaTracker tracker = new MediaTracker(this);
@@ -45,7 +45,7 @@ public class ImageDisplayPanel extends JPanel {
 		label.setBounds(0, 0, 360, 270);
 		add(label);
 		
-		ImageIcon icon_1 = new ImageIcon("./src/"+datalistList.getDatalistList().get(1).getDatas().get(0).getImg_name());
+		ImageIcon icon_1 = new ImageIcon("./imgs/"+datalistList.getDatalistList().get(1).getDatas().get(0).getImg_name());
 		
 		Image smallImg_1 = icon_1.getImage().getScaledInstance((int) (360), (int) (360*icon_1.getIconHeight()/icon_1.getIconWidth()),Image.SCALE_SMOOTH);
 		tracker.addImage(smallImg_1, 1);

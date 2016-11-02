@@ -18,10 +18,10 @@ public class ChoicesCreate {
 	 */
 	public void displayCoices(JButton a,JButton b,JButton c,JButton d){
 		//翻訳して出力
-		a.setText(coiceslist.getDatalistList().get(1).getDatas().get(0).getCaption());
-		b.setText(coiceslist.getDatalistList().get(1).getDatas().get(1).getCaption());
-		c.setText(coiceslist.getDatalistList().get(1).getDatas().get(2).getCaption());
-		d.setText(coiceslist.getDatalistList().get(1).getDatas().get(3).getCaption());
+		a.setText(coiceslist.getDatalistList().get(0).getDatas().get(0).getCaption());
+		b.setText(coiceslist.getDatalistList().get(0).getDatas().get(1).getCaption());
+		c.setText(coiceslist.getDatalistList().get(0).getDatas().get(2).getCaption());
+		d.setText(coiceslist.getDatalistList().get(0).getDatas().get(3).getCaption());
 	}
 
 	/**

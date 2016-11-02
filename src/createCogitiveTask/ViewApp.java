@@ -3,6 +3,7 @@ package createCogitiveTask;
 import java.awt.EventQueue;
 import java.awt.event.ActionEvent;
 import java.io.File;
+import java.io.IOException;
 
 //
 import javax.swing.AbstractAction;
@@ -14,6 +15,8 @@ import javax.swing.JLabel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 
+import densecapProcess.DenseCapProcess;
+import fileUtils.FileUtils;
 import nlp.KeitaisoKaiseki;
 import translation.Transration;
 
@@ -49,9 +52,14 @@ public class ViewApp {
 	private JButton readImgButton_1;
 	private JButton readImgButton_2;
 	private final Action action_2 = new ReadImgAction_1();
-	private final Action action_3 = new ReadImgAction();
+	private final Action action_3 = new ReadImgAction_2();
 	private JLabel readImgLabel_1;
 	private JLabel readImgLabel_2;
+	private final Action action_4 = new SwingAction();
+	
+	
+	private File in1;
+	private File in2;
 
 
 	/**
@@ -151,24 +159,29 @@ public class ViewApp {
 		createButton.setAction(action_1);
 		createButton.setBounds(39, 746, 56, 52);
 		frame.getContentPane().add(createButton);
-		
+
 		readImgButton_1 = new JButton("New button");
 		readImgButton_1.setAction(action_2);
 		readImgButton_1.setBounds(209, 12, 108, 23);
 		frame.getContentPane().add(readImgButton_1);
-		
+
 		readImgButton_2 = new JButton("New button");
 		readImgButton_2.setAction(action_3);
 		readImgButton_2.setBounds(520, 12, 108, 23);
 		frame.getContentPane().add(readImgButton_2);
-		
+
 		readImgLabel_1 = new JLabel("New label");
 		readImgLabel_1.setBounds(69, 17, 64, 13);
 		frame.getContentPane().add(readImgLabel_1);
-		
+
 		readImgLabel_2 = new JLabel("New label");
 		readImgLabel_2.setBounds(394, 17, 64, 13);
 		frame.getContentPane().add(readImgLabel_2);
+		
+		JButton densecapButton = new JButton("New button");
+		densecapButton.setAction(action_4);
+		densecapButton.setBounds(667, 8, 50, 31);
+		frame.getContentPane().add(densecapButton);
 
 		//翻訳用のクラス
 		trans = new Transration();
@@ -274,31 +287,112 @@ public class ViewApp {
 			JFileChooser filechooser = new JFileChooser(); // ファイル選択用クラス
 
 			int selected = filechooser.showOpenDialog(frame); //「開く」ダイアログ表示
-			
+
 			if (selected == JFileChooser.APPROVE_OPTION){ //ファイルが選択されたら
-				File file = filechooser.getSelectedFile();
-				readImgLabel_1.setText(file.getName()); //ラベルの文字をファイル名に
+					
+				in1 = filechooser.getSelectedFile();	
+				readImgLabel_1.setText(in1.getName()); //ラベルの文字をファイル名に
+				
+				File out1 = new File("./imgs/"+in1.getName());
+				try {
+					FileUtils.copyFile(in1, out1);
+				} catch (IOException e1) {
+					// TODO 自動生成された catch ブロック
+					e1.printStackTrace();
+				}
+
 			}
 		}
 	}
-	private class ReadImgAction extends AbstractAction {
+	private class ReadImgAction_2 extends AbstractAction {
 		/**
 		 * 
 		 */
 		private static final long serialVersionUID = 1L;
-		public ReadImgAction() {
+		public ReadImgAction_2() {
 			putValue(NAME, "SwingAction");
 			putValue(SHORT_DESCRIPTION, "Some short description");
 		}
 		public void actionPerformed(ActionEvent e) {
+			
+			
 			JFileChooser filechooser = new JFileChooser(); // ファイル選択用クラス
 
 			int selected = filechooser.showOpenDialog(frame); //「開く」ダイアログ表示
-			
+
 			if (selected == JFileChooser.APPROVE_OPTION){ //ファイルが選択されたら
-				File file = filechooser.getSelectedFile();
-				readImgLabel_2.setText(file.getName()); //ラベルの文字をファイル名に
+				
+				in2 = filechooser.getSelectedFile();
+				readImgLabel_2.setText(in2.getName()); //ラベルの文字をファイル名に
+
+				File out2 = new File("./imgs/"+in2.getName());
+				try {
+					FileUtils.copyFile(in1, out2);
+				} catch (IOException e1) {
+					// TODO 自動生成された catch ブロック
+					e1.printStackTrace();
+				}				
 			}
+
+
+		}
+	}
+	private class SwingAction extends AbstractAction {
+		/**
+		 * 
+		 */
+		private static final long serialVersionUID = 1L;
+		public SwingAction() {
+			putValue(NAME, "SwingAction");
+			putValue(SHORT_DESCRIPTION, "Some short description");
+		}
+		public void actionPerformed(ActionEvent e) {
+			
+			File tmpdir1 = new File("./imgs/tmp1");
+			tmpdir1.mkdir();
+		
+			File out1 = new File("./imgs/tmp1/"+in1.getName());
+			try {
+				FileUtils.copyFile(in1, out1);
+			} catch (IOException e1) {
+				// TODO 自動生成された catch ブロック
+				e1.printStackTrace();
+			}
+			
+			File tmpdir2 = new File("./imgs/tmp2");
+			tmpdir2.mkdir();
+			
+			File out2 = new File("./imgs/tmp2/"+in2.getName());
+			try {
+				FileUtils.copyFile(in2, out2);
+			} catch (IOException e1) {
+				// TODO 自動生成された catch ブロック
+				e1.printStackTrace();
+			}
+
+			try {
+				DenseCapProcess.DenseCapScript1();
+			} catch (IOException e1) {
+				// TODO 自動生成された catch ブロック
+				e1.printStackTrace();
+			} catch (InterruptedException e1) {
+				// TODO 自動生成された catch ブロック
+				e1.printStackTrace();
+			}
+			
+			try {
+				DenseCapProcess.DenseCapScript2();
+			} catch (IOException e1) {
+				// TODO 自動生成された catch ブロック
+				e1.printStackTrace();
+			} catch (InterruptedException e1) {
+				// TODO 自動生成された catch ブロック
+				e1.printStackTrace();
+			}
+			
+			FileUtils.delete(tmpdir1);
+			FileUtils.delete(tmpdir2);
+			
 		}
 	}
 }
