@@ -8,6 +8,10 @@ public class ChoicesCreate {
 
 	public DataListList coiceslist = new DataListList();;
 
+	public DataListList getCoiceslist() {
+		return coiceslist;
+	}
+
 	/**
 	 * @param datalistlist　過去の説明文のリストと現在の説明文のリスト
 	 * @param a　選択肢ボタン
@@ -16,12 +20,18 @@ public class ChoicesCreate {
 	 * @param d　選択肢ボタン
 	 * @param type 問題のタイプ
 	 */
-	public void displayCoices(JButton a,JButton b,JButton c,JButton d){
+	public int displayCoices(JButton a,JButton b,JButton c,JButton d, int i){
 		//翻訳して出力
-		a.setText(coiceslist.getDatalistList().get(0).getDatas().get(0).getCaption());
-		b.setText(coiceslist.getDatalistList().get(0).getDatas().get(1).getCaption());
-		c.setText(coiceslist.getDatalistList().get(0).getDatas().get(2).getCaption());
-		d.setText(coiceslist.getDatalistList().get(0).getDatas().get(3).getCaption());
+
+		if(i<coiceslist.getDatalistList().size()){
+			a.setText(coiceslist.getDatalistList().get(i).getDatas().get(0).getCaption());
+			b.setText(coiceslist.getDatalistList().get(i).getDatas().get(1).getCaption());
+			c.setText(coiceslist.getDatalistList().get(i).getDatas().get(2).getCaption());
+			d.setText(coiceslist.getDatalistList().get(i).getDatas().get(3).getCaption());
+			return 0;
+		}else{
+			return 1;
+		}
 	}
 
 	/**
@@ -60,7 +70,7 @@ public class ChoicesCreate {
 			Collections.shuffle(coices.getDatas());
 
 			coiceslist.addDataList(coices);
-
+			
 		}
 
 		return coiceslist;

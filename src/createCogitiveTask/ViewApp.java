@@ -14,7 +14,6 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import densecapProcess.DenseCapProcess;
 import fileUtils.FileUtils;
-import translation.Transration;
 
 public class ViewApp {
 
@@ -110,7 +109,7 @@ public class ViewApp {
 		frame.getContentPane().add(confirmpanel);
 		
 		coicespanel = new CoicesPanel();
-		coicespanel.setBounds(108, 401, 576, 76);
+		coicespanel.setBounds(108, 401, 637, 76);
 		frame.getContentPane().add(coicespanel);
 	
 		datalistList = new DataListList();
@@ -151,15 +150,11 @@ public class ViewApp {
 				datalistList = densecapList1.toDataListList();
 				datalistList.addDataList(tmp.getDatalistList().get(0));
 
-				
-				
-				
-
-
-				/*テキストエリアに比較キャプション表示*/
+				//説明文比較
 				CompareCap compareCap = new CompareCap();
 				compareCap.compareCaption(datalistList);
 
+				
 				
 				
 				confirmpanel.setDataListList(datalistList);
