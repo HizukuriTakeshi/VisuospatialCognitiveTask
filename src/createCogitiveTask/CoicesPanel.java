@@ -116,7 +116,7 @@ public class CoicesPanel extends JPanel {
 		}
 		public void actionPerformed(ActionEvent e) {
 			if(cc.getCoiceslist().getDatalistList().get(times).getDatas().get(0).getType() == QuestionType.APPEARANCE){
-				System.out.println("ok");
+				System.out.println("ok0");
 			}
 		}
 	}
@@ -131,7 +131,7 @@ public class CoicesPanel extends JPanel {
 		}
 		public void actionPerformed(ActionEvent e) {
 			if(cc.getCoiceslist().getDatalistList().get(times).getDatas().get(1).getType() == QuestionType.APPEARANCE){
-				System.out.println("ok");
+				System.out.println("ok1");
 			}
 		}
 	}
@@ -146,7 +146,7 @@ public class CoicesPanel extends JPanel {
 		}
 		public void actionPerformed(ActionEvent e) {
 			if(cc.getCoiceslist().getDatalistList().get(times).getDatas().get(2).getType() == QuestionType.APPEARANCE){
-				System.out.println("ok");
+				System.out.println("ok2");
 			}
 		}
 	}
@@ -161,7 +161,7 @@ public class CoicesPanel extends JPanel {
 		}
 		public void actionPerformed(ActionEvent e) {
 			if(cc.getCoiceslist().getDatalistList().get(times).getDatas().get(0).getType() == QuestionType.APPEARANCE){
-				System.out.println("ok");
+				System.out.println("ok3");
 			}
 		}
 	}

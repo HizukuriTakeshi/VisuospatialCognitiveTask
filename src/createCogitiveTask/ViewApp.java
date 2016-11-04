@@ -110,7 +110,7 @@ public class ViewApp {
 		frame.getContentPane().add(confirmpanel);
 		
 		coicespanel = new CoicesPanel();
-		coicespanel.setBounds(108, 401, 637, 110);
+		coicespanel.setBounds(97, 401, 637, 110);
 		frame.getContentPane().add(coicespanel);
 	
 		datalistList = new DataListList();
