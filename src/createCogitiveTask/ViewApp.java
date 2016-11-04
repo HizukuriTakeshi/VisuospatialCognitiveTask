@@ -12,6 +12,7 @@ import javax.swing.JButton;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+
 import densecapProcess.DenseCapProcess;
 import fileUtils.FileUtils;
 
@@ -68,7 +69,7 @@ public class ViewApp {
 	 */
 	private void initialize() {
 		frame = new JFrame();
-		frame.setBounds(100, 100, 785, 517);
+		frame.setBounds(100, 100, 783, 560);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
 
@@ -109,7 +110,7 @@ public class ViewApp {
 		frame.getContentPane().add(confirmpanel);
 		
 		coicespanel = new CoicesPanel();
-		coicespanel.setBounds(108, 401, 637, 76);
+		coicespanel.setBounds(108, 401, 637, 110);
 		frame.getContentPane().add(coicespanel);
 	
 		datalistList = new DataListList();
