@@ -78,7 +78,8 @@ public class CoicesPanel extends JPanel {
 		add(questionLabel);
 
 		//選択肢作成クラス
-				cc = new ChoicesCreate();
+		cc = new ChoicesCreate();
+
 	}
 
 	public void setDataListList(DataListList datalistlist){
@@ -111,12 +112,15 @@ public class CoicesPanel extends JPanel {
 		 */
 		private static final long serialVersionUID = 1L;
 		public SwingAction_0() {
-			putValue(NAME, "SwingAction");
+			putValue(NAME, "1");
 			putValue(SHORT_DESCRIPTION, "Some short description");
 		}
 		public void actionPerformed(ActionEvent e) {
+			JFrame f = (JFrame) SwingUtilities.getWindowAncestor(coiceButton_1);
 			if(cc.getCoiceslist().getDatalistList().get(times).getDatas().get(0).getType() == QuestionType.APPEARANCE){
-				System.out.println("ok0");
+				JOptionPane.showMessageDialog(f,"正解","メッセージ",JOptionPane.PLAIN_MESSAGE);
+			}else{
+				JOptionPane.showMessageDialog(f,"不正解","メッセージ",JOptionPane.PLAIN_MESSAGE);
 			}
 		}
 	}
@@ -126,12 +130,16 @@ public class CoicesPanel extends JPanel {
 		 */
 		private static final long serialVersionUID = 1L;
 		public SwingAction_1() {
-			putValue(NAME, "SwingAction_1");
+			putValue(NAME, "2");
 			putValue(SHORT_DESCRIPTION, "Some short description");
 		}
 		public void actionPerformed(ActionEvent e) {
+			JFrame f = (JFrame) SwingUtilities.getWindowAncestor(coiceButton_2);
+
 			if(cc.getCoiceslist().getDatalistList().get(times).getDatas().get(1).getType() == QuestionType.APPEARANCE){
-				System.out.println("ok1");
+				JOptionPane.showMessageDialog(f,"正解","メッセージ",JOptionPane.PLAIN_MESSAGE);
+			}else{
+				JOptionPane.showMessageDialog(f,"不正解","メッセージ",JOptionPane.PLAIN_MESSAGE);
 			}
 		}
 	}
@@ -141,13 +149,18 @@ public class CoicesPanel extends JPanel {
 		 */
 		private static final long serialVersionUID = 1L;
 		public SwingAction_2() {
-			putValue(NAME, "SwingAction_2");
+			putValue(NAME, "3");
 			putValue(SHORT_DESCRIPTION, "Some short description");
 		}
 		public void actionPerformed(ActionEvent e) {
+			JFrame f = (JFrame) SwingUtilities.getWindowAncestor(coiceButton_3);
+
 			if(cc.getCoiceslist().getDatalistList().get(times).getDatas().get(2).getType() == QuestionType.APPEARANCE){
-				System.out.println("ok2");
+				JOptionPane.showMessageDialog(f,"正解","メッセージ",JOptionPane.PLAIN_MESSAGE);
+			}else{
+				JOptionPane.showMessageDialog(f,"不正解","メッセージ",JOptionPane.PLAIN_MESSAGE);
 			}
+
 		}
 	}
 	private class SwingAction_3 extends AbstractAction {
@@ -156,13 +169,17 @@ public class CoicesPanel extends JPanel {
 		 */
 		private static final long serialVersionUID = 1L;
 		public SwingAction_3() {
-			putValue(NAME, "SwingAction_3");
+			putValue(NAME, "4");
 			putValue(SHORT_DESCRIPTION, "Some short description");
 		}
 		public void actionPerformed(ActionEvent e) {
-			if(cc.getCoiceslist().getDatalistList().get(times).getDatas().get(0).getType() == QuestionType.APPEARANCE){
-				System.out.println("ok3");
+			JFrame f = (JFrame) SwingUtilities.getWindowAncestor(coiceButton_4);
+			if(cc.getCoiceslist().getDatalistList().get(times).getDatas().get(3).getType() == QuestionType.APPEARANCE){
+				JOptionPane.showMessageDialog(f,"正解","メッセージ",JOptionPane.PLAIN_MESSAGE);
+			}else{
+				JOptionPane.showMessageDialog(f,"不正解","メッセージ",JOptionPane.PLAIN_MESSAGE);
 			}
+
 		}
 	}
 	private class SwingAction extends AbstractAction {
