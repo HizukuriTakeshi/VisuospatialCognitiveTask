@@ -51,7 +51,7 @@ public class ChoicesCreate {
 			DataList coices = new DataList();
 
 
-			coices = setCoices(datalistlist.getDatalistList().get(opt), answer, type);
+			coices = setCoices(datalistlist, answer, type);
 
 
 
@@ -101,13 +101,20 @@ public class ChoicesCreate {
 	 * @param type　問題のタイプ
 	 * @return　正解を除いた選択肢のリスト
 	 */
-	public DataList setCoices(DataList datalist , Data answer, QuestionType type){
+	public DataList setCoices(DataListList datalistlist , Data answer, QuestionType type){
 		DataList Coices = new DataList();
 
 
-		for(Data d: datalist.getDatas()){
+		for(Data d: datalistlist.getDatalistList().get(0).getDatas()){
 			//正解文ではない、出現or消失していない、正解文とのリンクはない
-			if(!d.getCaption().equals(answer.getCaption()) && d.getType() != type && d.getLink() == -1){
+			if(!d.getCaption().equals(answer.getCaption()) && d.getType() != QuestionType.APPEARANCE && d.getLink() == -1){
+				Coices.addData(d);
+			}
+		}
+		
+		for(Data d: datalistlist.getDatalistList().get(1).getDatas()){
+			//正解文ではない、出現or消失していない、正解文とのリンクはない
+			if(!d.getCaption().equals(answer.getCaption()) && d.getType() != QuestionType.DISAPPEARANCE && d.getLink() == -1){
 				Coices.addData(d);
 			}
 		}
