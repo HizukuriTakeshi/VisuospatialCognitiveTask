@@ -37,7 +37,7 @@ public class ViewApp {
 	private File in1;
 	private File in2;
 	private ConfirmPanel confirmpanel;
-	private CoicesPanel coicespanel;
+	private ChoicesPanel coicespanel;
 	
 	
 
@@ -109,7 +109,7 @@ public class ViewApp {
 		confirmpanel.setBounds(510, 90, 227, 39);
 		frame.getContentPane().add(confirmpanel);
 		
-		coicespanel = new CoicesPanel();
+		coicespanel = new ChoicesPanel();
 		coicespanel.setBounds(97, 401, 637, 110);
 		frame.getContentPane().add(coicespanel);
 	

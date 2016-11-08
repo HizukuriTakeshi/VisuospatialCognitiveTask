@@ -6,10 +6,10 @@ import javax.swing.JButton;
 
 public class ChoicesCreate {
 
-	public DataListList coiceslist = new DataListList();;
+	public DataListList choiceslist = new DataListList();;
 
-	public DataListList getCoiceslist() {
-		return coiceslist;
+	public DataListList getChoiceslist() {
+		return choiceslist;
 	}
 
 	/**
@@ -20,14 +20,14 @@ public class ChoicesCreate {
 	 * @param d　選択肢ボタン
 	 * @param type 問題のタイプ
 	 */
-	public int displayCoices(JButton a,JButton b,JButton c,JButton d, int i){
+	public int displayChoices(JButton a,JButton b,JButton c,JButton d, int i){
 		//翻訳して出力
 
-		if(i<coiceslist.getDatalistList().size()){
-			a.setText(coiceslist.getDatalistList().get(i).getDatas().get(0).getCaption());
-			b.setText(coiceslist.getDatalistList().get(i).getDatas().get(1).getCaption());
-			c.setText(coiceslist.getDatalistList().get(i).getDatas().get(2).getCaption());
-			d.setText(coiceslist.getDatalistList().get(i).getDatas().get(3).getCaption());
+		if(i<choiceslist.getDatalistList().size()){
+			a.setText(choiceslist.getDatalistList().get(i).getDatas().get(0).getCaption());
+			b.setText(choiceslist.getDatalistList().get(i).getDatas().get(1).getCaption());
+			c.setText(choiceslist.getDatalistList().get(i).getDatas().get(2).getCaption());
+			d.setText(choiceslist.getDatalistList().get(i).getDatas().get(3).getCaption());
 			return 0;
 		}else{
 			return 1;
@@ -39,7 +39,7 @@ public class ChoicesCreate {
 	 * @param type
 	 * @return
 	 */
-	public DataListList createCoices(DataListList datalistlist, QuestionType type){
+	public DataListList createChoices(DataListList datalistlist, QuestionType type){
 
 		int opt = 0;
 		if(type == QuestionType.APPEARANCE){
@@ -51,7 +51,7 @@ public class ChoicesCreate {
 			DataList coices = new DataList();
 
 
-			coices = setCoices(datalistlist, answer, type);
+			coices = setChoices(datalistlist, answer, type);
 
 
 
@@ -69,11 +69,11 @@ public class ChoicesCreate {
 			//もう一度シャッフル
 			Collections.shuffle(coices.getDatas());
 
-			coiceslist.addDataList(coices);
+			choiceslist.addDataList(coices);
 			
 		}
 
-		return coiceslist;
+		return choiceslist;
 
 	}
 
@@ -101,24 +101,24 @@ public class ChoicesCreate {
 	 * @param type　問題のタイプ
 	 * @return　正解を除いた選択肢のリスト
 	 */
-	public DataList setCoices(DataListList datalistlist , Data answer, QuestionType type){
-		DataList Coices = new DataList();
+	public DataList setChoices(DataListList datalistlist , Data answer, QuestionType type){
+		DataList choices = new DataList();
 
 
 		for(Data d: datalistlist.getDatalistList().get(0).getDatas()){
 			//正解文ではない、出現or消失していない、正解文とのリンクはない
 			if(!d.getCaption().equals(answer.getCaption()) && d.getType() != QuestionType.APPEARANCE && d.getLink() == -1){
-				Coices.addData(d);
+				choices.addData(d);
 			}
 		}
 		
 		for(Data d: datalistlist.getDatalistList().get(1).getDatas()){
 			//正解文ではない、出現or消失していない、正解文とのリンクはない
 			if(!d.getCaption().equals(answer.getCaption()) && d.getType() != QuestionType.DISAPPEARANCE && d.getLink() == -1){
-				Coices.addData(d);
+				choices.addData(d);
 			}
 		}
 
-		return Coices;
+		return choices;
 	}
 }

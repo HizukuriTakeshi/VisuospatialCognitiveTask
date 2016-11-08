@@ -11,18 +11,18 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
 
-public class CoicesPanel extends JPanel {
+public class ChoicesPanel extends JPanel {
 
 	/**
 	 *
 	 */
 	private static final long serialVersionUID = 1L;
-	private JButton coiceButton_1;
-	private JButton coiceButton_2;
-	private JButton coiceButton_3;
-	private JButton coiceButton_4;
+	private JButton choiceButton_1;
+	private JButton choiceButton_2;
+	private JButton choiceButton_3;
+	private JButton choiceButton_4;
 	private JButton createButton;
-	private final Action action_1 = new CreateCoicesAction();
+	private final Action action_1 = new CreateChoicesAction();
 
 	private ChoicesCreate cc;
 	private DataListList datalistlist;
@@ -39,28 +39,28 @@ public class CoicesPanel extends JPanel {
 	/**
 	 * Create the panel.
 	 */
-	public CoicesPanel() {
+	public ChoicesPanel() {
 		setLayout(null);
-		coiceButton_1 = new JButton("1");
-		coiceButton_1.setBounds(96, 37, 201, 23);
-		coiceButton_1.setAction(action);
-		add(coiceButton_1);
+		choiceButton_1 = new JButton("1");
+		choiceButton_1.setBounds(96, 37, 201, 23);
+		choiceButton_1.setAction(action);
+		add(choiceButton_1);
 
-		coiceButton_2 = new JButton("2");
-		coiceButton_2.setBounds(321, 37, 218, 23);
-		coiceButton_2.setAction(action_2);
-		add(coiceButton_2);
+		choiceButton_2 = new JButton("2");
+		choiceButton_2.setBounds(321, 37, 218, 23);
+		choiceButton_2.setAction(action_2);
+		add(choiceButton_2);
 
-		coiceButton_3 = new JButton("3");
-		coiceButton_3.setBounds(96, 72, 201, 23);
-		coiceButton_3.setAction(action_3);
-		add(coiceButton_3);
+		choiceButton_3 = new JButton("3");
+		choiceButton_3.setBounds(96, 72, 201, 23);
+		choiceButton_3.setAction(action_3);
+		add(choiceButton_3);
 
-		coiceButton_4 = new JButton("4");
-		coiceButton_4.setBounds(321, 72, 218, 23);
-		coiceButton_4.setAction(action_4);
+		choiceButton_4 = new JButton("4");
+		choiceButton_4.setBounds(321, 72, 218, 23);
+		choiceButton_4.setAction(action_4);
 
-		add(coiceButton_4);
+		add(choiceButton_4);
 
 		createButton = new JButton("push");
 		createButton.setBounds(12, 53, 60, 23);
@@ -87,22 +87,22 @@ public class CoicesPanel extends JPanel {
 	}
 
 
-	private class CreateCoicesAction extends AbstractAction {
+	private class CreateChoicesAction extends AbstractAction {
 		/**
 		 *
 		 */
 		private static final long serialVersionUID = 1L;
-		public CreateCoicesAction() {
+		public CreateChoicesAction() {
 			putValue(NAME, "出題");
 			putValue(SHORT_DESCRIPTION, "Some short description");
 		}
 		public void actionPerformed(ActionEvent e) {
 			times = 0;
-			cc.createCoices(datalistlist, QuestionType.APPEARANCE);
+			cc.createChoices(datalistlist, QuestionType.APPEARANCE);
 
 			questionLabel.setText("昔の様子と比べて、出現した物体について説明した文を選んでください。");
 
-			cc.displayCoices(coiceButton_1, coiceButton_2, coiceButton_3, coiceButton_4, times);
+			cc.displayChoices(choiceButton_1, choiceButton_2, choiceButton_3, choiceButton_4, times);
 		}
 	}
 
@@ -116,8 +116,8 @@ public class CoicesPanel extends JPanel {
 			putValue(SHORT_DESCRIPTION, "Some short description");
 		}
 		public void actionPerformed(ActionEvent e) {
-			JFrame f = (JFrame) SwingUtilities.getWindowAncestor(coiceButton_1);
-			if(cc.getCoiceslist().getDatalistList().get(times).getDatas().get(0).getType() == QuestionType.APPEARANCE){
+			JFrame f = (JFrame) SwingUtilities.getWindowAncestor(choiceButton_1);
+			if(cc.getChoiceslist().getDatalistList().get(times).getDatas().get(0).getType() == QuestionType.APPEARANCE){
 				JOptionPane.showMessageDialog(f,"正解","メッセージ",JOptionPane.PLAIN_MESSAGE);
 			}else{
 				JOptionPane.showMessageDialog(f,"不正解","メッセージ",JOptionPane.PLAIN_MESSAGE);
@@ -134,9 +134,9 @@ public class CoicesPanel extends JPanel {
 			putValue(SHORT_DESCRIPTION, "Some short description");
 		}
 		public void actionPerformed(ActionEvent e) {
-			JFrame f = (JFrame) SwingUtilities.getWindowAncestor(coiceButton_2);
+			JFrame f = (JFrame) SwingUtilities.getWindowAncestor(choiceButton_2);
 
-			if(cc.getCoiceslist().getDatalistList().get(times).getDatas().get(1).getType() == QuestionType.APPEARANCE){
+			if(cc.getChoiceslist().getDatalistList().get(times).getDatas().get(1).getType() == QuestionType.APPEARANCE){
 				JOptionPane.showMessageDialog(f,"正解","メッセージ",JOptionPane.PLAIN_MESSAGE);
 			}else{
 				JOptionPane.showMessageDialog(f,"不正解","メッセージ",JOptionPane.PLAIN_MESSAGE);
@@ -153,9 +153,9 @@ public class CoicesPanel extends JPanel {
 			putValue(SHORT_DESCRIPTION, "Some short description");
 		}
 		public void actionPerformed(ActionEvent e) {
-			JFrame f = (JFrame) SwingUtilities.getWindowAncestor(coiceButton_3);
+			JFrame f = (JFrame) SwingUtilities.getWindowAncestor(choiceButton_3);
 
-			if(cc.getCoiceslist().getDatalistList().get(times).getDatas().get(2).getType() == QuestionType.APPEARANCE){
+			if(cc.getChoiceslist().getDatalistList().get(times).getDatas().get(2).getType() == QuestionType.APPEARANCE){
 				JOptionPane.showMessageDialog(f,"正解","メッセージ",JOptionPane.PLAIN_MESSAGE);
 			}else{
 				JOptionPane.showMessageDialog(f,"不正解","メッセージ",JOptionPane.PLAIN_MESSAGE);
@@ -173,8 +173,8 @@ public class CoicesPanel extends JPanel {
 			putValue(SHORT_DESCRIPTION, "Some short description");
 		}
 		public void actionPerformed(ActionEvent e) {
-			JFrame f = (JFrame) SwingUtilities.getWindowAncestor(coiceButton_4);
-			if(cc.getCoiceslist().getDatalistList().get(times).getDatas().get(3).getType() == QuestionType.APPEARANCE){
+			JFrame f = (JFrame) SwingUtilities.getWindowAncestor(choiceButton_4);
+			if(cc.getChoiceslist().getDatalistList().get(times).getDatas().get(3).getType() == QuestionType.APPEARANCE){
 				JOptionPane.showMessageDialog(f,"正解","メッセージ",JOptionPane.PLAIN_MESSAGE);
 			}else{
 				JOptionPane.showMessageDialog(f,"不正解","メッセージ",JOptionPane.PLAIN_MESSAGE);
@@ -193,7 +193,7 @@ public class CoicesPanel extends JPanel {
 		}
 		public void actionPerformed(ActionEvent e) {
 			times++;
-			if(cc.displayCoices(coiceButton_1, coiceButton_2, coiceButton_3, coiceButton_4, times)!=0){
+			if(cc.displayChoices(choiceButton_1, choiceButton_2, choiceButton_3, choiceButton_4, times)!=0){
 				JFrame f = (JFrame) SwingUtilities.getWindowAncestor(btnNewButton);
 				JOptionPane.showMessageDialog(f,"問題終了","確認",JOptionPane.PLAIN_MESSAGE);
 
