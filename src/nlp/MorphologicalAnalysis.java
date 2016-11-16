@@ -5,6 +5,7 @@ import java.text.BreakIterator;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Properties;
 
 import org.annolab.tt4j.TokenHandler;
 import org.annolab.tt4j.TreeTaggerException;
@@ -12,14 +13,14 @@ import org.annolab.tt4j.TreeTaggerWrapper;
 
 public class MorphologicalAnalysis {
 
-	public static boolean v=false;
+	public static boolean result=false;
 
 	public static boolean checkV(String str) {
 		// Point TT4J to the TreeTagger installation directory. The executable is expected
         // in the "bin" subdirectory - in this example at "/opt/treetagger/bin/tree-tagger"
         //System.setProperty("treetagger.home", "/opt/treetagger");
-        System.setProperty("treetagger.home", "/treetagger");// ここに本体が必要　\treetagger\bin\tree-tagger.exe　
-        v = false;
+        System.setProperty("treetagger.home", "/treetagger");// ここに本体が必要　\treetagger\bin\tree-tagger.exe
+        result = false;
 
 
         TreeTaggerWrapper<String> tt = new TreeTaggerWrapper<String>();
@@ -43,7 +44,7 @@ public class MorphologicalAnalysis {
 
                                 if(list.contains(pos)){
                                     //System.out.println(token + "\t" + pos + "\t" + lemma);
-                                v = true;
+                                result = true;
                                 }
 
                         }
@@ -60,10 +61,54 @@ public class MorphologicalAnalysis {
 					e.printStackTrace();
 				}
 
-                return v;
+                return result;
 	}
 
+	public static boolean checkNoun(String str) {
+		// Point TT4J to the TreeTagger installation directory. The executable is expected
+        // in the "bin" subdirectory - in this example at "/opt/treetagger/bin/tree-tagger"
+        //System.setProperty("treetagger.home", "/opt/treetagger");
+		Properties properties = System.getProperties();
+        properties.list(System.out);
+        
+		System.setProperty("treetagger.home", "/home/hizukuri/TreeTagger");// ここに本体が必要　\treetagger\bin\tree-tagger.exe　
+                
+        TreeTaggerWrapper<String> tt = new TreeTaggerWrapper<String>();
+        List<String> sampleStr  = tokenize(str);
 
+                try {
+					tt.setModel("/TreeTagger/lib/english-utf8.par:iso8859-1");
+				} catch (IOException e1) {
+					// TODO 自動生成された catch ブロック
+					e1.printStackTrace();
+				}
+
+                tt.setHandler(new TokenHandler<String>() {
+
+                		public String[] str = {"NN","NNS","NP","NPS"};
+                		List<String> list = Arrays.asList(str);
+
+                        public void token(String token, String pos, String lemma) {
+
+                                if(list.contains(pos)){
+                                result = true;
+                                }
+                        }
+                });
+                try {
+					tt.process(sampleStr);
+				} catch (IOException e) {
+					// TODO 自動生成された catch ブロック
+					e.printStackTrace();
+				} catch (TreeTaggerException e) {
+					// TODO 自動生成された catch ブロック
+					e.printStackTrace();
+				}
+
+                return result;
+	}
+	
+	
 	public static List<String> breakUp(String str){
 		 System.setProperty("treetagger.home", "/treetagger");// ここに本体が必要　\treetagger\bin\tree-tagger.exe　
 
