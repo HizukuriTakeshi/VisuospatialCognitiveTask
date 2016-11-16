@@ -42,22 +42,22 @@ public class ChoicesPanel extends JPanel {
 	public ChoicesPanel() {
 		setLayout(null);
 		choiceButton_1 = new JButton("1");
-		choiceButton_1.setBounds(96, 37, 201, 23);
+		choiceButton_1.setBounds(84, 35, 285, 23);
 		choiceButton_1.setAction(action);
 		add(choiceButton_1);
 
 		choiceButton_2 = new JButton("2");
-		choiceButton_2.setBounds(321, 37, 218, 23);
+		choiceButton_2.setBounds(398, 35, 272, 23);
 		choiceButton_2.setAction(action_2);
 		add(choiceButton_2);
 
 		choiceButton_3 = new JButton("3");
-		choiceButton_3.setBounds(96, 72, 201, 23);
+		choiceButton_3.setBounds(84, 70, 285, 23);
 		choiceButton_3.setAction(action_3);
 		add(choiceButton_3);
 
 		choiceButton_4 = new JButton("4");
-		choiceButton_4.setBounds(321, 72, 218, 23);
+		choiceButton_4.setBounds(398, 70, 272, 23);
 		choiceButton_4.setAction(action_4);
 
 		add(choiceButton_4);
@@ -69,7 +69,7 @@ public class ChoicesPanel extends JPanel {
 		add(createButton);
 
 		btnNewButton = new JButton("New button");
-		btnNewButton.setBounds(551, 53, 53, 23);
+		btnNewButton.setBounds(682, 53, 53, 23);
 		btnNewButton.setAction(action_5);
 		add(btnNewButton);
 

@@ -6,7 +6,7 @@ import javax.swing.JButton;
 
 public class ChoicesCreate {
 
-	public DataListList choiceslist = new DataListList();;
+	public DataListList choiceslist;
 
 	public DataListList getChoiceslist() {
 		return choiceslist;
@@ -41,6 +41,8 @@ public class ChoicesCreate {
 	 */
 	public DataListList createChoices(DataListList datalistlist, QuestionType type){
 
+		choiceslist =  new DataListList();
+		
 		int opt = 0;
 		if(type == QuestionType.APPEARANCE){
 			opt = 1;
@@ -48,28 +50,29 @@ public class ChoicesCreate {
 
 		for(Data answer: searchAnswer(datalistlist.getDatalistList().get(opt), type).getDatas()){
 
-			DataList coices = new DataList();
+			
+			DataList choices = new DataList();
 
 
-			coices = setChoices(datalistlist, answer, type);
+			choices = setChoices(datalistlist, answer, type);
 
 
 
-			Collections.shuffle(coices.getDatas());
+			Collections.shuffle(choices.getDatas());
 
 
 			//ここで3つまでリストを減らす
-			for(int i = coices.getDatas().size()-1; i>=3;i--){
-				coices.getDatas().remove(i);
+			for(int i = choices.getDatas().size()-1; i>=3;i--){
+				choices.getDatas().remove(i);
 			}
 
 			//さらに正解のキャプションをcoices
-			coices.addData(answer);
+			choices.addData(answer);
 
 			//もう一度シャッフル
-			Collections.shuffle(coices.getDatas());
+			Collections.shuffle(choices.getDatas());
 
-			choiceslist.addDataList(coices);
+			choiceslist.addDataList(choices);
 			
 		}
 
@@ -114,7 +117,7 @@ public class ChoicesCreate {
 		
 		for(Data d: datalistlist.getDatalistList().get(1).getDatas()){
 			//正解文ではない、出現or消失していない、正解文とのリンクはない
-			if(!d.getCaption().equals(answer.getCaption()) && d.getType() != QuestionType.DISAPPEARANCE && d.getLink() == -1){
+			if(!d.getCaption().equals(answer.getCaption()) && d.getType() != QuestionType.APPEARANCE && d.getLink() == -1){
 				choices.addData(d);
 			}
 		}

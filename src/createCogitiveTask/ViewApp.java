@@ -15,6 +15,7 @@ import javax.swing.JLabel;
 
 import densecapProcess.DenseCapProcess;
 import fileUtils.FileUtils;
+import java.awt.event.ActionListener;
 
 public class ViewApp {
 
@@ -37,7 +38,7 @@ public class ViewApp {
 	private File in1;
 	private File in2;
 	private ConfirmPanel confirmpanel;
-	private ChoicesPanel coicespanel;
+	private ChoicesPanel choicespanel;
 	
 	
 
@@ -74,6 +75,10 @@ public class ViewApp {
 		frame.getContentPane().setLayout(null);
 
 		readFileButton = new JButton("New button");
+		readFileButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+			}
+		});
 		readFileButton.setBounds(544, 58, 152, 20);
 		readFileButton.setAction(action);
 		frame.getContentPane().add(readFileButton);
@@ -109,9 +114,9 @@ public class ViewApp {
 		confirmpanel.setBounds(510, 90, 227, 39);
 		frame.getContentPane().add(confirmpanel);
 		
-		coicespanel = new ChoicesPanel();
-		coicespanel.setBounds(97, 401, 637, 110);
-		frame.getContentPane().add(coicespanel);
+		choicespanel = new ChoicesPanel();
+		choicespanel.setBounds(18, 410, 753, 110);
+		frame.getContentPane().add(choicespanel);
 	
 		datalistList = new DataListList();
 
@@ -159,7 +164,7 @@ public class ViewApp {
 				
 				
 				confirmpanel.setDataListList(datalistList);
-				coicespanel.setDataListList(datalistList);
+				choicespanel.setDataListList(datalistList);
 				imgdisplaypanel.ImageDisplay(datalistList);
 			}
 		}
