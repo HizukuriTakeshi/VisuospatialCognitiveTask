@@ -208,7 +208,7 @@ public class BackgroundSub {
 		Highgui.imwrite("imgs/diff.jpg",diff_img);
 	}
 
-	public double checkBoundingBox(Data d){
+	public double checkBoundingBox(Data d, int name){
 		int x,y,w,h;
 		x = (int)((d.getBox()[0]*getX()/720)+getAffine_x());
 		y = (int)((d.getBox()[1]*getY()/540)+getAffine_y());
@@ -226,8 +226,8 @@ public class BackgroundSub {
 			}
 		}
 
-		//System.out.println(sum + " "+ sum/(cut_img.rows()*cut_img.cols()));
-		Highgui.imwrite("imgs/cut.jpg",cut_img);
+		System.out.println(sum/(cut_img.rows()*cut_img.cols()));
+		Highgui.imwrite("imgs/cut"+name+".jpg",cut_img);
 		return sum/(cut_img.rows()*cut_img.cols());
 	}
 }

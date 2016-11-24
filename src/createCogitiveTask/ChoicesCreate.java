@@ -108,10 +108,12 @@ public class ChoicesCreate {
 
 		DataList dlist2 = new DataList();
 
+		int name = 0;
 		for(Data d : dlist.getDatas()){	
-			if(bgs.checkBoundingBox(d) > 0.3){
+			if(bgs.checkBoundingBox(d,name) > 0.3){
 				dlist2.addData(d);
 			}
+			name++;
 		}
 
 		for(Data d : dlist2.getDatas()){	
