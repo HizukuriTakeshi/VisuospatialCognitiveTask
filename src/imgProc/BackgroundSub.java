@@ -8,16 +8,19 @@ import org.opencv.calib3d.Calib3d;
 import org.opencv.core.Core;
 import org.opencv.core.CvType;
 import org.opencv.core.Mat;
+import org.opencv.core.MatOfByte;
 import org.opencv.core.MatOfDMatch;
 import org.opencv.core.MatOfKeyPoint;
 import org.opencv.core.MatOfPoint2f;
 import org.opencv.core.Point;
 import org.opencv.core.Rect;
+import org.opencv.core.Scalar;
 import org.opencv.core.Size;
 import org.opencv.features2d.DMatch;
 import org.opencv.features2d.DescriptorExtractor;
 import org.opencv.features2d.DescriptorMatcher;
 import org.opencv.features2d.FeatureDetector;
+import org.opencv.features2d.Features2d;
 import org.opencv.highgui.Highgui;
 import org.opencv.imgproc.Imgproc;
 
@@ -132,6 +135,11 @@ public class BackgroundSub {
 			}
 		}
 		inM.fromList(inlinerMatch);
+		
+		Mat img_matches = new Mat();
+		Features2d.drawMatches(img_object, keypoints_object, img_scene, keypoints_scene, inM, img_matches, new Scalar(255,0,0), new Scalar(0,0,255), new MatOfByte(), 2);
+		Highgui.imwrite("./imgs/match.jpg", img_matches);
+
 
 		//ホモグラフィ変換後の画像の4隅を計算
 		Mat P = new Mat(new Size(4,3), CvType.CV_64F);
@@ -205,6 +213,8 @@ public class BackgroundSub {
 		setX(img_object.cols());
 		setY(img_object.rows());
 
+		Highgui.imwrite("imgs/homo.jpg",homo_img);
+		Highgui.imwrite("imgs/affine.jpg",affine_img);
 		Highgui.imwrite("imgs/diff.jpg",diff_img);
 	}
 
