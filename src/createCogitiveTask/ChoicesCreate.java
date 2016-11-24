@@ -4,16 +4,18 @@ import java.util.Collections;
 
 import javax.swing.JButton;
 
+import imgProc.BackgroundSub;
+
 public class ChoicesCreate {
 
 	public DataListList choiceslist;
+	public DataList answerlist;
 
 	public DataListList getChoiceslist() {
 		return choiceslist;
 	}
 
 	/**
-	 * @param datalistlist　過去の説明文のリストと現在の説明文のリスト
 	 * @param a　選択肢ボタン
 	 * @param b　選択肢ボタン
 	 * @param c　選択肢ボタン
@@ -42,15 +44,15 @@ public class ChoicesCreate {
 	public DataListList createChoices(DataListList datalistlist, QuestionType type){
 
 		choiceslist =  new DataListList();
-		
+
 		int opt = 0;
 		if(type == QuestionType.APPEARANCE){
 			opt = 1;
 		}
 
-		for(Data answer: searchAnswer(datalistlist.getDatalistList().get(opt), type).getDatas()){
+		for(Data answer: searchAnswer(datalistlist, type).getDatas()){
 
-			
+
 			DataList choices = new DataList();
 
 
@@ -73,7 +75,7 @@ public class ChoicesCreate {
 			Collections.shuffle(choices.getDatas());
 
 			choiceslist.addDataList(choices);
-			
+
 		}
 
 		return choiceslist;
@@ -85,16 +87,39 @@ public class ChoicesCreate {
 	 * @param type	問題のタイプ
 	 * @return　問題の答えとなる説明文のリスト
 	 */
-	public DataList searchAnswer(DataList datalist, QuestionType type){
+	public DataList searchAnswer(DataListList datalistlist, QuestionType type){
 		DataList dlist = new DataList();
 
-		for(Data d: datalist.getDatas()){
+		int opt = 0;
+		if(type == QuestionType.APPEARANCE){
+			opt = 1;
+		}
+
+		for(Data d: datalistlist.getDatalistList().get(opt).getDatas()){
 			if(d.getType() == type && d.getLink() == -1){
 				dlist.addData(d);
 			}
 		}
 
-		return dlist;
+		String before_imgPath = "./imgs/"+ datalistlist.getDatalistList().get(0).getDatas().get(0).getImg_name();
+		String after_imgPath = "./imgs/"+ datalistlist.getDatalistList().get(1).getDatas().get(0).getImg_name();
+
+		BackgroundSub bgs = new BackgroundSub(before_imgPath, after_imgPath);
+
+		DataList dlist2 = new DataList();
+
+		for(Data d : dlist.getDatas()){	
+			if(bgs.checkBoundingBox(d) > 0.3){
+				dlist2.addData(d);
+			}
+		}
+
+		for(Data d : dlist2.getDatas()){	
+			System.out.println(d.getCaption());
+		}
+
+		answerlist = dlist2;
+		return dlist2;
 
 	}
 
@@ -114,7 +139,7 @@ public class ChoicesCreate {
 				choices.addData(d);
 			}
 		}
-		
+
 		for(Data d: datalistlist.getDatalistList().get(1).getDatas()){
 			//正解文ではない、出現or消失していない、正解文とのリンクはない
 			if(!d.getCaption().equals(answer.getCaption()) && d.getType() != QuestionType.APPEARANCE && d.getLink() == -1){

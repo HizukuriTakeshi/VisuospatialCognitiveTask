@@ -74,7 +74,7 @@ public class CompareCap {
 				System.out.println(d.getCaption());
 			}
 		}
-		
+		System.out.println();
 	}
 
 

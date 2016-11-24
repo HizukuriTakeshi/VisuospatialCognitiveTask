@@ -68,16 +68,14 @@ public class MorphologicalAnalysis {
 		// Point TT4J to the TreeTagger installation directory. The executable is expected
         // in the "bin" subdirectory - in this example at "/opt/treetagger/bin/tree-tagger"
         //System.setProperty("treetagger.home", "/opt/treetagger");
-		Properties properties = System.getProperties();
-        properties.list(System.out);
-        
-		System.setProperty("treetagger.home", "/home/hizukuri/TreeTagger");// ここに本体が必要　\treetagger\bin\tree-tagger.exe　
+		
+		System.setProperty("treetagger.home", "/treetagger");// ここに本体が必要　\treetagger\bin\tree-tagger.exe　
                 
         TreeTaggerWrapper<String> tt = new TreeTaggerWrapper<String>();
         List<String> sampleStr  = tokenize(str);
 
                 try {
-					tt.setModel("/TreeTagger/lib/english-utf8.par:iso8859-1");
+					tt.setModel("/treetagger/lib/english-utf8.par:iso8859-1");
 				} catch (IOException e1) {
 					// TODO 自動生成された catch ブロック
 					e1.printStackTrace();

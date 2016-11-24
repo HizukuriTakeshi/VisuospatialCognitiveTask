@@ -7,6 +7,8 @@ import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
+import imgProc.BackgroundSub;
+
 public class ImageDisplayPanel extends JPanel {
 	
 	/**
@@ -43,5 +45,6 @@ public class ImageDisplayPanel extends JPanel {
 		label_1.setIcon(smallIcon_1);
 		label_1.setBounds(0, 0, 360, 270);
 		add(label_1);
+				
 	}
 }

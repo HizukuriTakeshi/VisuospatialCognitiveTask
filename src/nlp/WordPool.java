@@ -27,7 +27,11 @@ public class WordPool {
 		//重複を消す
 		Set<String> set = new HashSet<>(tmp);
 		wordpool = new ArrayList<>(set);
-
+		wordpool.add("is");
+		wordpool.add("a");
+		wordpool.add("an");
+		wordpool.add("the");
+		wordpool.add("table");
 	}
 
 	/**
@@ -42,14 +46,12 @@ public class WordPool {
 
 
 		for(String word: words){
-			if(MorphologicalAnalysis.checkNoun(word)){
 				if(wordpool.contains(word)){	
 					result = true;
 				}else{
 					result = false;
 					break;
 				}
-			}
 		}
 
 		return result;

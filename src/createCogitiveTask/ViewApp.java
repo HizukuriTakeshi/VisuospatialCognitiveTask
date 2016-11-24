@@ -13,8 +13,12 @@ import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 
+import org.opencv.core.Core;
+
 import densecapProcess.DenseCapProcess;
 import fileUtils.FileUtils;
+import imgProc.BackgroundSub;
+
 import java.awt.event.ActionListener;
 
 public class ViewApp {
@@ -119,6 +123,8 @@ public class ViewApp {
 		frame.getContentPane().add(choicespanel);
 	
 		datalistList = new DataListList();
+		
+		System.loadLibrary(Core.NATIVE_LIBRARY_NAME);
 
 	}
 
@@ -133,6 +139,7 @@ public class ViewApp {
 		}
 		public void actionPerformed(ActionEvent e) {
 
+				
 			File file1 = new File("./imgs/results1.json");
 			File file2 = new File("./imgs/results2.json");
 			

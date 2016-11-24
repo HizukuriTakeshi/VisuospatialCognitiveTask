@@ -26,8 +26,11 @@ public class ConfirmPanel extends JPanel {
 	private JButton button;
 	
 	private DataListList datalistlist;
+	private DataList answerlist;
 	
 	
+	
+
 	/**
 	 * Create the panel.
 	 */
@@ -52,6 +55,9 @@ public class ConfirmPanel extends JPanel {
 		this.datalistlist = datalistlist;
 	}
 	
+	public void setAnswerlist(DataList answerlist) {
+		this.answerlist = answerlist;
+	}
 
 	private class SwingAction extends AbstractAction {
 		/**
@@ -86,11 +92,10 @@ public class ConfirmPanel extends JPanel {
 
 				break;
 			case 2:
-				for(Data d:datalistlist.getDatalistList().get(0).getDatas()){
-					if(d.getType() == QuestionType.DISAPPEARANCE && d.getLink() == -1){
+				for(Data d:answerlist.getDatas()){
 						buf.append(d.getCaption());
 						buf.append("<BR>");
-					}
+					
 				}
 				break;
 			case 3:
