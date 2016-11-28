@@ -26,18 +26,13 @@ public class ConfirmPanel extends JPanel {
 	private JButton button;
 	
 	private DataListList datalistlist;
-	private DataList answerlist;
-	
-	
-	
-
 	/**
 	 * Create the panel.
 	 */
 	public ConfirmPanel() {
 		setLayout(null);
 
-		String[] caption = {"before","after","disappearance", "appearance"};
+		String[] caption = {"before","after", "appearance"};
 
 
 		comboBox = new JComboBox<Object>(caption);
@@ -56,7 +51,6 @@ public class ConfirmPanel extends JPanel {
 	}
 	
 	public void setAnswerlist(DataList answerlist) {
-		this.answerlist = answerlist;
 	}
 
 	private class SwingAction extends AbstractAction {
@@ -92,13 +86,6 @@ public class ConfirmPanel extends JPanel {
 
 				break;
 			case 2:
-				for(Data d:answerlist.getDatas()){
-						buf.append(d.getCaption());
-						buf.append("<BR>");
-					
-				}
-				break;
-			case 3:
 				for(Data d:datalistlist.getDatalistList().get(1).getDatas()){
 					if(d.getType() == QuestionType.APPEARANCE && d.getLink() == -1){
 						buf.append(d.getCaption());

@@ -2,6 +2,10 @@
 <classpath>
 	<classpathentry kind="src" path="src"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.8"/>
-	<classpathentry kind="lib" path="C:/jsonic/jsonic-1.3.10/jsonic-1.3.10.jar"/>
+	<classpathentry kind="lib" path="/home/hizukuri/git/VisuospatialCognitiveTask/lib/jsonic-1.3.10/jsonic-1.3.10.jar"/>
+	<classpathentry kind="lib" path="/home/hizukuri/git/VisuospatialCognitiveTask/lib/kuromoji-0.7.7/lib/kuromoji-0.7.7.jar"/>
+	<classpathentry kind="lib" path="/home/hizukuri/git/VisuospatialCognitiveTask/lib/microsoft-translator-java-api-0.6.2-jar-with-dependencies/microsoft-translator-java-api-0.6.2-jar-with-dependencies.jar"/>
+	<classpathentry kind="lib" path="/home/hizukuri/git/VisuospatialCognitiveTask/lib/org.annolab.tt4j-1.2.1/org.annolab.tt4j-1.2.1.jar"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/opencv-2.4.9"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

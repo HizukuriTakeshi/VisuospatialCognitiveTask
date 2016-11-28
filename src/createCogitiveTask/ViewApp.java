@@ -17,8 +17,6 @@ import org.opencv.core.Core;
 
 import densecapProcess.DenseCapProcess;
 import fileUtils.FileUtils;
-import imgProc.BackgroundSub;
-
 import java.awt.event.ActionListener;
 
 public class ViewApp {
@@ -163,12 +161,9 @@ public class ViewApp {
 				datalistList = densecapList1.toDataListList();
 				datalistList.addDataList(tmp.getDatalistList().get(0));
 
-				//説明文比較
-				CompareCap compareCap = new CompareCap();
-				compareCap.compareCaption(datalistList);
-
-				
-				
+				//BB比較
+				CompareBoundingBox cbb = new CompareBoundingBox();
+				cbb.compareBoundingBox(datalistList, QuestionType.APPEARANCE);
 				
 				confirmpanel.setDataListList(datalistList);
 				choicespanel.setDataListList(datalistList);

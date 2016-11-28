@@ -135,7 +135,7 @@ public class BackgroundSub {
 			}
 		}
 		inM.fromList(inlinerMatch);
-		
+
 		Mat img_matches = new Mat();
 		Features2d.drawMatches(img_object, keypoints_object, img_scene, keypoints_scene, inM, img_matches, new Scalar(255,0,0), new Scalar(0,0,255), new MatOfByte(), 2);
 		Highgui.imwrite("./imgs/match.jpg", img_matches);
@@ -218,17 +218,30 @@ public class BackgroundSub {
 		Highgui.imwrite("imgs/diff.jpg",diff_img);
 	}
 
+	/**
+	 * @param d
+	 * @param name
+	 * @return
+	 */
 	public double checkBoundingBox(Data d, int name){
+		//DenseCapのBBをリサイズ
 		int x,y,w,h;
-		x = (int)((d.getBox()[0]*getX()/720)+getAffine_x());
-		y = (int)((d.getBox()[1]*getY()/540)+getAffine_y());
+		if(d.getBox()[0] > 0){
+			x = (int)((d.getBox()[0]*getX()/720)+getAffine_x());
+		}else{
+			x= 0;
+		}
+		if(d.getBox()[1] > 0){
+			y = (int)((d.getBox()[1]*getY()/540)+getAffine_y());
+		}else{
+			y= 0;
+		}
 		w = (int)d.getBox()[2]*getX()/720;
 		h = (int)d.getBox()[3]*getY()/540;
+
 		Mat cut_img = new Mat(getDiffImg(), new Rect(x,y,w,h));
 
-		Mat dst1 = new Mat();
-		Mat dst2 = new Mat();
-
+		//BB内の差の割合計算
 		double sum = 0;
 		for(int i = 0; i< cut_img.rows(); i++){
 			for(int j = 0; j < cut_img.cols(); j++){
@@ -236,8 +249,12 @@ public class BackgroundSub {
 			}
 		}
 
-		System.out.println(sum/(cut_img.rows()*cut_img.cols()));
+		
+		double result = sum/(cut_img.rows()*cut_img.cols());
+		if(result > 0.2){
+		System.out.println(result);
 		Highgui.imwrite("imgs/cut"+name+".jpg",cut_img);
-		return sum/(cut_img.rows()*cut_img.cols());
+		}
+		return result;
 	}
 }

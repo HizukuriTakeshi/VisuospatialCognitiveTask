@@ -1,7 +1,6 @@
 package createCogitiveTask;
 
 import nlp.CosinSimilarity;
-import nlp.WordPool;
 
 public class CompareCap {
 
@@ -56,7 +55,6 @@ public class CompareCap {
 				}else{
 					count++;
 				}
-
 			}
 
 			if(count == datalistlist.getDatalistList().get(0).getDatas().size()){
@@ -65,16 +63,6 @@ public class CompareCap {
 			}
 		}
 		setDatalist0(datalist);
-		
-		
-		WordPool wordpool = new WordPool();
-		wordpool.poolingWords(datalistlist.getDatalistList().get(0));
-		for(Data d: datalistlist.getDatalistList().get(1).getDatas()){
-			if(!wordpool.containsWord(d.getCaption())){
-				System.out.println(d.getCaption());
-			}
-		}
-		System.out.println();
 	}
 
 

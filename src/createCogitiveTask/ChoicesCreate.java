@@ -101,27 +101,7 @@ public class ChoicesCreate {
 			}
 		}
 
-		String before_imgPath = "./imgs/"+ datalistlist.getDatalistList().get(0).getDatas().get(0).getImg_name();
-		String after_imgPath = "./imgs/"+ datalistlist.getDatalistList().get(1).getDatas().get(0).getImg_name();
-
-		BackgroundSub bgs = new BackgroundSub(before_imgPath, after_imgPath);
-
-		DataList dlist2 = new DataList();
-
-		int name = 0;
-		for(Data d : dlist.getDatas()){	
-			if(bgs.checkBoundingBox(d,name) > 0.3){
-				dlist2.addData(d);
-			}
-			name++;
-		}
-
-		for(Data d : dlist2.getDatas()){	
-			System.out.println(d.getCaption());
-		}
-
-		answerlist = dlist2;
-		return dlist2;
+		return dlist;
 
 	}
 

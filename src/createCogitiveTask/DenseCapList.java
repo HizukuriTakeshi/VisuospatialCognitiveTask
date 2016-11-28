@@ -32,23 +32,21 @@ public class DenseCapList {
 
 		DataListList dataListList = new DataListList();
 
+//		for (DenseCap tmp : results) {
+//			DataList dataList = new DataList();
+//			//尤度0以上の説明文のみ使用
+//			for(int i = 0;tmp.getScores()[i]>0;i++){
+//				Data tmp2 = new Data(tmp.getImg_name(), tmp.getScores()[i], tmp.getCaptions().get(i),tmp.getBoxes()[i]);
+//				dataList.addData(tmp2);
+//			}
+//			dataListList.addDataList(dataList);
+//
+//		}
+		
 		for (DenseCap tmp : results) {
 			DataList dataList = new DataList();
-			for(int i = 0;tmp.getScores()[i]>0;i++){
-
-
-//				String buf = tmp.getCaptions().get(i);
-//
-//				try {
-//					if(MorphologicalAnalysis.checkV(tmp.getCaptions().get(i))){
-//						buf = buf + ".";
-//					}
-//				} catch (Exception e) {
-//					// TODO 自動生成された catch ブロック
-//					e.printStackTrace();
-//				}
-
-
+			//尤度0以上の説明文のみ使用
+			for(int i = 0;i<tmp.getScores().length;i++){
 				Data tmp2 = new Data(tmp.getImg_name(), tmp.getScores()[i], tmp.getCaptions().get(i),tmp.getBoxes()[i]);
 				dataList.addData(tmp2);
 			}
