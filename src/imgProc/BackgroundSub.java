@@ -11,9 +11,11 @@ import org.opencv.core.Mat;
 import org.opencv.core.MatOfByte;
 import org.opencv.core.MatOfDMatch;
 import org.opencv.core.MatOfKeyPoint;
+import org.opencv.core.MatOfPoint;
 import org.opencv.core.MatOfPoint2f;
 import org.opencv.core.Point;
 import org.opencv.core.Rect;
+import org.opencv.core.RotatedRect;
 import org.opencv.core.Scalar;
 import org.opencv.core.Size;
 import org.opencv.features2d.DMatch;
@@ -200,8 +202,18 @@ public class BackgroundSub {
 
 		//差分
 		Core.absdiff(homo_img, affine_img, diff_img);
+
+		//黒背景を処理
+		for(int i = 0; i < diff_img.cols();i++){
+			for(int j = 0; j < diff_img.rows(); j++){
+				if(homo_img.get(j, i)[0]==0 || affine_img.get(j, i)[0]==0){
+					diff_img.put(j, i, new double[] {0});
+				}
+			}
+		}
+
 		//しきい値
-		Imgproc.threshold(diff_img, diff_img, 100.0, 255.0,Imgproc.THRESH_BINARY | Imgproc.THRESH_OTSU);
+		Imgproc.threshold(diff_img, diff_img, 0.0,255.0,Imgproc.THRESH_BINARY | Imgproc.THRESH_OTSU);
 		//ノイズ除去
 		Imgproc.erode(diff_img, diff_img, new Mat(), new Point(-1,-1), 1);
 		//欠損部補完
@@ -213,9 +225,12 @@ public class BackgroundSub {
 		setX(img_object.cols());
 		setY(img_object.rows());
 
-		Highgui.imwrite("imgs/homo.jpg",homo_img);
-		Highgui.imwrite("imgs/affine.jpg",affine_img);
-		Highgui.imwrite("imgs/diff.jpg",diff_img);
+
+
+
+		Highgui.imwrite("imgs/processed/homo.jpg",homo_img);
+		Highgui.imwrite("imgs/processed/affine.jpg",affine_img);
+		Highgui.imwrite("imgs/processed/diff.jpg",diff_img);
 	}
 
 	/**
@@ -225,21 +240,10 @@ public class BackgroundSub {
 	 */
 	public double checkBoundingBox(Data d, int name){
 		//DenseCapのBBをリサイズ
-		int x,y,w,h;
-		if(d.getBox()[0] > 0){
-			x = (int)((d.getBox()[0]*getX()/720)+getAffine_x());
-		}else{
-			x= 0;
-		}
-		if(d.getBox()[1] > 0){
-			y = (int)((d.getBox()[1]*getY()/540)+getAffine_y());
-		}else{
-			y= 0;
-		}
-		w = (int)d.getBox()[2]*getX()/720;
-		h = (int)d.getBox()[3]*getY()/540;
+		double [] box = resize(d, 720, 540);
 
-		Mat cut_img = new Mat(getDiffImg(), new Rect(x,y,w,h));
+
+		Mat cut_img = new Mat(getDiffImg(), new Rect(box));
 
 		//BB内の差の割合計算
 		double sum = 0;
@@ -249,12 +253,89 @@ public class BackgroundSub {
 			}
 		}
 
-		
+
 		double result = sum/(cut_img.rows()*cut_img.cols());
 		if(result > 0.2){
-		System.out.println(result);
-		Highgui.imwrite("imgs/cut"+name+".jpg",cut_img);
+			System.out.println(result);
+			Highgui.imwrite("imgs/processed/cut"+name+".jpg",cut_img);
 		}
 		return result;
+	}
+
+	public double[] resize(Data d, int width, int height){
+		double[] box = new double[4];
+		int x,y,w,h;
+
+		if(d.getBox()[0] > 0){
+			x = (int)((d.getBox()[0]*getX()/width)+getAffine_x());
+		}else{
+			x= 0;
+		}
+		if(d.getBox()[1] > 0){
+			y = (int)((d.getBox()[1]*getY()/height)+getAffine_y());
+		}else{
+			y= 0;
+		}
+		w = (int)d.getBox()[2]*getX()/width;
+		h = (int)d.getBox()[3]*getY()/height;
+
+		box[0] = x;
+		box[1] = y;
+		box[2] = w;
+		box[3] = h;
+
+		return box;
+	}
+
+	public Rect[] findDifference(Mat diff_img){
+		Mat hierarchy=Mat.zeros(new Size(5,5), CvType.CV_8UC1);
+		Mat invsrc = diff_img.clone();
+		List<MatOfPoint> contours=new ArrayList<MatOfPoint>(); 
+		Imgproc.findContours(invsrc, contours, hierarchy, Imgproc.RETR_EXTERNAL, Imgproc.CHAIN_APPROX_TC89_L1); 
+		Mat dstt=Mat.zeros(new Size(diff_img.width(),diff_img.height()),CvType.CV_8UC3);  
+		Scalar color=new Scalar(255,255,255);  
+		Imgproc.drawContours(dstt, contours, -1, color,1);
+		Rect [] rects = new Rect[contours.size()];
+		int i=0;  
+		for(i=0;i<contours.size();i++)  
+		{  
+			MatOfPoint ptmat= contours.get(i);  
+
+			color=new Scalar(255,0,0);  
+			MatOfPoint2f ptmat2 = new MatOfPoint2f( ptmat.toArray() );  
+			RotatedRect bbox=Imgproc.minAreaRect(ptmat2);  
+			Rect box=bbox.boundingRect();
+			Core.circle(dstt, bbox.center, 5, color,-1);  
+            color=new Scalar(0,255,0);  
+            Core.rectangle(dstt,box.tl(),box.br(),color,2); 
+			rects[i] = box;
+		}
+
+		Highgui.imwrite("imgs/processed/test.png",dstt); 
+
+		return rects;
+	}
+	
+	public double checkBoundingBox(Rect r, int name){
+
+		Mat diff_img = getDiffImg();
+		Mat cut_img = new Mat(diff_img, r);
+
+		//BB内の差の割合計算
+		double sum = 0;
+		for(int i = 0; i< cut_img.rows(); i++){
+			for(int j = 0; j < cut_img.cols(); j++){
+				sum+= cut_img.get(i, j)[0]/255;
+			}
+		}
+
+		double result = sum/(cut_img.rows()*cut_img.cols());
+		double a = cut_img.rows()*cut_img.cols();
+		double b = diff_img.rows()*diff_img.cols();
+		if(result > 0.1 && a/b > 0.0025){
+			System.out.println(result);
+			Highgui.imwrite("imgs/processed/rinkaku/"+name+".jpg",cut_img);
+		}
+		return result;	
 	}
 }

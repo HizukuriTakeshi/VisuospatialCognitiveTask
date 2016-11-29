@@ -1,5 +1,7 @@
 package createCogitiveTask;
 
+import org.opencv.core.Rect;
+
 import imgProc.BackgroundSub;
 
 public class CompareBoundingBox {
@@ -52,9 +54,16 @@ public class CompareBoundingBox {
 					System.out.println(d.getCaption());
 					name++;
 				}
-				
 			}
-
+			
+			
+			//テスト
+			Rect[] rects = bgs.findDifference(bgs.getDiffImg());
+			System.out.println(rects.length);
+			for(int i= 0; i<rects.length ; i++ ){
+				Rect r = rects[i];
+				bgs.checkBoundingBox(r, i);
+			}
 			setDatalist0(datalist);
 		}
 

@@ -165,6 +165,7 @@ public class ViewApp {
 				CompareBoundingBox cbb = new CompareBoundingBox();
 				cbb.compareBoundingBox(datalistList, QuestionType.APPEARANCE);
 				
+				
 				confirmpanel.setDataListList(datalistList);
 				choicespanel.setDataListList(datalistList);
 				imgdisplaypanel.ImageDisplay(datalistList);
