@@ -1,0 +1,58 @@
+package createCogitiveTask;
+
+import org.opencv.core.Mat;
+import org.opencv.core.Rect;
+import org.opencv.highgui.Highgui;
+
+import imgProc.BackgroundSub;
+
+public class FindDiff {
+
+
+	/**差分画像から輪郭抽出
+	 * 増えたキャプションのみを返す
+	 * @param datalistlist　データリストリスト
+	 * @throws Exception
+	 */
+	public void compareBoundingBox(String before_imgName, String after_imgName){
+
+		String before_imgPath = before_imgName;
+		String after_imgPath =  after_imgName;
+
+		//差分計算
+		BackgroundSub bgs = new BackgroundSub(before_imgPath, after_imgPath);
+			
+		//輪郭抽出した画像の切り出し
+		Rect[] rects = bgs.findDifference(bgs.getDiffImg());
+		System.out.println(rects.length);
+		
+		Mat diff_img = bgs.getDiffImg();
+		Mat after_img = Highgui.imread(after_imgPath);
+		
+		
+		Rect max_r = new Rect();
+		double max = 0;
+		
+		for(int i= 0; i<rects.length ; i++ ){
+			Rect r = rects[i];
+			
+			double a = r.width*r.height;
+			double b = diff_img.rows()*diff_img.cols();
+			double result = bgs.checkBoundingBox(r, i);
+			
+			if(result > 0.1 && a/b > 0.005){
+				if(max<result){
+					max_r = r;
+				}
+			}	
+			
+		}
+		max_r.set(new double[] {max_r.x-bgs.getAffine_x(), max_r.y-bgs.getAffine_x() ,max_r.width,max_r.height});
+		
+		System.out.println(bgs.getAffine_x()+" "+bgs.getAffine_y());
+		System.out.println(max_r.x+" "+max_r.y+" "+max_r.width+" "+max_r.height);
+		
+		Mat img = new Mat(after_img, max_r);
+		Highgui.imwrite("imgs/processed/rinkaku/1.jpg",img);
+	}
+}

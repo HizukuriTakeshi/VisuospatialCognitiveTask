@@ -41,6 +41,7 @@ public class ViewApp {
 	private File in2;
 	private ConfirmPanel confirmpanel;
 	private ChoicesPanel choicespanel;
+	private final Action action_1 = new SwingAction_1();
 	
 	
 
@@ -81,7 +82,7 @@ public class ViewApp {
 			public void actionPerformed(ActionEvent e) {
 			}
 		});
-		readFileButton.setBounds(544, 58, 152, 20);
+		readFileButton.setBounds(546, 148, 152, 20);
 		readFileButton.setAction(action);
 		frame.getContentPane().add(readFileButton);
 
@@ -108,17 +109,22 @@ public class ViewApp {
 		frame.getContentPane().add(readImgLabel_2);
 
 		JButton densecapButton = new JButton("DenseCap");
-		densecapButton.setBounds(640, 12, 105, 23);
+		densecapButton.setBounds(546, 114, 152, 23);
 		densecapButton.setAction(action_4);
 		frame.getContentPane().add(densecapButton);
 		
 		confirmpanel = new ConfirmPanel();
-		confirmpanel.setBounds(510, 90, 227, 39);
+		confirmpanel.setBounds(513, 180, 227, 39);
 		frame.getContentPane().add(confirmpanel);
 		
 		choicespanel = new ChoicesPanel();
 		choicespanel.setBounds(18, 410, 753, 110);
 		frame.getContentPane().add(choicespanel);
+		
+		JButton btnNewButton = new JButton("輪郭抽出");
+		btnNewButton.setAction(action_1);
+		btnNewButton.setBounds(546, 68, 152, 23);
+		frame.getContentPane().add(btnNewButton);
 	
 		datalistList = new DataListList();
 		
@@ -264,7 +270,6 @@ public class ViewApp {
 
 			File tmpdir2 = new File(filePath2);
 			tmpdir2.mkdir();
-
 			File out2 = new File(filePath2+in2.getName());
 			try {
 				FileUtils.copyFile(in2, out2);
@@ -296,6 +301,25 @@ public class ViewApp {
 			FileUtils.delete(tmpdir1);
 			FileUtils.delete(tmpdir2);
 
+		}
+	}
+	private class SwingAction_1 extends AbstractAction {
+		/**
+		 * 
+		 */
+		private static final long serialVersionUID = 1L;
+		public SwingAction_1() {
+			putValue(NAME, "輪郭抽出");
+			putValue(SHORT_DESCRIPTION, "Some short description");
+		}
+		public void actionPerformed(ActionEvent e) {
+
+			String path1 = "./imgs/"+in1.getName();
+			String path2= "./imgs/"+in2.getName();
+			
+			FindDiff fd = new FindDiff();
+			fd.compareBoundingBox(path1, path2);
+			
 		}
 	}
 }

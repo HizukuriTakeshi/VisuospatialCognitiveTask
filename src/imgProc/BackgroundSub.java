@@ -256,7 +256,7 @@ public class BackgroundSub {
 
 		double result = sum/(cut_img.rows()*cut_img.cols());
 		if(result > 0.2){
-			System.out.println(result);
+			//System.out.println(result);
 			Highgui.imwrite("imgs/processed/cut"+name+".jpg",cut_img);
 		}
 		return result;
@@ -330,12 +330,7 @@ public class BackgroundSub {
 		}
 
 		double result = sum/(cut_img.rows()*cut_img.cols());
-		double a = cut_img.rows()*cut_img.cols();
-		double b = diff_img.rows()*diff_img.cols();
-		if(result > 0.1 && a/b > 0.0025){
-			System.out.println(result);
-			Highgui.imwrite("imgs/processed/rinkaku/"+name+".jpg",cut_img);
-		}
+		
 		return result;	
 	}
 }
