@@ -4,8 +4,6 @@ import java.util.Collections;
 
 import javax.swing.JButton;
 
-import imgProc.BackgroundSub;
-
 public class ChoicesCreate {
 
 	public DataListList choiceslist;
@@ -45,10 +43,7 @@ public class ChoicesCreate {
 
 		choiceslist =  new DataListList();
 
-		int opt = 0;
-		if(type == QuestionType.APPEARANCE){
-			opt = 1;
-		}
+		
 
 		for(Data answer: searchAnswer(datalistlist, type).getDatas()){
 

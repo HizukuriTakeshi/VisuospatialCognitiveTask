@@ -1,9 +1,8 @@
-package createCogitiveTask;
+package imgProc;
 
 import org.opencv.core.Mat;
 import org.opencv.core.Rect;
 import org.opencv.highgui.Highgui;
-
 import imgProc.BackgroundSub;
 
 public class FindDiff {
@@ -24,7 +23,7 @@ public class FindDiff {
 			
 		//輪郭抽出した画像の切り出し
 		Rect[] rects = bgs.findDifference(bgs.getDiffImg());
-		System.out.println(rects.length);
+		
 		
 		Mat diff_img = bgs.getDiffImg();
 		Mat after_img = Highgui.imread(after_imgPath);
@@ -40,6 +39,7 @@ public class FindDiff {
 			double b = diff_img.rows()*diff_img.cols();
 			double result = bgs.checkBoundingBox(r, i);
 			
+			System.out.println("atodekesu");
 			if(result > 0.1 && a/b > 0.005){
 				if(max<result){
 					max_r = r;
@@ -47,11 +47,7 @@ public class FindDiff {
 			}	
 			
 		}
-		max_r.set(new double[] {max_r.x-bgs.getAffine_x(), max_r.y-bgs.getAffine_x() ,max_r.width,max_r.height});
-		
-		System.out.println(bgs.getAffine_x()+" "+bgs.getAffine_y());
-		System.out.println(max_r.x+" "+max_r.y+" "+max_r.width+" "+max_r.height);
-		
+		max_r.set(new double[] {max_r.x, max_r.y ,max_r.width,max_r.height});
 		Mat img = new Mat(after_img, max_r);
 		Highgui.imwrite("imgs/processed/rinkaku/1.jpg",img);
 	}

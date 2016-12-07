@@ -17,6 +17,8 @@ import org.opencv.core.Core;
 
 import densecapProcess.DenseCapProcess;
 import fileUtils.FileUtils;
+import imgProc.FindDiff;
+
 import java.awt.event.ActionListener;
 
 public class ViewApp {
