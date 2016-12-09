@@ -47,8 +47,9 @@ public class CompareBoundingBox {
 				opt=1;
 			}
 			
+			//差分とキャプションのBBを比較してピクセル割合が大きいときdatalistにadd
 			for(Data d : datalistlist.getDatalistList().get(opt).getDatas()){	
-				if(bgs.checkBoundingBox(d,name) > 0.2){
+				if(bgs.checkBoundingBox(d,name) > 0.1){
 					datalist.addData(d);
 					d.setType(QuestionType.APPEARANCE);
 					System.out.println(d.getCaption());
@@ -56,6 +57,10 @@ public class CompareBoundingBox {
 				}
 			}
 			
+			if(datalist.getDatas().isEmpty()){
+				System.out.println("empty");
+				//輪郭のところを再びDneseCap
+			}
 			
 			//テスト
 			Rect[] rects = bgs.findDifference(bgs.getDiffImg());

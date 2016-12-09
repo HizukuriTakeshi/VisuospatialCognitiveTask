@@ -99,8 +99,8 @@ public class CompareCap {
 				d0.setType(QuestionType.DISAPPEARANCE);
 			}
 		}
-		
-		
+
+
 		setDatalist1(datalist);
 	}
 
@@ -130,6 +130,37 @@ public class CompareCap {
 		}
 	}
 
+	/**増えたキャプションフラグがついたものが過去説明文にないかチェック
+	 * @param datalistlist
+	 */
+	public void checkCaption0(DataListList datalistlist){
 
+		DataList datalist = new DataList();
 
+		for(Data d1: datalistlist.getDatalistList().get(1).getDatas()){
+
+			//出現フラグチェック
+			if(d1.getType()==QuestionType.APPEARANCE){
+				for(Data d0: datalistlist.getDatalistList().get(0).getDatas()){
+
+					//ひとつでも類似説明文があれば飛ばす
+					if(cs.caluculate(d1.getCaption(),d0.getCaption())>0.6){
+						d0.setType(QuestionType.NULL);
+						break;
+					}else{
+						count++;
+					}
+				}
+
+				//すべて類似しなかった場合
+				if(count == datalistlist.getDatalistList().get(0).getDatas().size()){
+					datalist.addData(d1);
+					d1.setType(QuestionType.APPEARANCE);
+				}
+
+			}
+		}
+		setDatalist0(datalist);
+	}
 }
+
