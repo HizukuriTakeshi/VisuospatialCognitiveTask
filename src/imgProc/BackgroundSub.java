@@ -172,7 +172,7 @@ public class BackgroundSub {
 		Highgui.imwrite("imgs/processed/diff.jpg",img_diff);
 	}
 
-	/**
+	/**キャプションのBBを切り出して差分と比較して出現物体説明文を見つける
 	 * @param d
 	 * @param name
 	 * @return
@@ -182,7 +182,7 @@ public class BackgroundSub {
 		double [] box = resize(d, 720, 540);
 
 		Mat cut_img = new Mat(getDiffImg(), new Rect(box));
-
+		
 		//BB内の差の割合計算
 		double sum = 0;
 		for(int i = 0; i< cut_img.rows(); i++){
@@ -190,7 +190,6 @@ public class BackgroundSub {
 				sum+= cut_img.get(i, j)[0]/255;
 			}
 		}
-
 
 		double result = sum/(cut_img.rows()*cut_img.cols());
 		if(result > 0.2){
@@ -235,6 +234,10 @@ public class BackgroundSub {
 		return box;
 	}
 
+	/**輪郭抽出
+	 * @param diff_img
+	 * @return
+	 */
 	public Rect[] findDifference(Mat diff_img){
 		Mat hierarchy=Mat.zeros(new Size(5,5), CvType.CV_8UC1);
 		Mat invsrc = diff_img.clone();
@@ -336,8 +339,8 @@ public class BackgroundSub {
 	 */
 	public boolean checkMatch(Mat objectImage, Mat sceneImage, Mat dst){
 
-		//		System.out.println("Started....");
-		//		System.out.println("Loading images...");
+				System.out.println("Started....");
+				System.out.println("Loading images...");
 		//SURF特徴
 		MatOfKeyPoint objectKeyPoints = new MatOfKeyPoint();
 		FeatureDetector featureDetector = FeatureDetector.create(FeatureDetector.SURF);
@@ -412,6 +415,7 @@ public class BackgroundSub {
 			scnMatOfPoint2f.fromList(scenePoints);
 
 			Mat homography = Calib3d.findHomography(scnMatOfPoint2f,objMatOfPoint2f, Calib3d.RANSAC, 3);
+			
 
 			System.out.println("Drawing matches image...");
 			MatOfDMatch goodMatches = new MatOfDMatch();
@@ -421,8 +425,8 @@ public class BackgroundSub {
 
 			Size s = new Size(objectImage.cols(),objectImage.rows());
 
-			Imgproc.warpPerspective(sceneImage, dst, homography, s);
-
+			Imgproc.warpPerspective(sceneImage, dst, homography, s);			
+			
 		} else {
 			System.out.println("Object Not Found");
 			return false;

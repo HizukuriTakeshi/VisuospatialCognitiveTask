@@ -173,6 +173,14 @@ public class ViewApp {
 				CompareBoundingBox cbb = new CompareBoundingBox();
 				cbb.compareBoundingBox(datalistList, QuestionType.APPEARANCE);
 				
+				//テスト
+				CompareCap cc = new CompareCap();
+				cc.checkCaption0(datalistList);
+				for(Data d: cc.getDatalist0().getDatas()){
+					System.out.println(d.getCaption());
+				}
+				System.out.println("test");
+				
 				
 				confirmpanel.setDataListList(datalistList);
 				choicespanel.setDataListList(datalistList);
@@ -320,7 +328,7 @@ public class ViewApp {
 			String path2= "./imgs/"+in2.getName();
 			
 			FindDiff fd = new FindDiff();
-			fd.compareBoundingBox(path1, path2);
+			fd.selectChangeContour(path1, path2);
 			
 		}
 	}

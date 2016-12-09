@@ -8,12 +8,11 @@ import imgProc.BackgroundSub;
 public class FindDiff {
 
 
-	/**差分画像から輪郭抽出
-	 * 増えたキャプションのみを返す
-	 * @param datalistlist　データリストリスト
-	 * @throws Exception
+	/**尤も変化してそうな輪郭の選択
+	 * @param before_imgName
+	 * @param after_imgName
 	 */
-	public void compareBoundingBox(String before_imgName, String after_imgName){
+	public void selectChangeContour(String before_imgName, String after_imgName){
 
 		String before_imgPath = before_imgName;
 		String after_imgPath =  after_imgName;
@@ -39,7 +38,6 @@ public class FindDiff {
 			double b = diff_img.rows()*diff_img.cols();
 			double result = bgs.checkBoundingBox(r, i);
 			
-			System.out.println("atodekesu");
 			if(result > 0.1 && a/b > 0.005){
 				if(max<result){
 					max_r = r;
