@@ -17,8 +17,6 @@ import org.opencv.core.Core;
 
 import densecapProcess.DenseCapProcess;
 import fileUtils.FileUtils;
-import imgProc.FindDiff;
-
 import java.awt.event.ActionListener;
 
 public class ViewApp {
@@ -169,17 +167,21 @@ public class ViewApp {
 				datalistList = densecapList1.toDataListList();
 				datalistList.addDataList(tmp.getDatalistList().get(0));
 
-				//BB比較
+				//差分と説明文BB比較
 				CompareBoundingBox cbb = new CompareBoundingBox();
 				cbb.compareBoundingBox(datalistList, QuestionType.APPEARANCE);
 				
-				//テスト
+				
+				//候補とキャプション群比較
 				CompareCap cc = new CompareCap();
 				cc.checkCaption0(datalistList);
 				for(Data d: cc.getDatalist0().getDatas()){
 					System.out.println(d.getCaption());
 				}
 				System.out.println("test");
+									
+				
+
 				
 				
 				confirmpanel.setDataListList(datalistList);
@@ -324,11 +326,12 @@ public class ViewApp {
 		}
 		public void actionPerformed(ActionEvent e) {
 
-			String path1 = "./imgs/"+in1.getName();
-			String path2= "./imgs/"+in2.getName();
+//			String path1 = "./imgs/"+in1.getName();
+//			String path2= "./imgs/"+in2.getName();
 			
-			FindDiff fd = new FindDiff();
-			fd.selectChangeContour(path1, path2);
+			//FindDiff fd = new FindDiff();
+			//fd.selectChangeContour(path1, path2);
+			System.out.println("このボタンの機能はありません");
 			
 		}
 	}

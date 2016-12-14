@@ -31,6 +31,24 @@ public class BackgroundSub {
 
 	private Mat diffImg;
 	private Mat homoImg;
+	private Mat beforeImg;
+	private Mat afterImg;
+
+	public Mat getBeforeImg() {
+		return beforeImg;
+	}
+
+	public void setBeforeImg(Mat beforeImg) {
+		this.beforeImg = beforeImg;
+	}
+
+	public Mat getAfterImg() {
+		return afterImg;
+	}
+
+	public void setAfterImg(Mat afterImg) {
+		this.afterImg = afterImg;
+	}
 
 	public Mat getHomoImg() {
 		return homoImg;
@@ -72,6 +90,9 @@ public class BackgroundSub {
 		Mat img_before = Highgui.imread(beforeImgpath, 0);
 		Mat img_after = Highgui.imread(afterImgpath, 0);
 
+		setBeforeImg(Highgui.imread(beforeImgpath));
+		setAfterImg(Highgui.imread(afterImgpath));
+		
 		//		//特徴検出
 		//		FeatureDetector detector = FeatureDetector.create(4); //4 = SURF 
 		//		MatOfKeyPoint keypoints_object = new MatOfKeyPoint();

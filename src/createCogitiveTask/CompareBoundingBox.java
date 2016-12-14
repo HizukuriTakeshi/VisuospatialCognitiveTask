@@ -1,8 +1,10 @@
 package createCogitiveTask;
 
-import org.opencv.core.Rect;
+import java.io.IOException;
 
+import densecapProcess.DenseCapProcess;
 import imgProc.BackgroundSub;
+import imgProc.FindDiff;
 
 public class CompareBoundingBox {
 
@@ -57,18 +59,33 @@ public class CompareBoundingBox {
 				}
 			}
 			
+			//差分領域とキャプションの重なりがないときは輪郭抽出を行う
 			if(datalist.getDatas().isEmpty()){
 				System.out.println("empty");
 				//輪郭のところを再びDneseCap
+				//変化領域
+//				FindDiff fd = new FindDiff(bgs.getDiffImg(),bgs.getBeforeImg(),bgs.getAfterImg());
+//				fd.selectChangeContour();
+//				//densecapに通す
+//				try {
+//					DenseCapProcess.DenseCapScript3();
+//				} catch (IOException | InterruptedException e) {
+//					// TODO 自動生成された catch ブロック
+//					e.printStackTrace();
+//				}
+				
 			}
-			
-			//テスト
-			Rect[] rects = bgs.findDifference(bgs.getDiffImg());
-			System.out.println(rects.length);
-			for(int i= 0; i<rects.length ; i++ ){
-				Rect r = rects[i];
-				bgs.checkBoundingBox(r, i);
+			//普通に差分，輪郭切り出し、denseをやってみた
+			FindDiff fd = new FindDiff(bgs.getDiffImg(),bgs.getBeforeImg(),bgs.getAfterImg());
+			fd.selectChangeContour();
+			//densecapに通す
+			try {
+				DenseCapProcess.DenseCapScript3();
+			} catch (IOException | InterruptedException e) {
+				// TODO 自動生成された catch ブロック
+				e.printStackTrace();
 			}
+
 			setDatalist0(datalist);
 		}
 
