@@ -8,6 +8,7 @@ import org.opencv.calib3d.Calib3d;
 import org.opencv.core.Core;
 import org.opencv.core.CvType;
 import org.opencv.core.Mat;
+import org.opencv.core.MatOfByte;
 import org.opencv.core.MatOfDMatch;
 import org.opencv.core.MatOfKeyPoint;
 import org.opencv.core.MatOfPoint;
@@ -21,6 +22,7 @@ import org.opencv.features2d.DMatch;
 import org.opencv.features2d.DescriptorExtractor;
 import org.opencv.features2d.DescriptorMatcher;
 import org.opencv.features2d.FeatureDetector;
+import org.opencv.features2d.Features2d;
 import org.opencv.features2d.KeyPoint;
 import org.opencv.highgui.Highgui;
 import org.opencv.imgproc.Imgproc;
@@ -31,6 +33,15 @@ public class BackgroundSub {
 
 	private Mat diffImg;
 	private Mat homoImg;
+	private Mat homobeforeImg;
+	public Mat getHomobeforeImg() {
+		return homobeforeImg;
+	}
+
+	public void setHomobeforeImg(Mat homobeforeImg) {
+		this.homobeforeImg = homobeforeImg;
+	}
+
 	private Mat beforeImg;
 	private Mat afterImg;
 
@@ -86,6 +97,10 @@ public class BackgroundSub {
 
 
 
+	/**
+	 * @param beforeImgpath 過去画像
+	 * @param afterImgpath
+	 */
 	public BackgroundSub(String beforeImgpath, String afterImgpath){
 		Mat img_before = Highgui.imread(beforeImgpath, 0);
 		Mat img_after = Highgui.imread(afterImgpath, 0);
@@ -162,11 +177,12 @@ public class BackgroundSub {
 		//
 		//		//ホモグラフィ変換
 		//		Imgproc.warpPerspective(img_before, homo_img, HP, new Size(img_before.cols(), img_before.rows()));
-		checkMatch(img_after, img_before, img_homo);
+		checkMatch(getAfterImg(), getBeforeImg(), img_homo);
 		setHomoImg(img_homo);
-
+		Mat img_homo_gray = new Mat();
+		Imgproc.cvtColor(img_homo, img_homo_gray, Imgproc.COLOR_RGBA2GRAY);
 		//差分
-		Core.absdiff(img_homo, img_after, img_diff);
+		Core.absdiff(img_homo_gray, img_after, img_diff);
 
 		//黒背景を処理
 		for(int i = 0; i < img_diff.cols();i++){
@@ -299,6 +315,7 @@ public class BackgroundSub {
 	 */
 	public Mat createPartSub(Mat past, Mat present, int width, int height, int x, int y){
 		//結果出力用mat
+		//単純に差分をとる
 		Mat baseimg = imageDiff(past, present);
 
 		//作業用mat
@@ -306,7 +323,7 @@ public class BackgroundSub {
 
 
 		int i = 0;
-		int j = 50;
+		int j = 100;
 		int w=width;
 		boolean flagx = true;
 		boolean flagy = true;
@@ -327,7 +344,7 @@ public class BackgroundSub {
 					flagy=false;
 
 				}
-				//				System.out.println(i+" "+ j +" "+w+" "+h);
+				System.out.println(i+" "+ j +" "+w+" "+h);
 				box = new Rect(new double[] {i,j,w,h});
 				//ターゲット画像の切り出し
 				target = new Mat(present,box);
@@ -349,7 +366,24 @@ public class BackgroundSub {
 			//画像の左上角のx座標増
 			i=i+x;
 		}
+		
+		//黒背景を処理
+		for(int k = 0; k < baseimg.cols();k++){
+			for(int l = 0; l < baseimg.rows(); l++){
+				if(past.get(l, k)[0]==0){
+					baseimg.put(l, k, new double[] {0});
+				}
+			}
+		}
 
+		//しきい値
+		Imgproc.threshold(baseimg, baseimg, 0.0,255.0,Imgproc.THRESH_BINARY | Imgproc.THRESH_OTSU);
+		//ノイズ除去
+		Imgproc.erode(baseimg, baseimg, new Mat(), new Point(-1,-1), 1);
+		//欠損部補完
+		Imgproc.dilate(baseimg, baseimg, new Mat());
+		
+		Highgui.imwrite("imgs/processed/part.png",baseimg); 
 		return baseimg;
 	}
 
@@ -441,9 +475,14 @@ public class BackgroundSub {
 			System.out.println("Drawing matches image...");
 			MatOfDMatch goodMatches = new MatOfDMatch();
 			goodMatches.fromList(goodMatchesList);
-
-			//Features2d.drawMatches(objectImage, objectKeyPoints, sceneImage, sceneKeyPoints, goodMatches, matchoutput, matchestColor, newKeypointColor, new MatOfByte(), 2);
-
+			
+			
+			Mat matchoutput = new Mat(sceneImage.rows() * 2, sceneImage.cols() * 2, Highgui.CV_LOAD_IMAGE_COLOR);
+			Scalar matchestColor = new Scalar(0, 255, 0);
+			Scalar newKeypointColor = new Scalar(255, 0, 0);
+			Features2d.drawMatches(objectImage, objectKeyPoints, sceneImage, sceneKeyPoints, goodMatches, matchoutput, matchestColor, newKeypointColor, new MatOfByte(), 2);
+			Highgui.imwrite("./imgs/processed/matchoutput.jpg", matchoutput);
+			
 			Size s = new Size(objectImage.cols(),objectImage.rows());
 
 			Imgproc.warpPerspective(sceneImage, dst, homography, s);			

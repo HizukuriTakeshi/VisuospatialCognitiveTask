@@ -117,6 +117,7 @@ public class FindDiff {
 			color=new Scalar(0,255,0);  
 			Core.rectangle(dstt,box.tl(),box.br(),color,2); 
 			rects[i] = box;
+			//System.out.println(rects[i].x+" "+rects[i].y+" "+rects[i].height+" "+rects[i].width);
 		}
 
 		Highgui.imwrite("imgs/processed/test.png",dstt); 
@@ -143,17 +144,61 @@ public class FindDiff {
 
 			double a = r.width*r.height;
 			double b = diff_img.rows()*diff_img.cols();
-			double result = checkBoundingBox(r, i);
+			int yoko = r.x+r.width;
+			int tate = r.y+r.height;
+			if(r.x<0){
+				r.x=0;
+			}
+			if(r.y<0){
+				r.y=0;
+			}
+			if(yoko>diffImg.cols()){
+				r.width = diffImg.cols()-r.x;
+			}
+			if(tate>diffImg.rows()){
+				r.height = diffImg.rows()-r.y;
+			}
 
-			if(result > 0.1 && a/b > 0.005){
-				if(max<result){
-					max_r = r;
-				}
-			}	
+
+			if(a/b > 0.005){
+				System.out.println(r.x+" "+r.y+" "+r.height+" "+r.width);
+				double result = checkBoundingBox(r, i);
+				if(result > 0.1){
+					if(max<result){	
+						max_r = r;
+					}
+				}	
+			}
 
 		}
+
+		if(max_r.x-max_r.width*0.05>0){
+			max_r.x = (int) (max_r.x-max_r.width*0.05);
+		}else{
+			max_r.x = 0;	
+		}
+		if(max_r.y-max_r.height*0.05>0){
+			max_r.y = (int) (max_r.y-max_r.height*0.05);
+		}else{
+			max_r.y = 0;
+		}
+
+		if(max_r.width*1.1+max_r.x<afterImg.cols()){
+			max_r.width= (int) (max_r.width*1.1);
+		}else{
+			max_r.width= afterImg.cols()-max_r.x;	
+		}
+		if(max_r.height*1.1+max_r.y<afterImg.rows()){
+			max_r.height=(int) (max_r.height*1.1);
+		}else{
+			max_r.height= afterImg.rows()-max_r.y;		
+		}
+
 		//実際の輪郭よりも大きくBBをとる
-		max_r.set(new double[] {max_r.x*0.9, max_r.y*0.9 ,max_r.width+max_r.x*0.2,max_r.height+max_r.y*0.2});
+		max_r.set(new double[] {max_r.x, max_r.y ,max_r.width,max_r.height});
+
+		
+
 		Mat img = new Mat(after_img, max_r);
 		Highgui.imwrite("imgs/processed/rinkaku.jpg",img);
 	}
