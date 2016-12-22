@@ -51,6 +51,10 @@ public class CompareCap {
 			for(Data d0: datalistlist.getDatalistList().get(0).getDatas()){
 
 				if(cs.caluculate(d1.getCaption(),d0.getCaption())>0.6){
+					System.out.println(d1.getCaption()+":"+d0.getCaption());
+					System.out.println(cs.caluculate(d1.getCaption(),d0.getCaption()));
+					System.out.println(cs.jaroWinklerDistance(d1.getCaption(), d0.getCaption()));
+					System.out.println(cs.levensteinDistance(d1.getCaption(), d0.getCaption()));
 					break;
 				}else{
 					count++;

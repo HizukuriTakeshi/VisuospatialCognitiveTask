@@ -179,7 +179,7 @@ public class ViewApp {
 					System.out.println(d.getCaption());
 				}
 				System.out.println("test");
-									
+				cc.compareCaption0(datalistList);
 				
 
 				

@@ -4,6 +4,9 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import org.apache.lucene.search.spell.JaroWinklerDistance;
+import org.apache.lucene.search.spell.LevensteinDistance;
+ 
 
 public class CosinSimilarity {
 
@@ -19,12 +22,11 @@ public class CosinSimilarity {
 
 		Set<String> set = new HashSet<>(tmp);
 		List<String> uniqu_words = new ArrayList<>(set);
-
-
+		
 
 		double[] f1 = makeFlags(uniqu_words, a1);
 		double[] f2 = makeFlags(uniqu_words, a2);
-
+		
 
 		Vector v1 = new Vector(f1, f1.length);
 		Vector v2 = new Vector(f2, f2.length);
@@ -44,6 +46,15 @@ public class CosinSimilarity {
 		return flags;
 	}
 
+	public double levensteinDistance(String a, String b){
+		 LevensteinDistance l_algo = new LevensteinDistance();
+		return l_algo.getDistance(a,b);
+	}
+	
 
+	public double jaroWinklerDistance(String a, String b){
+		JaroWinklerDistance j_algo = new JaroWinklerDistance();
+		return j_algo.getDistance(a,b);
+	}
 
 }

@@ -40,7 +40,7 @@ public class CompareBoundingBox {
 			//差分計算
 			BackgroundSub bgs = new BackgroundSub(before_imgPath, after_imgPath);
 			DataList datalist = new DataList();
-			bgs.setDiffImg(bgs.createPartSub(bgs.getHomoImg(), bgs.getAfterImg(), (int)bgs.getAfterImg().cols()/5, (int)bgs.getAfterImg().rows()/5, (int)bgs.getAfterImg().cols()/5, (int)bgs.getAfterImg().rows()/5));
+			//bgs.setDiffImg(bgs.createPartSub(bgs.getHomoImg(), bgs.getAfterImg(), (int)bgs.getAfterImg().cols()/5, (int)bgs.getAfterImg().rows()/5, (int)bgs.getAfterImg().cols()/5, (int)bgs.getAfterImg().rows()/5));
 			
 			//nameは出力ファイル名
 			int name = 0;
