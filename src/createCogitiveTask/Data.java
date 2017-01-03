@@ -7,7 +7,17 @@ public class Data {
 	private double[] box;
 	private int link = -1;
 	private QuestionType type;
+	private double wariai;
+	private double coscore;
 
+
+	public double getCoscore() {
+		return coscore;
+	}
+
+	public void setCoscore(double coscore) {
+		this.coscore = coscore;
+	}
 
 	//
 	Data(String img_name, double score, String caption, double[] box){
@@ -56,5 +66,13 @@ public class Data {
 
 	public void setType(QuestionType type) {
 		this.type = type;
+	}
+
+	public double getWariai() {
+		return wariai;
+	}
+
+	public void setWariai(double wariai) {
+		this.wariai = wariai;
 	}
 }

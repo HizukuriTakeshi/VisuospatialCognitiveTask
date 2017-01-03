@@ -2,8 +2,11 @@ package createCogitiveTask;
 
 import java.awt.EventQueue;
 import java.awt.event.ActionEvent;
+import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileWriter;
 import java.io.IOException;
+import java.io.PrintWriter;
 
 //
 import javax.swing.AbstractAction;
@@ -18,6 +21,9 @@ import org.opencv.core.Core;
 import densecapProcess.DenseCapProcess;
 import fileUtils.FileUtils;
 import java.awt.event.ActionListener;
+import javax.swing.JTextField;
+import javax.swing.JTextArea;
+import javax.swing.JScrollPane;
 
 public class ViewApp {
 
@@ -26,8 +32,9 @@ public class ViewApp {
 	private final Action action = new ReadFileAction();
 	private ImageDisplayPanel imgdisplaypanel;
 
-	
+
 	private DataListList datalistList;
+	private DataListList onlycaption;
 	private JButton readImgButton_1;
 	private JButton readImgButton_2;
 	private final Action action_2 = new ReadImgAction_1();
@@ -42,8 +49,9 @@ public class ViewApp {
 	private ConfirmPanel confirmpanel;
 	private ChoicesPanel choicespanel;
 	private final Action action_1 = new SwingAction_1();
-	
-	
+	private JTextArea textArea;
+	private JScrollPane scrollPane;
+
 
 	/**
 	 * Launch the application.
@@ -75,14 +83,14 @@ public class ViewApp {
 		frame = new JFrame();
 		frame.setBounds(100, 100, 783, 560);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		frame.getContentPane().setLayout(null);
 
 		readFileButton = new JButton("New button");
+		readFileButton.setBounds(546, 148, 152, 20);
 		readFileButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 			}
 		});
-		readFileButton.setBounds(546, 148, 152, 20);
+		frame.getContentPane().setLayout(null);
 		readFileButton.setAction(action);
 		frame.getContentPane().add(readFileButton);
 
@@ -112,22 +120,32 @@ public class ViewApp {
 		densecapButton.setBounds(546, 114, 152, 23);
 		densecapButton.setAction(action_4);
 		frame.getContentPane().add(densecapButton);
-		
+
 		confirmpanel = new ConfirmPanel();
 		confirmpanel.setBounds(513, 180, 227, 39);
 		frame.getContentPane().add(confirmpanel);
-		
+
 		choicespanel = new ChoicesPanel();
 		choicespanel.setBounds(18, 410, 753, 110);
 		frame.getContentPane().add(choicespanel);
-		
+
 		JButton btnNewButton = new JButton("輪郭抽出");
-		btnNewButton.setAction(action_1);
 		btnNewButton.setBounds(546, 68, 152, 23);
+		btnNewButton.setAction(action_1);
 		frame.getContentPane().add(btnNewButton);
-	
+
+		scrollPane = new JScrollPane();
+		scrollPane.setBounds(544, 231, 143, 159);
+		frame.getContentPane().add(scrollPane);
+
+
+		textArea = new JTextArea();
+		scrollPane.setViewportView(textArea);
+
+
+
 		datalistList = new DataListList();
-		
+
 		System.loadLibrary(Core.NATIVE_LIBRARY_NAME);
 
 	}
@@ -143,10 +161,10 @@ public class ViewApp {
 		}
 		public void actionPerformed(ActionEvent e) {
 
-				
+
 			File file1 = new File("./imgs/results1.json");
 			File file2 = new File("./imgs/results2.json");
-			
+
 			if (file1.exists() && file2.exists()){ //ファイルが選択されたら
 
 
@@ -163,35 +181,100 @@ public class ViewApp {
 				DataListList tmp = new DataListList();
 
 				tmp = densecapList2.toDataListList();
-				
+
 				datalistList = densecapList1.toDataListList();
 				datalistList.addDataList(tmp.getDatalistList().get(0));
+
+				//説明文飲みの出現文推定
+				onlycaption = new DataListList();
+
+				DenseCapList densecapList3 = new DenseCapList();
+				densecapList3 = jsonReader.jsonDataRead("./imgs/results1.json");//ファイルから読み込む
+
+				//二つ目のjsonファイルを読み込み、datalistlist1に datalistlist2のdatalistを追加することで一つのデータリストリストに過去現在の説明文を入れる。
+				DenseCapList densecapList4 = new DenseCapList();
+				densecapList4 = jsonReader.jsonDataRead("./imgs/results2.json");//ファイルから読み込む
+				DataListList tmp2 = new DataListList();
+				tmp2 = densecapList4.toDataListList();
+
+				onlycaption = densecapList3.toDataListList();
+				onlycaption.addDataList(tmp2.getDatalistList().get(0));
+				CompareCap cconlycap = new CompareCap();
+				cconlycap.compareAllCaption(onlycaption);
+				textArea.setText("");
+
+				try {
+					//出力先を作成する
+					FileWriter fw = new FileWriter("imgs/processed/mojionly.txt", false);  //※１
+					PrintWriter pw = new PrintWriter(new BufferedWriter(fw));
+
+					//内容を指定する
+					for(Data d: cconlycap.getDatalist0().getDatas()){
+						//System.out.println(d.getCaption());
+						pw.println(d.getCaption());
+					}
+					//ファイルに書き出す
+					pw.close();
+					//終了メッセージを画面に出力する
+					System.out.println("出力が完了しました。");
+				} catch (IOException ex) {
+					//例外時処理
+					ex.printStackTrace();
+				}
+
+
+
+				for(Data d: cconlycap.getDatalist0().getDatas()){
+					//System.out.println(d.getCaption());
+					textArea.append(d.getCaption()+"\n");
+				}
+
+
 
 				//差分と説明文BB比較
 				CompareBoundingBox cbb = new CompareBoundingBox();
 				cbb.compareBoundingBox(datalistList, QuestionType.APPEARANCE);
-				
-				
+
 				//候補とキャプション群比較
 				CompareCap cc = new CompareCap();
 				cc.checkCaption0(datalistList);
-				for(Data d: cc.getDatalist0().getDatas()){
-					System.out.println(d.getCaption());
+				//				for(Data d: cc.getDatalist0().getDatas()){
+				//					System.out.println(d.getCaption());
+				//				}
+
+				//cc.compareCaption0(datalistList);
+
+				try {
+					//出力先を作成する
+					FileWriter fw2 = new FileWriter("imgs/processed/sabunari.txt", false);  //※１
+					PrintWriter pw2 = new PrintWriter(new BufferedWriter(fw2));
+
+					//内容を指定する
+					for(Data d:datalistList.getDatalistList().get(1).getDatas()){
+						if(d.getType() == QuestionType.APPEARANCE && d.getLink() == -1){
+							pw2.println(d.getCaption());
+						}
+					}
+					//ファイルに書き出す
+					pw2.close();
+					//終了メッセージを画面に出力する
+					System.out.println("出力が完了しました。");
+				} catch (IOException ex) {
+					//例外時処理
+					ex.printStackTrace();
 				}
-				System.out.println("test");
-				cc.compareCaption0(datalistList);
 				
 
-				
-				
 				confirmpanel.setDataListList(datalistList);
 				choicespanel.setDataListList(datalistList);
 				imgdisplaypanel.ImageDisplay(datalistList);
+
+
 			}
 		}
 	}
-	
-	
+
+
 	private class ReadImgAction_1 extends AbstractAction {
 		/**
 		 * 
@@ -268,7 +351,7 @@ public class ViewApp {
 
 			String filePath1 = "./imgs/tmp1/";
 			String filePath2 = "./imgs/tmp2/";
-			
+
 			File tmpdir1 = new File(filePath1);
 			tmpdir1.mkdir();
 
@@ -326,13 +409,13 @@ public class ViewApp {
 		}
 		public void actionPerformed(ActionEvent e) {
 
-//			String path1 = "./imgs/"+in1.getName();
-//			String path2= "./imgs/"+in2.getName();
-			
+			//			String path1 = "./imgs/"+in1.getName();
+			//			String path2= "./imgs/"+in2.getName();
+
 			//FindDiff fd = new FindDiff();
 			//fd.selectChangeContour(path1, path2);
 			System.out.println("このボタンの機能はありません");
-			
+
 		}
 	}
 }

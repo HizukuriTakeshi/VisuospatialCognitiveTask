@@ -107,7 +107,7 @@ public class BackgroundSub {
 
 		setBeforeImg(Highgui.imread(beforeImgpath));
 		setAfterImg(Highgui.imread(afterImgpath));
-		
+
 		//		//特徴検出
 		//		FeatureDetector detector = FeatureDetector.create(4); //4 = SURF 
 		//		MatOfKeyPoint keypoints_object = new MatOfKeyPoint();
@@ -183,7 +183,7 @@ public class BackgroundSub {
 		Imgproc.cvtColor(img_homo, img_homo_gray, Imgproc.COLOR_RGBA2GRAY);
 		//差分
 		Core.absdiff(img_homo_gray, img_after, img_diff);
-
+		Highgui.imwrite("imgs/processed/purediff.jpg",img_diff);
 		//黒背景を処理
 		for(int i = 0; i < img_diff.cols();i++){
 			for(int j = 0; j < img_diff.rows(); j++){
@@ -219,7 +219,7 @@ public class BackgroundSub {
 		double [] box = resize(d, 720, 540);
 
 		Mat cut_img = new Mat(getDiffImg(), new Rect(box));
-		
+
 		//BB内の差の割合計算
 		double sum = 0;
 		for(int i = 0; i< cut_img.rows(); i++){
@@ -229,10 +229,11 @@ public class BackgroundSub {
 		}
 
 		double result = sum/(cut_img.rows()*cut_img.cols());
-		if(result > 0.2){
+		if(result > 0.1){
 			//System.out.println(result);
-			Highgui.imwrite("imgs/processed/cut"+name+".jpg",cut_img);
+			//Highgui.imwrite("imgs/processed/cut"+name+".jpg",cut_img);
 		}
+		
 		return result;
 	}
 
@@ -366,7 +367,7 @@ public class BackgroundSub {
 			//画像の左上角のx座標増
 			i=i+x;
 		}
-		
+
 		//黒背景を処理
 		for(int k = 0; k < baseimg.cols();k++){
 			for(int l = 0; l < baseimg.rows(); l++){
@@ -382,7 +383,7 @@ public class BackgroundSub {
 		Imgproc.erode(baseimg, baseimg, new Mat(), new Point(-1,-1), 1);
 		//欠損部補完
 		Imgproc.dilate(baseimg, baseimg, new Mat());
-		
+
 		Highgui.imwrite("imgs/processed/part.png",baseimg); 
 		return baseimg;
 	}
@@ -394,8 +395,8 @@ public class BackgroundSub {
 	 */
 	public boolean checkMatch(Mat objectImage, Mat sceneImage, Mat dst){
 
-				System.out.println("Started....");
-				System.out.println("Loading images...");
+		System.out.println("Started....");
+		System.out.println("Loading images...");
 		//SURF特徴
 		MatOfKeyPoint objectKeyPoints = new MatOfKeyPoint();
 		FeatureDetector featureDetector = FeatureDetector.create(FeatureDetector.SURF);
@@ -469,24 +470,24 @@ public class BackgroundSub {
 			MatOfPoint2f scnMatOfPoint2f = new MatOfPoint2f();
 			scnMatOfPoint2f.fromList(scenePoints);
 
-			Mat homography = Calib3d.findHomography(scnMatOfPoint2f,objMatOfPoint2f, Calib3d.RANSAC, 3);
-			
+			Mat homography = Calib3d.findHomography(scnMatOfPoint2f,objMatOfPoint2f, Calib3d.RANSAC, 2);
+
 
 			System.out.println("Drawing matches image...");
 			MatOfDMatch goodMatches = new MatOfDMatch();
 			goodMatches.fromList(goodMatchesList);
-			
-			
+
+
 			Mat matchoutput = new Mat(sceneImage.rows() * 2, sceneImage.cols() * 2, Highgui.CV_LOAD_IMAGE_COLOR);
 			Scalar matchestColor = new Scalar(0, 255, 0);
 			Scalar newKeypointColor = new Scalar(255, 0, 0);
 			Features2d.drawMatches(objectImage, objectKeyPoints, sceneImage, sceneKeyPoints, goodMatches, matchoutput, matchestColor, newKeypointColor, new MatOfByte(), 2);
 			Highgui.imwrite("./imgs/processed/matchoutput.jpg", matchoutput);
-			
+
 			Size s = new Size(objectImage.cols(),objectImage.rows());
 
 			Imgproc.warpPerspective(sceneImage, dst, homography, s);			
-			
+
 		} else {
 			System.out.println("Object Not Found");
 			return false;
@@ -525,5 +526,74 @@ public class BackgroundSub {
 		double result = sum/(cut_img.rows()*cut_img.cols());
 
 		return result;	
+	}
+
+	public Mat test(Mat img_after,Mat img_before){
+		//特徴検出
+		FeatureDetector detector = FeatureDetector.create(4); //4 = SURF 
+		MatOfKeyPoint keypoints_object = new MatOfKeyPoint();
+		MatOfKeyPoint keypoints_scene  = new MatOfKeyPoint();
+		detector.detect(img_before, keypoints_object);
+		detector.detect(img_after, keypoints_scene);
+
+		//特徴記述
+		DescriptorExtractor extractor = DescriptorExtractor.create(2); //2 = SURF;
+		Mat descriptor_object = new Mat();
+		Mat descriptor_scene = new Mat();
+		extractor.compute(img_before, keypoints_object, descriptor_object);
+		extractor.compute(img_after, keypoints_scene, descriptor_scene);
+
+		//マッチング
+		DescriptorMatcher matcher = DescriptorMatcher.create(1); // 1 = FLANNBASED
+		List<MatOfDMatch> knnmatch_points = new ArrayList<MatOfDMatch>();
+		matcher.knnMatch(descriptor_object, descriptor_scene, knnmatch_points, 2);
+
+		final double match_par = 0.6;
+		LinkedList<DMatch> good_matches = new LinkedList<DMatch>();
+		MatOfDMatch gm = new MatOfDMatch();
+		LinkedList<Point> match_point1 = new LinkedList<Point>();
+		LinkedList<Point> match_point2 = new LinkedList<Point>();
+
+		//knnマッチング結果の絞り込み
+		for(int i = 0; i< knnmatch_points.size(); ++i){
+			double distance1 = knnmatch_points.get(i).toArray()[0].distance;
+			double distance2 = knnmatch_points.get(i).toArray()[1].distance;
+			//第2候補から距離値が離れている点のみ抽出
+			if(distance1< distance2*match_par){
+				good_matches.addLast(knnmatch_points.get(i).toArray()[0]);
+				match_point1.add(keypoints_object.toList().get(knnmatch_points.get(i).toArray()[0].queryIdx).pt);
+				match_point2.add(keypoints_scene.toList().get(knnmatch_points.get(i).toArray()[0].trainIdx).pt);
+			}
+		}
+
+		gm.fromList(good_matches);
+		MatOfPoint2f m_p1 = new MatOfPoint2f();
+		m_p1.fromList(match_point1);
+		MatOfPoint2f m_p2 = new MatOfPoint2f();
+		m_p2.fromList(match_point2);
+
+		//ホモグラフィ行列計算
+		Mat masks = new Mat();
+		Mat H = Calib3d.findHomography(m_p1, m_p2, 3, Calib3d.RANSAC, masks);
+		LinkedList<DMatch> inlinerMatch = new LinkedList<DMatch>();
+		MatOfDMatch inM = new MatOfDMatch();
+
+		//RANSACに使った点のみ抽出
+		for(int i = 0; i< masks.rows(); ++i){
+			if(masks.get(i, 0)[0] == 1){
+				inlinerMatch.addLast(good_matches.get(i));
+			}
+		}
+		inM.fromList(inlinerMatch);
+
+		Mat img_matches = new Mat();
+		Features2d.drawMatches(img_before, keypoints_object, img_after, keypoints_scene, inM, img_matches, new Scalar(255,0,0), new Scalar(0,0,255), new MatOfByte(), 2);
+		Highgui.imwrite("./imgs/processed/testMatch.jpg", img_matches);
+
+		Mat result = new Mat();
+		Size s = new Size(img_before.cols(),img_before.rows());
+		Imgproc.warpPerspective(img_after, result, H, s);			
+		Highgui.imwrite("./imgs/processed/testHomo.jpg", result);
+		return result;
 	}
 }

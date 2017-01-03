@@ -1,5 +1,8 @@
 package createCogitiveTask;
 
+import java.util.Collections;
+import java.util.Comparator;
+
 import nlp.CosinSimilarity;
 
 public class CompareCap {
@@ -45,27 +48,78 @@ public class CompareCap {
 		DataList datalist = new DataList();
 
 
+		
+		for(Data d1: datalistlist.getDatalistList().get(1).getDatas()){
+			count = 0;
+			for(Data d0: datalistlist.getDatalistList().get(0).getDatas()){
+				if(d1.getType()==QuestionType.APPEARANCE){
+					double cosin = cs.caluculate(d1.getCaption(),d0.getCaption());
+					//double jaro = cs.jaroWinklerDistance(d1.getCaption(), d0.getCaption());
+					//double lev = cs.levensteinDistance(d1.getCaption(), d0.getCaption());
+					if(cosin>0.8){
+						//System.out.print(d1.getCaption()+":"+d0.getCaption());
+						break;
+					}else{
+						//System.out.print(d1.getCaption()+":"+d0.getCaption());
+						//System.out.print(cosin+":");
+						//System.out.print(jaro+":");
+						//System.out.println(lev);
+						count++;
+					}
+				}
+			}
+			
+			if(count +1>= datalistlist.getDatalistList().get(0).getDatas().size()){
+				d1.setType(QuestionType.APPEARANCE);
+				datalist.addData(d1);
+				datalist1.addData(d1);
+			}else{
+				d1.setType(QuestionType.NULL);
+			}
+		}
+		//		for(Data dd: datalist1.getDatas()){
+		//		System.out.println(dd.getCaption());
+		//		}
+		setDatalist0(datalist);
+	}
+
+	public void compareAllCaption(DataListList datalistlist){
+
+		DataList datalist = new DataList();
+
+
 		for(Data d1: datalistlist.getDatalistList().get(1).getDatas()){
 
 			count = 0;
-			for(Data d0: datalistlist.getDatalistList().get(0).getDatas()){
 
-				if(cs.caluculate(d1.getCaption(),d0.getCaption())>0.6){
-					System.out.println(d1.getCaption()+":"+d0.getCaption());
-					System.out.println(cs.caluculate(d1.getCaption(),d0.getCaption()));
-					System.out.println(cs.jaroWinklerDistance(d1.getCaption(), d0.getCaption()));
-					System.out.println(cs.levensteinDistance(d1.getCaption(), d0.getCaption()));
+			for(Data d0: datalistlist.getDatalistList().get(0).getDatas()){
+				double cosin = cs.caluculate(d1.getCaption(),d0.getCaption());
+				//double jaro = cs.jaroWinklerDistance(d1.getCaption(), d0.getCaption());
+				//double lev = cs.levensteinDistance(d1.getCaption(), d0.getCaption());
+				if(cosin>0.8){
+					//d1.setType(QuestionType.NULL);
 					break;
 				}else{
+					//System.out.print(d1.getCaption()+":"+d0.getCaption());
+					//System.out.print(cosin+":");
+					//System.out.print(jaro+":");
+					//System.out.println(lev);
 					count++;
 				}
 			}
 
-			if(count == datalistlist.getDatalistList().get(0).getDatas().size()){
+
+			if(count +1 >= datalistlist.getDatalistList().get(0).getDatas().size()){
 				datalist.addData(d1);
 				d1.setType(QuestionType.APPEARANCE);
+				datalist1.addData(d1);
+			}else{
+				d1.setType(QuestionType.NULL);
 			}
 		}
+		//		for(Data dd: datalist1.getDatas()){
+		//		System.out.println(dd.getCaption());
+		//		}
 		setDatalist0(datalist);
 	}
 
@@ -85,7 +139,7 @@ public class CompareCap {
 			for(Data d1: datalistlist.getDatalistList().get(1).getDatas()){
 
 				try {
-					if(cs.caluculate(d0.getCaption(),d1.getCaption())>0.6){
+					if(cs.caluculate(d0.getCaption(),d1.getCaption())>0.8){
 						break;
 					}else{
 						count++;
@@ -126,7 +180,7 @@ public class CompareCap {
 			for(int j = i+1;j<datalist.getDatas().size()-1;j++){
 				//出現もしくは消失したキャプションで、かつ、出現は出現、消失は消失と比較
 				if(datalist.getDatas().get(i).getType() != QuestionType.NULL && datalist.getDatas().get(i).getType() == datalist.getDatas().get(j).getType()){
-					if(cs.caluculate(datalist.getDatas().get(i).getCaption(),datalist.getDatas().get(j).getCaption())>0.6){
+					if(cs.caluculate(datalist.getDatas().get(i).getCaption(),datalist.getDatas().get(j).getCaption())>0.8){
 						datalist.getDatas().get(j).setLink(i);
 					}
 				}
@@ -135,6 +189,7 @@ public class CompareCap {
 	}
 
 	/**増えたキャプションフラグがついたものが過去説明文にないかチェック
+	 * 画像差分後に確かめる
 	 * @param datalistlist
 	 */
 	public void checkCaption0(DataListList datalistlist){
@@ -143,13 +198,15 @@ public class CompareCap {
 
 		for(Data d1: datalistlist.getDatalistList().get(1).getDatas()){
 
+			count = 0;
 			//出現フラグチェック
 			if(d1.getType()==QuestionType.APPEARANCE){
 				for(Data d0: datalistlist.getDatalistList().get(0).getDatas()){
 
+					d1.setCoscore(cs.caluculate(d1.getCaption(),d0.getCaption()));
 					//ひとつでも類似説明文があれば飛ばす
-					if(cs.caluculate(d1.getCaption(),d0.getCaption())>0.6){
-						d0.setType(QuestionType.NULL);
+					if(d1.getCoscore()>0.8){
+						//d0.setType(QuestionType.NULL);
 						break;
 					}else{
 						count++;
@@ -157,13 +214,33 @@ public class CompareCap {
 				}
 
 				//すべて類似しなかった場合
-				if(count == datalistlist.getDatalistList().get(0).getDatas().size()){
+				if(count +1 >= datalistlist.getDatalistList().get(0).getDatas().size()){
 					datalist.addData(d1);
 					d1.setType(QuestionType.APPEARANCE);
+				}else{
+					d1.setType(QuestionType.NULL);
 				}
 
 			}
 		}
+		
+
+		//割合ごとに並べ替え
+		Collections.sort(datalistlist.getDatalistList().get(1).getDatas(), new Comparator<Data>(){
+			@Override
+			public int compare(Data first, Data second){
+				
+				//idの文字列長でソート。文字列数がが小さい順に並べる。
+				if(first.getCoscore() > second.getCoscore()){
+					return 1;
+				}else if(first.getCoscore() < second.getCoscore()){
+					return -1;
+				}else if(first.getCoscore() == second.getCoscore()){
+					return 0;
+				}
+				return 0;
+			}
+		});
 		setDatalist0(datalist);
 	}
 }
