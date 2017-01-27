@@ -15,6 +15,7 @@ import org.opencv.core.Size;
 import org.opencv.highgui.Highgui;
 import org.opencv.imgproc.Imgproc;
 
+import createCogitiveTask.QuestionType;
 import imgProc.BackgroundSub;
 
 public class FindDiff {
@@ -57,13 +58,13 @@ public class FindDiff {
 	 * @param before_imgName
 	 * @param after_imgName
 	 */
-	public void selectChangeContour(String before_imgName, String after_imgName){
+	public void selectChangeContour(String before_imgName, String after_imgName, QuestionType type){
 
 		String before_imgPath = before_imgName;
 		String after_imgPath =  after_imgName;
 
 		//差分計算
-		BackgroundSub bgs = new BackgroundSub(before_imgPath, after_imgPath);
+		BackgroundSub bgs = new BackgroundSub(before_imgPath, after_imgPath, type);
 
 		//輪郭抽出した画像の切り出し
 		Rect[] rects = bgs.findDifference(bgs.getDiffImg());

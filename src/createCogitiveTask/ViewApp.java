@@ -21,9 +21,6 @@ import org.opencv.core.Core;
 import densecapProcess.DenseCapProcess;
 import fileUtils.FileUtils;
 import java.awt.event.ActionListener;
-import javax.swing.JTextField;
-import javax.swing.JTextArea;
-import javax.swing.JScrollPane;
 
 public class ViewApp {
 
@@ -49,8 +46,7 @@ public class ViewApp {
 	private ConfirmPanel confirmpanel;
 	private ChoicesPanel choicespanel;
 	private final Action action_1 = new SwingAction_1();
-	private JTextArea textArea;
-	private JScrollPane scrollPane;
+
 
 
 	/**
@@ -81,7 +77,7 @@ public class ViewApp {
 	 */
 	private void initialize() {
 		frame = new JFrame();
-		frame.setBounds(100, 100, 783, 560);
+		frame.setBounds(100, 100, 830, 641);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
 		readFileButton = new JButton("New button");
@@ -126,23 +122,13 @@ public class ViewApp {
 		frame.getContentPane().add(confirmpanel);
 
 		choicespanel = new ChoicesPanel();
-		choicespanel.setBounds(18, 410, 753, 110);
+		choicespanel.setBounds(12, 408, 806, 193);
 		frame.getContentPane().add(choicespanel);
 
 		JButton btnNewButton = new JButton("輪郭抽出");
 		btnNewButton.setBounds(546, 68, 152, 23);
 		btnNewButton.setAction(action_1);
 		frame.getContentPane().add(btnNewButton);
-
-		scrollPane = new JScrollPane();
-		scrollPane.setBounds(544, 231, 143, 159);
-		frame.getContentPane().add(scrollPane);
-
-
-		textArea = new JTextArea();
-		scrollPane.setViewportView(textArea);
-
-
 
 		datalistList = new DataListList();
 
@@ -185,7 +171,7 @@ public class ViewApp {
 				datalistList = densecapList1.toDataListList();
 				datalistList.addDataList(tmp.getDatalistList().get(0));
 
-				//説明文飲みの出現文推定
+				//説明文のみの出現文推定
 				onlycaption = new DataListList();
 
 				DenseCapList densecapList3 = new DenseCapList();
@@ -197,56 +183,54 @@ public class ViewApp {
 				DataListList tmp2 = new DataListList();
 				tmp2 = densecapList4.toDataListList();
 
+				//文字だけの比較
 				onlycaption = densecapList3.toDataListList();
 				onlycaption.addDataList(tmp2.getDatalistList().get(0));
 				CompareCap cconlycap = new CompareCap();
 				cconlycap.compareAllCaption(onlycaption);
-				textArea.setText("");
 
 				try {
 					//出力先を作成する
-					FileWriter fw = new FileWriter("imgs/processed/mojionly.txt", false);  //※１
+					FileWriter fw = new FileWriter("imgs/processed/mojionly_apearance.txt", false);  //※１
 					PrintWriter pw = new PrintWriter(new BufferedWriter(fw));
-
+					pw.println("apearance");
 					//内容を指定する
 					for(Data d: cconlycap.getDatalist0().getDatas()){
-						//System.out.println(d.getCaption());
 						pw.println(d.getCaption());
 					}
 					//ファイルに書き出す
 					pw.close();
-					//終了メッセージを画面に出力する
-					System.out.println("出力が完了しました。");
 				} catch (IOException ex) {
 					//例外時処理
 					ex.printStackTrace();
 				}
 
-
-
-				for(Data d: cconlycap.getDatalist0().getDatas()){
-					//System.out.println(d.getCaption());
-					textArea.append(d.getCaption()+"\n");
+				try {
+					//出力先を作成する
+					FileWriter fw = new FileWriter("imgs/processed/mojionly_disapearance.txt", false);  //※１
+					PrintWriter pw = new PrintWriter(new BufferedWriter(fw));
+					pw.println("disapearance");
+					for(Data d: cconlycap.getDatalist1().getDatas()){
+						pw.println(d.getCaption());
+					}
+					//ファイルに書き出す
+					pw.close();
+				} catch (IOException ex) {
+					//例外時処理
+					ex.printStackTrace();
 				}
 
-
-
-				//差分と説明文BB比較
+				//画像差分による変化領域検出
 				CompareBoundingBox cbb = new CompareBoundingBox();
-				cbb.compareBoundingBox(datalistList, QuestionType.APPEARANCE);
+				cbb.compareBoundingBox(datalistList);
 
 				//候補とキャプション群比較
 				CompareCap cc = new CompareCap();
 				cc.checkCaption0(datalistList);
-				//				for(Data d: cc.getDatalist0().getDatas()){
-				//					System.out.println(d.getCaption());
-				//				}
-
-				//cc.compareCaption0(datalistList);
 
 				try {
 					//出力先を作成する
-					FileWriter fw2 = new FileWriter("imgs/processed/sabunari.txt", false);  //※１
+					FileWriter fw2 = new FileWriter("imgs/processed/sabun_appearance.txt", false);  //※１
 					PrintWriter pw2 = new PrintWriter(new BufferedWriter(fw2));
 
 					//内容を指定する
@@ -263,7 +247,27 @@ public class ViewApp {
 					//例外時処理
 					ex.printStackTrace();
 				}
-				
+
+				try {
+					//出力先を作成する
+					FileWriter fw2 = new FileWriter("imgs/processed/sabun_disappearance.txt", false);  //※１
+					PrintWriter pw2 = new PrintWriter(new BufferedWriter(fw2));
+
+					//内容を指定する
+					for(Data d:datalistList.getDatalistList().get(0).getDatas()){
+						if(d.getType() == QuestionType.DISAPPEARANCE && d.getLink() == -1){
+							pw2.println(d.getCaption());
+						}
+					}
+					//ファイルに書き出す
+					pw2.close();
+					//終了メッセージを画面に出力する
+					System.out.println("出力が完了しました。");
+				} catch (IOException ex) {
+					//例外時処理
+					ex.printStackTrace();
+				}
+
 
 				confirmpanel.setDataListList(datalistList);
 				choicespanel.setDataListList(datalistList);

@@ -46,9 +46,6 @@ public class CompareCap {
 	public void compareCaption0(DataListList datalistlist){
 
 		DataList datalist = new DataList();
-
-
-		
 		for(Data d1: datalistlist.getDatalistList().get(1).getDatas()){
 			count = 0;
 			for(Data d0: datalistlist.getDatalistList().get(0).getDatas()){
@@ -85,29 +82,18 @@ public class CompareCap {
 
 	public void compareAllCaption(DataListList datalistlist){
 
+		
 		DataList datalist = new DataList();
-
-
 		for(Data d1: datalistlist.getDatalistList().get(1).getDatas()){
-
 			count = 0;
-
 			for(Data d0: datalistlist.getDatalistList().get(0).getDatas()){
-				double cosin = cs.caluculate(d1.getCaption(),d0.getCaption());
-				//double jaro = cs.jaroWinklerDistance(d1.getCaption(), d0.getCaption());
-				//double lev = cs.levensteinDistance(d1.getCaption(), d0.getCaption());
+				double cosin = cs.caluculate(d1.getCaption(),d0.getCaption());				
 				if(cosin>0.8){
-					//d1.setType(QuestionType.NULL);
 					break;
 				}else{
-					//System.out.print(d1.getCaption()+":"+d0.getCaption());
-					//System.out.print(cosin+":");
-					//System.out.print(jaro+":");
-					//System.out.println(lev);
 					count++;
 				}
 			}
-
 
 			if(count +1 >= datalistlist.getDatalistList().get(0).getDatas().size()){
 				datalist.addData(d1);
@@ -117,10 +103,29 @@ public class CompareCap {
 				d1.setType(QuestionType.NULL);
 			}
 		}
-		//		for(Data dd: datalist1.getDatas()){
-		//		System.out.println(dd.getCaption());
-		//		}
 		setDatalist0(datalist);
+		
+		DataList kakolist = new DataList();
+		for(Data d0: datalistlist.getDatalistList().get(0).getDatas()){
+			count = 0;
+			for(Data d1: datalistlist.getDatalistList().get(1).getDatas()){
+				double cosin = cs.caluculate(d0.getCaption(),d1.getCaption());				
+				if(cosin>0.8){
+					break;
+				}else{
+					count++;
+				}
+			}
+
+			if(count +1 >= datalistlist.getDatalistList().get(1).getDatas().size()){
+				kakolist.addData(d0);
+				d0.setType(QuestionType.DISAPPEARANCE);
+				datalist0.addData(d0);
+			}else{
+				d0.setType(QuestionType.NULL);
+			}
+		}
+		setDatalist1(kakolist);
 	}
 
 
@@ -195,7 +200,6 @@ public class CompareCap {
 	public void checkCaption0(DataListList datalistlist){
 
 		DataList datalist = new DataList();
-
 		for(Data d1: datalistlist.getDatalistList().get(1).getDatas()){
 
 			count = 0;
@@ -206,6 +210,7 @@ public class CompareCap {
 					d1.setCoscore(cs.caluculate(d1.getCaption(),d0.getCaption()));
 					//ひとつでも類似説明文があれば飛ばす
 					if(d1.getCoscore()>0.8){
+						System.out.println("類似あり:"+d1.getCaption());
 						//d0.setType(QuestionType.NULL);
 						break;
 					}else{
@@ -242,6 +247,62 @@ public class CompareCap {
 			}
 		});
 		setDatalist0(datalist);
+	}
+	
+	/**増えたキャプションフラグがついたものが現在説明文にないかチェック
+	 * 画像差分後に確かめる
+	 * @param datalistlist
+	 */
+	public void checkCaption1(DataListList datalistlist){
+
+		DataList datalist = new DataList();
+		for(Data d0: datalistlist.getDatalistList().get(0).getDatas()){
+
+			count = 0;
+			//消失フラグチェック
+			if(d0.getType()==QuestionType.DISAPPEARANCE){
+				for(Data d1: datalistlist.getDatalistList().get(1).getDatas()){
+
+					d0.setCoscore(cs.caluculate(d0.getCaption(),d1.getCaption()));
+					//ひとつでも類似説明文があれば飛ばす
+					if(d0.getCoscore()>0.8){
+						System.out.println("類似あり:"+d0.getCaption());
+						//d0.setType(QuestionType.NULL);
+						break;
+					}else{
+						count++;
+					}
+				}
+
+				//すべて類似しなかった場合
+				if(count +1 >= datalistlist.getDatalistList().get(1).getDatas().size()){
+					datalist.addData(d0);
+					d0.setType(QuestionType.DISAPPEARANCE);
+				}else{
+					d0.setType(QuestionType.NULL);
+				}
+
+			}
+		}
+		
+
+		//割合ごとに並べ替え
+		Collections.sort(datalistlist.getDatalistList().get(0).getDatas(), new Comparator<Data>(){
+			@Override
+			public int compare(Data first, Data second){
+				
+				//idの文字列長でソート。文字列数がが小さい順に並べる。
+				if(first.getCoscore() > second.getCoscore()){
+					return 1;
+				}else if(first.getCoscore() < second.getCoscore()){
+					return -1;
+				}else if(first.getCoscore() == second.getCoscore()){
+					return 0;
+				}
+				return 0;
+			}
+		});
+		setDatalist1(datalist);
 	}
 }
 

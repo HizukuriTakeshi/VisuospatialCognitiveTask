@@ -28,6 +28,7 @@ import org.opencv.highgui.Highgui;
 import org.opencv.imgproc.Imgproc;
 
 import createCogitiveTask.Data;
+import createCogitiveTask.QuestionType;
 
 public class BackgroundSub {
 
@@ -101,12 +102,21 @@ public class BackgroundSub {
 	 * @param beforeImgpath 過去画像
 	 * @param afterImgpath
 	 */
-	public BackgroundSub(String beforeImgpath, String afterImgpath){
+	public BackgroundSub(String beforeImgpath, String afterImgpath,QuestionType type){
 		Mat img_before = Highgui.imread(beforeImgpath, 0);
 		Mat img_after = Highgui.imread(afterImgpath, 0);
 
 		setBeforeImg(Highgui.imread(beforeImgpath));
 		setAfterImg(Highgui.imread(afterImgpath));
+		
+		String typename;
+		if(type.equals(QuestionType.APPEARANCE)){
+			typename = "appearance";
+		}else if(type.equals(QuestionType.DISAPPEARANCE)){
+			typename = "disappearance";
+		}else{
+			typename = "null";
+		}
 
 		//		//特徴検出
 		//		FeatureDetector detector = FeatureDetector.create(4); //4 = SURF 
@@ -183,7 +193,7 @@ public class BackgroundSub {
 		Imgproc.cvtColor(img_homo, img_homo_gray, Imgproc.COLOR_RGBA2GRAY);
 		//差分
 		Core.absdiff(img_homo_gray, img_after, img_diff);
-		Highgui.imwrite("imgs/processed/purediff.jpg",img_diff);
+		Highgui.imwrite("imgs/processed/"+typename+"_"+"purediff.jpg",img_diff);
 		//黒背景を処理
 		for(int i = 0; i < img_diff.cols();i++){
 			for(int j = 0; j < img_diff.rows(); j++){
@@ -205,8 +215,8 @@ public class BackgroundSub {
 		setX(img_before.cols());
 		setY(img_before.rows());
 
-		Highgui.imwrite("imgs/processed/homo.jpg",img_homo);
-		Highgui.imwrite("imgs/processed/diff.jpg",img_diff);
+		Highgui.imwrite("imgs/processed/"+typename+"_"+"homo.jpg",img_homo);
+		Highgui.imwrite("imgs/processed/"+typename+"_"+"diff.jpg",img_diff);
 	}
 
 	/**キャプションのBBを切り出して差分と比較して出現物体説明文を見つける
@@ -214,7 +224,7 @@ public class BackgroundSub {
 	 * @param name
 	 * @return
 	 */
-	public double checkBoundingBox(Data d, int name){
+	public double checkBoundingBox(Data d){
 		//DenseCapのBBをリサイズ
 		double [] box = resize(d, 720, 540);
 
